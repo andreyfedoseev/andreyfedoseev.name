@@ -8,7 +8,7 @@ feeds = {
 
 
 urlpatterns = patterns('',
-    url(r'^$', 'blog.views.index'),
+    url(r'^$', 'blog.views.index', name="index"),
     url(r'^page/(?P<page>\d+)/$', 'blog.views.index', name="blog_listing_page"),
     url(r'^post/(\d+)/$', 'blog.views.entry'),
     url(r'^post/(\d+)/([^/]+)/$', 'blog.views.entry'),

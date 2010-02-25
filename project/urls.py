@@ -14,6 +14,7 @@ urlpatterns = patterns(
     '',
     url(r'^$', 'project.views.frontpage', name='frontpage'),
     url(r'^blog/', include('blog.urls', namespace="blog", app_name='blog')),
+    url(r'^about/', 'django.views.generic.simple.direct_to_template', {'template': 'blog/about.html'}, name="about"),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('registration.auth_urls')),
     url(r'^robots.txt$', include('robots.urls')),

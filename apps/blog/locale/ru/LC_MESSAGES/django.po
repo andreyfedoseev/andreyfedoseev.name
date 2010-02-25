@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-24 10:21-0600\n"
+"POT-Creation-Date: 2010-02-25 14:12-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,19 +144,27 @@ msgstr "Изображение"
 msgid "Order"
 msgstr "Порядок"
 
-#: templates/blog/entry.html:8
+#: templates/blog/about.html:9 templates/blog/entry.html:8
 msgid "Blog Index"
 msgstr "Главная страница блога"
 
-#: templates/blog/index.html:9
+#: templates/blog/base.html:25
+msgid "Andrey Fedoseev's blog"
+msgstr "Блог Андрея Федосеева"
+
+#: templates/blog/entry.html:9 templates/blog/index.html:7
+msgid "About"
+msgstr "Об авторе"
+
+#: templates/blog/index.html:11
 msgid "Next page"
 msgstr "Следующая страница"
 
-#: templates/blog/index.html:12
+#: templates/blog/index.html:14
 msgid "Previous page"
 msgstr "Предыдущая страница"
 
-#: templates/blog/index.html:37
+#: templates/blog/index.html:38
 msgid "No entries have been published."
 msgstr "Не опубликовано ни одной записи."
 
@@ -188,6 +196,6 @@ msgstr "Отмена"
 msgid "Upload an image"
 msgstr "Загрузить изображение"
 
-#: templatetags/blog_tags.py:100
+#: templatetags/blog_tags.py:104
 msgid "Read more"
 msgstr "Читать дальше"

@@ -1,0 +1,21 @@
+{% extends "blog/base.html" %}
+{% load i18n %}
+{% block content %}
+<h2>Об авторе</h2>
+<div class="span-4">
+  <img src="{{ MEDIA_URL }}images/andreyfedoseev.jpg" alt="" />
+</div>
+<div class="span-14 last">
+  <p>Меня зовут Андрей Федосеев.
+  С 2003 занимаюсь веб-программированием с использованием языка Python.
+  Линуксоид. Интересуюсь пользовательскими интерфейсами. Неравнодушен к тому,
+  что происходит в моей стране и в мире. Живу в Челябинске.</p>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+<ul>
+  <li><a href="{% url blog:index %}">{% trans "Blog Index" %}</a></li>
+</ul>
+{% endblock %}
