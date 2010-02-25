@@ -1,0 +1,16 @@
+{% load i18n %}
+<div class="field" id="images-widget">
+  {{ form.images.label_tag }}
+  {% for error in form.images.errors %}
+      <div class="error small">{{ error }}</div>
+  {% endfor %}
+  {{ form.images }}
+  <div class="images-container"></div>
+  <div class="clear"></div>
+  <div>
+    <a id="upload-image-button" href="javascript:void(0);">{% trans "Upload an image" %}</a>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function() {new ImagesWidget("#upload-image-button", "{% url blog:ajax-upload-image %}", "{% url blog:ajax-get-images %}", "{% url blog:ajax-delete-image %}", "images");});
+</script>

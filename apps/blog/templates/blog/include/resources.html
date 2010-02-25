@@ -1,0 +1,20 @@
+{% load assets %}
+
+{% assets "blog_frontend_css" %}
+  <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" media="screen, projection" /> 
+{% endassets %} 
+
+{% assets "blog_print_css" %}
+  <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" media="print" /> 
+{% endassets %} 
+
+<!--[if lt IE 8]>
+{% assets "blog_ie_css" %}
+  <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" media="screen, projection" /> 
+{% endassets %} 
+<![endif]-->
+
+{% assets "blog_frontend_js" %}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %} 
+ 

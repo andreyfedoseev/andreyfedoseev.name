@@ -1,0 +1,12 @@
+{% load assets %}
+
+{% assets "blog_admin_css" %}
+  <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" media="screen, projection" /> 
+{% endassets %} 
+
+{% assets "blog_admin_js" %}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %} 
+ 
+<script type="text/javascript" src="{% url blog:i18n.js %}"></script>
+ 

@@ -1,0 +1,25 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% load i18n %}
+{% block title %}{{ entry }}{% endblock %}
+{% block sidebar_headline %}{{ entry.blog }}{% endblock %}
+{% block sidebar %}
+<ul>
+  <li><a href="{{ entry.blog.get_absolute_url }}">{% trans "Blog Index" %}</a></li>
+</ul>
+<ul>
+  {% comment %}
+  <li><a href="#about">About</a></li>
+  <li><a href="#search">Search</a></li>
+  {% endcomment %}
+</ul>
+{% endblock %}
+{% block content %}<div class="post">
+    <h2>
+      <span class="span-17">{{ entry }}</span>
+      <span class="span-1 last"><a class="permalink" href="{{ entry.get_absolute_url }}">&para;</a></span>
+      <div class="clear"></div> 
+    </h2>
+    {% render_text entry %}
+  </div> 
+{% endblock %}

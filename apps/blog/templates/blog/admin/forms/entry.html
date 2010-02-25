@@ -1,0 +1,38 @@
+{% extends "blog/admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{% if entry %}{{ entry }}{% else %}{% trans "New entry" %}{% endif %}{% endblock %}
+
+{% block pre_content %}
+<form method="post" action="{% if entry %}{% url blog:edit-entry entry.id %}{% else %}{% url blog:add-entry %}{% endif %}" />
+{% endblock %}
+
+{% block content %}
+  {% with form.title as field %}{% include "blog/admin/forms/include/field.html" %}{% endwith %}
+  {% with form.text as field %}{% include "blog/admin/forms/include/field.html" %}{% endwith %}
+  <script language="javascript">
+    $(document).ready(function()    {
+       var settings = htmlSettings;
+       oembed = {name:'oembed', className: 'oembed', openWith:'{% templatetag openblock %} oembed {% templatetag closeblock %}', closeWith:'{% templatetag openblock %} endoembed {% templatetag closeblock %}' };
+       settings.markupSet.splice(18, 0, oembed); 
+       settings.previewParserPath = "{% url blog:preview %}"
+       settings.previewInWindow = 'width=800, height=600, resizable=yes, scrollbars=yes'; 
+       $('.markitup').markItUp(htmlSettings);
+
+       $('.inline-label').inline_label();
+    });
+  </script>
+  <div class="buttons clear">
+    <button type="submit" name="save">{% trans "Save" %}</button>
+    <button type="submit" name="cancel">{% trans "Cancel" %}</button>
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+  {% include "blog/admin/forms/include/publication_form.html" %}
+  {% include "blog/admin/forms/include/images.html" %}
+{% endblock %}
+
+{% block post_content %}
+</form>
+{% endblock %}

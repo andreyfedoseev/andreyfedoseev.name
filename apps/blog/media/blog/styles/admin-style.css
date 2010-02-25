@@ -1,0 +1,121 @@
+.ui-widget {
+  font-size: 80%; 
+}
+
+ul.navigation {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+  text-align: right;
+  height: 25px;
+  padding-top: 5px;
+  padding-left: 1em;
+}   
+
+ul.navigation li {
+  margin: 0;
+  padding: 0;
+  display: inline;  
+  margin-left: 1em;
+}   
+
+#content.admin {
+  margin-top: 10px; 
+}
+
+#sidebar.admin {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  width: 245px;
+  padding-left: 245px;
+}
+
+#sidebar.admin .inner {
+  background-color: #eeeeee;
+  width: 224px;
+  padding: 10px;
+}
+
+#upload-image-button.loading {
+  padding-left: 20px;
+  background: url(../images/ajax-loader-small.gif) no-repeat 0% 50%;
+}
+
+#images-widget .images-container .image-container {
+  padding: 5px;
+  border: 1px solid #aaaaaa;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  float: left;
+  background-color: white;
+}
+
+#images-widget .images-container .image-container .wrapper {
+  padding: 3px;
+  background: #dddddd;
+  margin-bottom: 5px;
+}
+
+#images-widget .images-container .image-container .wrapper img {
+  cursor: pointer;
+}
+
+#images-widget .images-container .image-container a.set-cover-button {
+  display: block;
+  float: left;
+  width: 26px;
+  height: 22px;
+  background: url(../images/image-icon.png) no-repeat 50% -1px;
+  margin-right: 5px;
+}
+
+#images-widget .images-container .image-container a.set-cover-button.selected {
+  border: 1px solid #aaaaaa;
+  background-color: #cccccc;
+}
+  
+  
+#images-widget .images-container .image-container a.insert-image-button {
+  display: block;
+  float: left;
+  background-color: #cccccc;
+  margin-right: 5px;
+  border: 1px solid #aaaaaa;
+}
+
+#images-widget .images-container .image-container a.insert-image-button.thumb {
+  width: 12px;
+  height: 10px;
+  margin-top: 7px;
+}
+
+#images-widget .images-container .image-container a.insert-image-button.scaled {
+  width: 16px;
+  height: 13px;
+  margin-top: 5px;
+}
+
+#images-widget .images-container .image-container a.insert-image-button.original {
+  width: 20px;
+  height: 16px;
+  margin-top: 3px;
+}
+
+#images-widget .images-container .image-container a.delete {
+  width: 16px;
+  height: 16px;
+  display: block;
+  float: right;
+  background: url(../images/cross.png) no-repeat;
+  margin-top: 3px;
+}
+
+.inline_label {
+  font-family: Helvetica, Arial, Verdana;
+  color: #cccccc;
+}
+
+.markItUp .oembed a {
+  background-image: url(../images/film-link-icon.png);
+}

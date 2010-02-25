@@ -1,0 +1,39 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% load i18n %}
+{% block title %}{{ blog }}{% endblock %}
+{% block sidebar_headline %}<a href="{{ blog.get_absolute_url }}">{{ blog }}</a>{% endblock %}
+{% block sidebar %}
+<ul>
+  {% if page.has_next %}
+    <li><a href="{% url blog:blog_listing_page page.next_page_number %}">{% trans "Next page" %} &rarr;</a></li>
+  {% endif %}
+  {% if page.has_previous %}
+    <li><a href="{% url blog:blog_listing_page page.previous_page_number %}">&larr; {% trans "Previous page" %}</a></li>
+  {% endif %}
+  {% comment %}
+  <li><a href="#about">About</a></li>
+  <li><a href="#search">Search</a></li>
+  {% endcomment %}
+</ul>
+{% endblock %}
+{% block content %}
+  {% if entries %}
+  <div class="list">
+    {% for entry in entries %}
+    <div class="post hide append-bottom" id="p{{ entry.id }}"> 
+      <h2><a href="{{ entry.get_absolute_url }}">{{ entry }}</a></h2>
+      {% render_text entry short %}
+    </div>
+    {% endfor %}
+  </div>
+  <div class="grid hide clear">
+    {% for entry in entries %}
+      {% include "blog/grid_entry.html" %}
+    {% endfor %}
+  </div>
+  <script type="text/javascript">$(document).ready(init_grid);</script>
+  {% else %}
+    <p>{% trans "No entries have been published." %}</p> 
+  {% endif %}
+{% endblock %}

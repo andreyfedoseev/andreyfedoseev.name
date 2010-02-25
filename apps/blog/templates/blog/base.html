@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru"> 
+  <head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+    <title>{% block title %}{% endblock %}</title> 
+    {% block meta_description %}{% endblock %} 
+    <link rel="icon" href="{{MEDIA_URL}}images/favicon.png"/> 
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/AndreyFedoseev" /> 
+
+    {% include "blog/include/resources.html" %}
+
+    <meta name="google-site-verification" content="x2ZAuUS4Bc581RdBqcKRWDdjYvKe6-wJ7PhqglEKE6k" /> 
+    <link rel="openid.server" href="http://www.myopenid.com/server" /> 
+    <link rel="openid.delegate" href="http://andreyfedoseev.myopenid.com/" /> 
+  </head> 
+  <body><div class="container prepend-top">
+  <div id="content" class="span-18"> 
+    {% block content %}
+    {% endblock %}        
+  </div> 
+  <div id="sidebar" class="span-6 last">
+    <div class="inner">
+      <h1>{% block sidebar_headline %}{% endblock %}</h1>
+      {% block sidebar %}{% endblock %}
+    </div>
+  </div>        
+  
+  </div></body> 
+</html>
