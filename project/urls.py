@@ -1,9 +1,14 @@
 from django.conf.urls.defaults import patterns, include, handler500, url
 from django.conf import settings
 from django.contrib import admin
+from blog.sitemap import BlogSitemap
 admin.autodiscover()
 
 handler500 # Pyflakes
+
+sitemaps = {
+    'blog': BlogSitemap,            
+}
 
 urlpatterns = patterns(
     '',
@@ -12,6 +17,7 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('registration.auth_urls')),
     url(r'^robots.txt$', include('robots.urls')),
+    url(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 )
 
 if settings.DEBUG:

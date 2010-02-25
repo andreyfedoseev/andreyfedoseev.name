@@ -71,6 +71,8 @@ def do_image(parser, token):
              (tag_name, ', '.join(['%s' % f for f in IMAGE_FORMATS]))
     if title and (not title.startswith('"') or not title.endswith('"')):
         raise template.TemplateSyntaxError, "%r title must be in quotes" % tag_name
+    if title:
+        title = title[1:-1]
         
     return ImageNode(id, format, title)    
 
