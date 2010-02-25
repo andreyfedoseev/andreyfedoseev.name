@@ -36,4 +36,4 @@ htmlSettings = {
 		{name:'Clean', className:'clean', replaceWith:function(markitup) { return markitup.selection.replace(/<(.*?)>/g, "") } },
 		{name:'Preview', className:'preview', call:'preview' }
 	]
-}
+};
