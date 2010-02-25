@@ -25,7 +25,7 @@ class Recent(Feed):
         return u''
     
     def items(self, obj):
-        return obj.published_entries().filter(include_in_rss=True)
+        return obj.published_entries().filter(include_in_rss=True)[:10]
 
     def item_link(self, item):
         return item.get_absolute_url()
