@@ -3,23 +3,31 @@
 {% load i18n %}
 {% block title %}{{ blog }}{% endblock %}
 {% block sidebar %}
-<ul>
-  <li><a href="{% url about %}">{% trans "About" %}</a></li>
-</ul>
-<ul>
-  {% if page.has_next %}
-    <li><a href="{% url blog:blog_listing_page page.next_page_number %}">{% trans "Next page" %}</a> &rarr;</li>
-  {% endif %}
-  {% if page.has_previous %}
-    <li>&larr; <a href="{% ifequal page.previous_page_number 1 %}{% url blog:index %}{% else %}{% url blog:blog_listing_page page.previous_page_number %}{% endifequal %}">{% trans "Previous page" %}</a></li>
-  {% endif %}
-</ul>
-{% comment %}
-<ul>
-  <li><strong>Архив записей:</strong><br/> <a href="#">по датам</a> / <a href="#">по тегам</a></li>
-</ul>
-{% endcomment %}
+
+{% if entry_type %}
+  <div class="note"><div class="inner">
+    {% blocktrans %}Show only {{ entry_type }}{% endblocktrans %}
+    <div class="foot">
+      <a href="{% url blog:index %}">{% trans "Show all entries" %}</a>
+    </div>
+  </div></div>
+{% endif %}
+
+{% if year %}
+  <div class="note"><div class="inner">
+    {% if month %}
+      {% blocktrans with month_title|lower as month %}Show entries for {{ month }} {{ year }}{% endblocktrans %}
+    {% else %}
+      {% blocktrans %}Show entries for {{ year }}{% endblocktrans %}
+    {% endif %} 
+    <div class="foot">
+      <a href="{% url blog:index %}">{% trans "Show all entries" %}</a>
+    </div>
+  </div></div>
+{% endif %}
+
 {% endblock %}
+
 {% block content %}
   {% if entries %}
   <div class="list">

@@ -8,8 +8,11 @@ feeds = {
 
 
 urlpatterns = patterns('',
-    url(r'^$', 'blog.views.index', name="index"),
-    url(r'^page/(?P<page>\d+)/$', 'blog.views.index', name="blog_listing_page"),
+    url(r'^(?:page/(?P<page>\d+)/)?$', 'blog.views.index', name="index"),
+    url(r'^types/$', 'blog.views.by_type', name="by_type"),
+    url(r'^types/(?P<entry_type>\w+)/(?:page/(?P<page>\d+)/)?$', 'blog.views.index_by_type', name="index_by_type"),
+    url(r'^dates/$', 'blog.views.by_date', name="by_date"),
+    url(r'^dates/(?P<year>\d{4})/(?:(?P<month>\d{1,2})/)?(?:page/(?P<page>\d+)/)?$', 'blog.views.index_by_date', name="index_by_date"),
     url(r'^post/(\d+)/$', 'blog.views.entry'),
     url(r'^post/(\d+)/([^/]+)/$', 'blog.views.entry'),
     url(r'^i18n.js$', 'django.views.i18n.javascript_catalog', {'packages': ('blog',)}, name="i18n.js"),

@@ -8,13 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-25 14:12-0600\n"
+"POT-Creation-Date: 2010-02-26 12:37-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: adminviews.py:42
 msgid "New entry was created."
@@ -144,39 +146,107 @@ msgstr "Изображение"
 msgid "Order"
 msgstr "Порядок"
 
-#: templates/blog/about.html:9 templates/blog/entry.html:8
-msgid "Blog Index"
-msgstr "Главная страница блога"
+#: views.py:15
+msgid "text entries"
+msgstr "текстовые записи"
 
-#: templates/blog/base.html:25
+#: views.py:16
+msgid "photo entries"
+msgstr "фотографии"
+
+#: views.py:17
+msgid "audio entries"
+msgstr "записи с аудио"
+
+#: views.py:18
+msgid "video entries"
+msgstr "записи с видео"
+
+#: views.py:19
+msgid "link entries"
+msgstr "ссылки"
+
+#: views.py:20
+msgid "quote entries"
+msgstr "цитаты"
+
+#: views.py:77 views.py:96
+#, fuzzy, python-format
+msgid "%s entries"
+msgstr "текстовые записи"
+
+#: templates/blog/base.html:26 templates/blog/base.html.py:28
 msgid "Andrey Fedoseev's blog"
 msgstr "Блог Андрея Федосеева"
 
-#: templates/blog/entry.html:9 templates/blog/index.html:7
-msgid "About"
-msgstr "Об авторе"
-
-#: templates/blog/index.html:11
+#: templates/blog/base.html:36
 msgid "Next page"
 msgstr "Следующая страница"
 
-#: templates/blog/index.html:14
+#: templates/blog/base.html:39
 msgid "Previous page"
 msgstr "Предыдущая страница"
 
-#: templates/blog/index.html:38
+#: templates/blog/base.html:47 templates/blog/entry.html:9
+msgid "About"
+msgstr "Об авторе"
+
+#: templates/blog/base.html:49 templates/blog/entry.html:8
+msgid "Blog Index"
+msgstr "Главная страница блога"
+
+#: templates/blog/base.html:55
+msgid "Archive:"
+msgstr "Архив записей:"
+
+#: templates/blog/base.html:58 templates/blog/base.html.py:60
+msgid "by type"
+msgstr "по типу"
+
+#: templates/blog/base.html:65 templates/blog/base.html.py:67
+msgid "by date"
+msgstr "по дате"
+
+#: templates/blog/by_date.html:4 templates/blog/by_date.html.py:6
+msgid "Archive by date"
+msgstr "Архив записей по датам"
+
+#: templates/blog/by_type.html:4 templates/blog/by_type.html.py:6
+msgid "Archive by type"
+msgstr "Архив записей по типу"
+
+#: templates/blog/index.html:9
+#, python-format
+msgid "Show only %(entry_type)s"
+msgstr "Показаны только %(entry_type)s"
+
+#: templates/blog/index.html:11 templates/blog/index.html.py:24
+msgid "Show all entries"
+msgstr "Все записи"
+
+#: templates/blog/index.html:19
+#, python-format
+msgid "Show entries for %(month)s %(year)s"
+msgstr "Показаны записи за %(month)s %(year)s года"
+
+#: templates/blog/index.html:21
+#, python-format
+msgid "Show entries for %(year)s"
+msgstr "Показаны записи за %(year)s год"
+
+#: templates/blog/index.html:48
 msgid "No entries have been published."
 msgstr "Не опубликовано ни одной записи."
 
-#: templates/blog/admin/base.html:7
+#: templates/blog/admin/base.html:6
 msgid "Manage Blog"
 msgstr "Управление блогом"
 
-#: templates/blog/admin/base.html:15
+#: templates/blog/admin/base.html:14
 msgid "Blog admin"
 msgstr "Админка блога"
 
-#: templates/blog/admin/base.html:16
+#: templates/blog/admin/base.html:15
 msgid "Django admin"
 msgstr "Админка Django"
 
@@ -199,3 +269,9 @@ msgstr "Загрузить изображение"
 #: templatetags/blog_tags.py:104
 msgid "Read more"
 msgstr "Читать дальше"
+
+#~ msgid "one entry"
+#~ msgid_plural "%(counter)s entries"
+#~ msgstr[0] "одна штука"
+#~ msgstr[1] "%(counter)s штуки"
+#~ msgstr[2] "%(counter)s штук"

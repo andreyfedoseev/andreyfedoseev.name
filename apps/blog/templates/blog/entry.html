@@ -3,17 +3,6 @@
 {% load pytils_dt %}
 {% load i18n %}
 {% block title %}{{ entry }}{% endblock %}
-{% block sidebar %}
-<ul>
-  <li><a href="{% url blog:index %}">{% trans "Blog Index" %}</a></li>
-  <li><a href="{% url about %}">{% trans "About" %}</a></li>
-</ul>
-<ul>
-  {% comment %}
-  <li><a href="#search">Search</a></li>
-  {% endcomment %}
-</ul>
-{% endblock %}
 {% block content %}<div class="post">
     <h2>
       <span class="span-17">{{ entry }}</span>

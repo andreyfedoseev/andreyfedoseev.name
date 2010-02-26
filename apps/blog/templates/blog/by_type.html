@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% load i18n %}
+{% block title %}{% trans "Archive by type" %}{% endblock %}
+{% block content %}
+  <h2>{% trans "Archive by type" %}</h2>
+  <ul class="type-archive">
+    {% for type in types %}
+      <li>
+        <a href="{% url blog:index_by_type entry_type=type.type %}">{{ type.title|capfirst }}</a>
+        <span class="quiet small">{{ type.number }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

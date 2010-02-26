@@ -82,3 +82,36 @@
   vertical-align: top;
   background: #fff200;
 }
+
+#sidebar .note {
+  padding-left: 11px;
+  margin: 0.5em;
+  margin-left: -11px;
+  background: url(../images/sidebar-note-arrow.png) no-repeat 0% 50%;
+}
+
+#sidebar .note>.inner {
+  background: #FFF6BF;
+  padding: 0.5em 0.7em;
+  line-height: 1.2;
+  font-size: 90%;
+}
+
+#sidebar .note>.inner>.foot {
+  text-align: right;
+  text-transform: lowercase;
+  margin-top: 0.2em;
+}
+
+.date-archive h4 {
+  margin-bottom: 0.5em;
+}
+
+.date-archive ul,
+ul.type-archive {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin-left: 0.5em;
+  margin-bottom: 1em;
+}

@@ -27,7 +27,7 @@ textarea.tall {
 }
 
 /* Sidebar */
-#sidebar .inner {
+#sidebar > .inner {
   margin-left: 10px;  
 }
 
@@ -39,19 +39,12 @@ textarea.tall {
 #sidebar h1 a,
 #sidebar h1 a:visited {
   color: #000000;
-  text-decoration: none;
 }
-
-#sidebar h1 a:hover {
-  color: #000000;
-    text-decoration: underline;
-}
-
 
 #sidebar ul {
   list-style-type: none;
   padding-left: 1em;
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
 }
 
 #sidebar ul li a,#sidebar ul li a:visited {
