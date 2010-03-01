@@ -35,7 +35,18 @@
     <div class="post hide append-bottom" id="p{{ entry.id }}"> 
       <h2><a href="{{ entry.get_absolute_url }}">{{ entry }}</a></h2>
       {% render_text entry short %}
+      <div class="prepend-top clear">
+      <div class="small quiet comments-count">
+        {% with entry.comments.count as count %}
+          {% if count %}
+            <a href="{{ entry.get_absolute_url }}#comments">{% blocktrans count count as count %}{{ count }} comment{% plural %}{{ count }} comments{% endblocktrans %}</a>
+          {% else %}
+            <a href="{{ entry.get_absolute_url }}#add-comment">{% trans "No comments" %}</a>
+          {% endif %}  
+        {% endwith %}
+      </div>
       <div class="small quiet">{% blocktrans with entry.publication_timestamp|humanized_date as date%}Published on {{ date }}{% endblocktrans %}</div>
+      </div>
     </div>
     {% endfor %}
   </div>

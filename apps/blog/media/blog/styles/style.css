@@ -1,3 +1,8 @@
+/* List */
+.list {
+  margin-right: 10px; 
+}
+
 /* Grid */
 .grid .cell {
   background-color: #08bcc3;
@@ -116,11 +121,20 @@
 }
 
 /* Comments */
+.comments-count {
+  float: right; 
+} 
+
 a#add-comment {
   display: block;
   float: right;
   margin-bottom: 0;
   margin-top: -0.2em;
+  text-transform: lowercase;
+}
+
+#comments {
+  padding-top: 1em; 
 }
 
 #comments h4 {

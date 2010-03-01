@@ -20,7 +20,7 @@
   {% with entry.threaded_comments as comments %}
     <div id="comments" >
       <div class="append-bottom span-18">
-        <a href="#" id="add-comment" class="small">{% trans "Add comment" %}</a>
+        <a href="#" id="add-comment" class="rounded">{% trans "Add comment" %}</a>
         <h4{% if not comments.count %} style="display: none;"{% endif %}>{% trans "Comments" %}</h4>
       </div>
       {% for comment in entry.threaded_comments %}

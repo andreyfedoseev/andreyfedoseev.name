@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 05:14-0600\n"
+"POT-Creation-Date: 2010-03-01 04:26-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -243,7 +243,7 @@ msgstr "Архив записей по датам"
 msgid "Archive by type"
 msgstr "Архив записей по типу"
 
-#: templates/blog/entry.html:8 templates/blog/index.html:38
+#: templates/blog/entry.html:8 templates/blog/index.html:47
 #, python-format
 msgid "Published on %(date)s"
 msgstr "Опубликовано %(date)s"
@@ -254,7 +254,7 @@ msgstr "ссылка на эту запись"
 
 #: templates/blog/entry.html:23
 msgid "Add comment"
-msgstr "Написать комментарий"
+msgstr "Прокомментировать"
 
 #: templates/blog/entry.html:24
 msgid "Comments"
@@ -279,7 +279,19 @@ msgstr "Показаны записи за %(month)s %(year)s года"
 msgid "Show entries for %(year)s"
 msgstr "Показаны записи за %(year)s год"
 
-#: templates/blog/index.html:49
+#: templates/blog/index.html:41
+#, python-format
+msgid "%(count)s comment"
+msgid_plural "%(count)s comments"
+msgstr[0] "%(count)s комментарий"
+msgstr[1] "%(count)s комментария"
+msgstr[2] "%(count)s комментариев"
+
+#: templates/blog/index.html:43
+msgid "No comments"
+msgstr "Нет комментариев"
+
+#: templates/blog/index.html:58
 msgid "No entries have been published."
 msgstr "Не опубликовано ни одной записи."
 
@@ -315,12 +327,12 @@ msgstr "Загрузить изображение"
 msgid "Reply"
 msgstr "Ответить"
 
-#: templates/blog/comments/include/commentform.html:31
-#: templates/blog/comments/include/commentform.html:43
+#: templates/blog/comments/include/commentform.html:32
+#: templates/blog/comments/include/commentform.html:45
 msgid "why?"
 msgstr "зачем?"
 
-#: templates/blog/comments/include/commentform.html:59
+#: templates/blog/comments/include/commentform.html:62
 msgid "Submit"
 msgstr "Отправить"
 
