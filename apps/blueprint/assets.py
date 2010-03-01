@@ -2,6 +2,7 @@ from django_assets import Bundle
 
 from django.conf import settings
 import os.path
+from django_assets.registry import register
 
 PREFIX = os.path.join(getattr(settings, "STATIC_DIRNAME", "static"), "blueprint")
 
@@ -25,3 +26,4 @@ blueprint_ie_css = Bundle(
     output="gen/blueprint-ie.css",
 )
 
+register("blueprint", blueprint)
