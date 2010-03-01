@@ -15,7 +15,7 @@
        var settings = htmlSettings;
        oembed = {name:'oembed', className: 'oembed', openWith:'{% templatetag openblock %} oembed {% templatetag closeblock %}', closeWith:'{% templatetag openblock %} endoembed {% templatetag closeblock %}' };
        settings.markupSet.splice(18, 0, oembed); 
-       settings.previewParserPath = "{% url blog:preview %}"
+       settings.previewParserPath = "{% url blog:preview %}";
        settings.previewInWindow = 'width=800, height=600, resizable=yes, scrollbars=yes'; 
        $('.markitup').markItUp(htmlSettings);
 

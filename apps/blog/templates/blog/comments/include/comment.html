@@ -1,0 +1,46 @@
+{% load i18n %}
+{% load blog_tags %}
+{% load gravatar_tags %}
+{% load markup %}
+{% if comment.level == 0%}
+<div class="comment span-18 rounded" id="comment-{{ comment.id }}">
+{% else %}
+  {% if comment.level < 5 %}
+    <div class="comment span-18 rounded level{{ comment.level }}" id="comment-{{ comment.id }}">
+  {% else %}
+    <div class="comment span-18 rounded level5" id="comment-{{ comment.id }}">
+  {% endif %}
+{% endif %}
+  <div class="comment-text span-18"><div class="inner">
+  {{ comment.text|markdown }}
+  </div></div>
+  <div class="span-6 push-6 last">
+    <div class="sidenote"><div class="inner rounded">
+      <a class="permalink" href="{{ comment.entry.get_absolute_url }}#comment-{{ comment.id }}">#</a>
+      <div class="avatar rounded">
+        {% if comment.author_email %}
+          <img src="{% get_gravatar_for_email comment.author_email 40 %}" alt="{{ comment.author_name }}" width="40" height="40" />
+        {% else %}
+          <img src="{{ MEDIA_URL }}static/blog/images/default-avatar.png" alt="{{ comment.author_name }}" width="40" height="40" />
+        {% endif %}
+      </div>
+      <div class="loud">
+        {% if comment.author_url %}
+          <a href="{{ comment.author_url }}" rel="nofollow">{{ comment.author_name }}</a>
+        {% else %}
+          {{ comment.author_name }}
+        {% endif %}
+      </div>
+      <div class="quiet">{{ comment.timestamp|humanized_date }}</div>
+      <div class="foot">
+        <a class="reply" href="#">{% trans "Reply" %}</a>
+      </div>
+    </div></div>
+  </div>
+<div class="clear"></div>
+</div>
+{% if comment.level == 0 %}
+  {% for comment in comment.get_descendants %}
+    {% include "blog/comments/include/comment.html" %}
+  {% endfor %}
+{% endif %}

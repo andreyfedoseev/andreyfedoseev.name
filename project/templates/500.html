@@ -1,4 +1,16 @@
-{% extends "base.html" %}
+{% extends "error.html" %}
+{% load i18n %}
+{% block title %}500 {% trans "Internal application error" %}{% endblock %}
 {% block content %}
-<p>500 Internal server error</p>
+<div class="span-6 prepend-4 last">
+  <div class="loud">{% trans "Problems, officer?" %}</div>
+  <img src="/media/images/trollface.jpg" alt="{% trans "Problems, officer?" %}" />
+</div>
+<div class="span-14 prepend-top message">
+<h1>500 {% trans "Internal application error" %}</h1>
+<h2>{% trans "Oh, sh*t! <br/> This website is going to bang in<br/> 3 seconds!" %}</h2>
+</div>
+<div class="clear span-8 prepend-8 prepend-top">
+<h2><a href="/">{% trans "Skip to homepage" %}</a></h2>
+</div>
 {% endblock %}

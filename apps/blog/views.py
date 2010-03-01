@@ -175,4 +175,4 @@ def entry(request, id, slug=None):
     return render_to_response("blog/entry.html", {
                               'entry': entry,
                               }, context_instance=RequestContext(request))
-    
+

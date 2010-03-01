@@ -1,8 +1,15 @@
+# -*- coding: utf-8 -*- 
+
 from blog.models import Entry, Image, PHOTO_TYPE, VIDEO_TYPE
 from django import template
+from django.contrib.humanize.templatetags.humanize import naturalday
+from django.template.defaultfilters import stringfilter
 from django.template.loader import get_template_from_string
 from django.utils.translation import ugettext as _
+from pytils.dt import ru_strftime, distance_of_time_in_words
+import datetime
 import re
+from django.utils import translation
 
 
 register = template.Library()
@@ -147,4 +154,19 @@ def cover(entry):
                 return "http://i.ytimg.com/vi/%s/0.jpg" % youtube_video
     
     return None 
-        
+
+@register.filter
+def humanized_date(date):
+    if not isinstance(date, datetime.datetime):
+        return u""
+
+    language = translation.get_language()
+
+    delta = datetime.datetime.now() - date 
+    if language == 'ru':
+        if delta.days > 5:
+            return ru_strftime(format=u"%d %B %Y", date=date, inflected=True) + " года".decode('utf-8')
+        else:
+            return distance_of_time_in_words(date) 
+    return naturalday(date)
+    

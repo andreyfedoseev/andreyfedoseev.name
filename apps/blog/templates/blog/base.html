@@ -52,7 +52,7 @@
       
       <ul>
         <li>
-          <strong>{% trans "Archive:" %}</strong><br/>
+          <strong>{% trans "Archive:" %}</strong><br />
           {% url blog:by_type as by_type_url %}
           {% ifnotequal request.path by_type_url %}
             <a href="{{ by_type_url }}">{% trans "by type" %}</a>
@@ -71,7 +71,9 @@
       </ul>
       
     </div>
-  </div>        
+  </div>   
+  <div class="clear"></div>     
+  {% block post_content %}{% endblock %}
   
   </div>
   {% include "include/google-analytics.html" %}

@@ -1,8 +1,11 @@
 from autoslug.fields import AutoSlugField
+from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from sorl.thumbnail.fields import ImageWithThumbnailsField
+import datetime
+import mptt
 
 
 class Blog(models.Model):
@@ -97,6 +100,10 @@ class Entry(models.Model):
             return ('blog:blog.views.entry', [self.id])
         
 
+    def threaded_comments(self):
+        return self.comments.filter(parent=None).order_by('tree_id')
+
+
 class Image(models.Model):
 
     entry = models.ForeignKey(Entry, null=True, verbose_name = _(u"Entry"))
@@ -116,3 +123,22 @@ class Image(models.Model):
 
     def __unicode__(self):
         return u"Image-%i" % self.id
+    
+    
+class Comment(models.Model):
+    
+    entry = models.ForeignKey(Entry, related_name="comments")
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
+
+    timestamp = models.DateTimeField(null=False, blank=False, default=datetime.datetime.now)
+    
+    author = models.ForeignKey(User, null=True, blank=True, related_name="blog_comments")
+    author_name = models.CharField(max_length=100)
+    author_email = models.EmailField(max_length=100, null=True, blank=True)
+    author_url = models.URLField(max_length=200, null=True, blank=True)
+    
+    notify = models.BooleanField(default=False)
+
+    text = models.TextField()
+        
+mptt.register(Comment, order_insertion_by=['timestamp'])

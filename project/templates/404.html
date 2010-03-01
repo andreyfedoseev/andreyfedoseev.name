@@ -1,4 +1,15 @@
-{% extends "base.html" %}
+{% extends "error.html" %}
+{% load i18n %}
+{% block title %}404 {% trans "Page not found" %}{% endblock %}
 {% block content %}
-<p>404 Page not found</p>
+<div class="span-10 prepend-2 last">
+  <img src="{{ MEDIA_URL }}images/fuuuuu.jpg" alt="Fuuuuu" />
+</div>
+<div class="span-10 prepend-top message">
+<h1>404</h1>
+<h2>{% trans "Oh, sh*t! <br/> We can't find this page :-(" %}</h2>
+</div>
+<div class="clear span-8 prepend-8 prepend-top">
+<h2><a href="/">{% trans "Skip to homepage" %}</a></h2>
+</div>
 {% endblock %}

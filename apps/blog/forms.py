@@ -4,6 +4,7 @@ from django.forms.fields import EMPTY_VALUES
 from django.forms.util import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime
+from django.forms.widgets import TextInput
 
 
 class ImagesWidget(forms.widgets.Input):
@@ -122,3 +123,25 @@ def saveEntry(entry, data):
                 image.save()
         
     return entry
+
+
+class CommentForm(forms.Form):
+    
+    reply_to = forms.IntegerField(required=False,
+                                  widget=forms.HiddenInput())
+    
+    text = forms.CharField(required=True, widget=forms.Textarea(),
+                           label=_(u"Text"),
+                           help_text=_("You can use Markdown here."))
+    
+    author_name = forms.CharField(required=True, label=_(u"Your name"),
+                                  widget=TextInput())
+    author_email = forms.EmailField(required=False, label=_(u"Your email"),
+                                    widget=TextInput(),
+                                    help_text=_("Email address is used to get your Gravatar."))
+    author_url = forms.URLField(required=False, label=_(u"Your site URL"),
+                                widget=TextInput(),
+                                help_text=_("Link to your site is displayed near every comment that you submit."))
+    
+    notify = forms.BooleanField(required=False, label=_(u"Send notification on replies"))
+    

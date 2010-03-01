@@ -3,12 +3,35 @@
 {% load pytils_dt %}
 {% load i18n %}
 {% block title %}{{ entry }}{% endblock %}
+{% block sidebar %}
+<div class="sidenote"><div class="inner rounded">
+  {% blocktrans with entry.publication_timestamp|humanized_date as date%}Published on {{ date }}{% endblocktrans %}
+  <div class="foot">
+    <a href="{{ entry.get_absolute_url }}">{% trans "Permalink" %}</a> 
+  </div>
+</div></div>
+{% endblock %}
 {% block content %}<div class="post">
-    <h2>
-      <span class="span-17">{{ entry }}</span>
-      <span class="span-1 last"><a class="permalink" href="{{ entry.get_absolute_url }}">&para;</a></span>
-      <div class="clear"></div> 
-    </h2>
+    <h2>{{ entry }}</h2>
     {% render_text entry %}
   </div> 
 {% endblock %}
+{% block post_content %}
+  {% with entry.threaded_comments as comments %}
+    <div id="comments" >
+      <div class="append-bottom span-18">
+        <a href="#" id="add-comment" class="small">{% trans "Add comment" %}</a>
+        <h4{% if not comments.count %} style="display: none;"{% endif %}>{% trans "Comments" %}</h4>
+      </div>
+      {% for comment in entry.threaded_comments %}
+        {% include "blog/comments/include/comment.html" %}
+      {% endfor %}
+    </div>
+    <script type="text/javascript">
+      $(function() {
+          new CommentWidget('{% url blog:comment_form entry_id=entry.id %}', '{% url blog:preview_comment %}');
+      });
+    </script>
+  {% endwith %}
+{% endblock %}
+  

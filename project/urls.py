@@ -1,10 +1,10 @@
-from django.conf.urls.defaults import patterns, include, handler500, url
+from django.conf.urls.defaults import patterns, include, handler500, url,\
+    handler404
 from django.conf import settings
 from django.contrib import admin
 from blog.sitemap import BlogSitemap
 admin.autodiscover()
 
-handler500 # Pyflakes
 
 sitemaps = {
     'blog': BlogSitemap,            

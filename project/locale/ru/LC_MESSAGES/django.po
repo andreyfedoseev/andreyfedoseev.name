@@ -1,0 +1,45 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-28 02:16-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: settings.py:27
+msgid "Russian"
+msgstr "Русский"
+
+#: templates/404.html:3
+msgid "Page not found"
+msgstr "Страница не найдена"
+
+#: templates/404.html:10
+msgid "Oh, sh*t! <br/> We can't find this page :-("
+msgstr "Б*я! <br/> Кто-то украл эту страницу!"
+
+#: templates/404.html:13 templates/500.html:13
+msgid "Skip to homepage"
+msgstr "Перейти на главную"
+
+#: templates/500.html:3 templates/500.html.py:9
+msgid "Internal application error"
+msgstr "Ошибка на сервере"
+
+#: templates/500.html:6
+msgid "Problems, officer?"
+msgstr "Проблемы?"
+
+#: templates/500.html:10
+msgid "Oh, sh*t! <br/> This website is going to bang in<br/> 3 seconds!"
+msgstr "Б*я!<br/> Этот сайт взорвётся через 3 секунды!"
