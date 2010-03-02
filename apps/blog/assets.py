@@ -6,7 +6,7 @@ from jquery.assets import jquery, jquery_cookie, jquery_url, jquery_ajaxupload, 
     jquery_template, jquery_inline_label, jquery_scroll_to, jquery_ui_core, \
     jquery_ui_highlight, jquery_markitup_core, jquery_markitup_markdown, \
     jquery_markitup_markdown_css, jquery_markitup_core_css, jquery_tooltip,\
-    jquery_tooltip_css
+    jquery_tooltip_css, jquery_history
 import os.path
 
 
@@ -28,6 +28,7 @@ blog_frontend_js = Bundle(
     jquery,
     jquery_cookie,
     jquery_url,
+    jquery_history,
     jquery_scroll_to,
     jquery_ui_core,
     jquery_ui_highlight,

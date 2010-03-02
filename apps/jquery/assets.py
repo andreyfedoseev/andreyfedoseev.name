@@ -85,6 +85,11 @@ jquery_url = Bundle(
     output="gen/jquery.url.js"                
 )
 
+jquery_history = Bundle(
+    os.path.join(PREFIX, 'jquery.history.js'),
+    output="gen/jquery.history.js"                
+)
+
 jquery_markitup_core = Bundle(
     os.path.join(PREFIX, 'markitup/jquery.markitup.js'),
     output="gen/jquery.markitup.js"                
