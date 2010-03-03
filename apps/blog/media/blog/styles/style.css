@@ -112,18 +112,14 @@
   margin-top: 0.5em;
 }
 
-#sidebar ul.archive-links {
-  padding-left: 0.5em;  
-}
-
-#sidebar ul.archive-links li strong {
+#sidebar h6 {
   font-size: 120%; 
   font-weight: normal;
-  display: block;
 }
 
-#sidebar ul.archive-links li span {
-  font-size: 0.9em; 
+#sidebar a.subscribe {
+  padding-left: 20px;
+  background: url(../images/rss.png) no-repeat 0 50%;
 }
 
 .date-archive h4 {

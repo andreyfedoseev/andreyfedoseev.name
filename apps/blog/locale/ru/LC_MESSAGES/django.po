@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-03 01:53-0600\n"
+"POT-Creation-Date: 2010-03-03 04:15-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -227,19 +227,23 @@ msgstr "Об авторе"
 msgid "Blog Index"
 msgstr "Главная страница блога"
 
-#: templates/blog/base.html:55
+#: templates/blog/base.html:54
+msgid "RSS"
+msgstr "RSS"
+
+#: templates/blog/base.html:57
 msgid "Archive:"
 msgstr "Архив записей:"
 
-#: templates/blog/base.html:59 templates/blog/base.html.py:61
+#: templates/blog/base.html:62 templates/blog/base.html.py:64
 msgid "by type"
 msgstr "по типу"
 
-#: templates/blog/base.html:66 templates/blog/base.html.py:68
+#: templates/blog/base.html:70 templates/blog/base.html.py:72
 msgid "by date"
 msgstr "по датам"
 
-#: templates/blog/base.html:73 templates/blog/base.html.py:75
+#: templates/blog/base.html:78 templates/blog/base.html.py:80
 msgid "by tag"
 msgstr "по тегам"
 
@@ -361,4 +365,3 @@ msgstr "Отправить"
 #: templatetags/blog_tags.py:111
 msgid "Read more"
 msgstr "Читать дальше"
-
