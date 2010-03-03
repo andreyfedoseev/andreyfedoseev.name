@@ -258,7 +258,7 @@ msgstr "Архив записей по типу"
 #: templates/blog/entry.html:8 templates/blog/index.html:57
 #, python-format
 msgid "Published on %(date)s"
-msgstr "Опубликовано %(date)s"
+msgstr "Запись опубликована %(date)s"
 
 #: templates/blog/entry.html:10
 msgid "Tags:"
