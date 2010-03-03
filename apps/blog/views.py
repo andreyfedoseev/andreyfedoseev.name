@@ -62,7 +62,7 @@ LIST_DISPLAY = 'list'
 
 
 def display_type(request):
-    display_type = request.COOKIES.get(DISPLAY_TYPE_COOKE, LIST_DISPLAY)
+    display_type = request.COOKIES.get(DISPLAY_TYPE_COOKE, GRID_DISPLAY)
     if display_type not in (GRID_DISPLAY, LIST_DISPLAY):
         display_type = GRID_DISPLAY
     return display_type
