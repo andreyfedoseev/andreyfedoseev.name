@@ -5,6 +5,9 @@ from django.forms.util import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime
 from django.forms.widgets import TextInput
+from tagging.forms import TagField
+from tagging.utils import edit_string_for_tags
+from tagging.models import Tag
 
 
 class ImagesWidget(forms.widgets.Input):
@@ -80,6 +83,9 @@ class EntryForm(forms.Form):
                                         label=_(u"Include in RSS"),
                                         widget=forms.CheckboxInput({"class": "checkbox"}))
 
+    tags = TagField(required=False, label=_(u"Tags"),
+                    widget=forms.TextInput({'class': 'title span-18 last'}))
+    
 
 def getFormData(entry):
     data = {}
@@ -93,6 +99,7 @@ def getFormData(entry):
     data['disable_comments'] = entry.disable_comments
     data['hide_comments'] = entry.hide_comments
     data['include_in_rss'] = entry.include_in_rss
+    data['tags'] = edit_string_for_tags(Tag.objects.get_for_object(entry))
     return data
 
 
@@ -121,7 +128,7 @@ def saveEntry(entry, data):
             if image.entry != entry:
                 image.entry = entry
                 image.save()
-        
+    Tag.objects.update_tags(entry, data.get('tags', None))
     return entry
 
 

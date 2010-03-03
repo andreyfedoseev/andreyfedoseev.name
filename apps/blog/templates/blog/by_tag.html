@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% load i18n %}
+{% block title %}{% trans "Archive by tags" %}{% endblock %}
+{% block content %}
+  <h2>{% trans "Archive by tags" %}</h2>
+  <ul class="tag-archive">
+    {% for tag in tags %}
+      <li>
+        <a href="{% url blog:index_by_tag tag=tag.name|urlencode %}">{{ tag.name }}</a>
+        <span class="quiet small">{{ tag.count }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

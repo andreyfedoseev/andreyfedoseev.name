@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from sorl.thumbnail.fields import ImageWithThumbnailsField
 import datetime
 import mptt
+import tagging
 
 
 class Blog(models.Model):
@@ -102,6 +103,9 @@ class Entry(models.Model):
 
     def threaded_comments(self):
         return self.comments.filter(parent=None).order_by('tree_id')
+
+
+tagging.register(Entry)
 
 
 class Image(models.Model):

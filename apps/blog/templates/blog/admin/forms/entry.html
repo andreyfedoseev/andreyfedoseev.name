@@ -10,6 +10,7 @@
 {% block content %}
   {% with form.title as field %}{% include "blog/admin/forms/include/field.html" %}{% endwith %}
   {% with form.text as field %}{% include "blog/admin/forms/include/field.html" %}{% endwith %}
+  {% with form.tags as field %}{% include "blog/admin/forms/include/field.html" %}{% endwith %}
   <script language="javascript">
     $(document).ready(function()    {
        var settings = htmlSettings;

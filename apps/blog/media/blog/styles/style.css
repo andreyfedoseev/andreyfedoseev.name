@@ -108,11 +108,25 @@
   margin-top: 0.5em;
 }
 
+#sidebar ul.archive-links {
+  padding-left: 0.5em;  
+}
+
+#sidebar ul.archive-links li strong {
+  font-size: 120%; 
+  font-weight: normal;
+  display: block;
+}
+
+#sidebar ul.archive-links li span {
+  font-size: 0.9em; 
+}
+
 .date-archive h4 {
   margin-bottom: 0.5em;
 }
 
-.date-archive ul,ul.type-archive {
+.date-archive ul,ul.type-archive,ul.tag-archive {
   list-style-type: none;
   margin: 0;
   padding: 0;

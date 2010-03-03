@@ -50,9 +50,10 @@
         {% endifnotequal %}
       </ul>
       
-      <ul>
+      <ul class="archive-links">
         <li>
-          <strong>{% trans "Archive:" %}</strong><br />
+          <strong>{% trans "Archive:" %}</strong>
+          <span>
           {% url blog:by_type as by_type_url %}
           {% ifnotequal request.path by_type_url %}
             <a href="{{ by_type_url }}">{% trans "by type" %}</a>
@@ -66,6 +67,14 @@
           {% else %}
             {% trans "by date" %}
           {% endifnotequal %}
+          /
+          {% url blog:by_tag as by_tag_url %}
+          {% ifnotequal request.path by_tag_url %}
+            <a href="{{ by_tag_url }}">{% trans "by tag" %}</a>
+          {% else %}
+            {% trans "by tag" %}
+          {% endifnotequal %}
+          </span>
         </li>
 
       </ul>

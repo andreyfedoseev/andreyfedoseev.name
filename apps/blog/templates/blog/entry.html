@@ -5,7 +5,14 @@
 {% block title %}{{ entry }}{% endblock %}
 {% block sidebar %}
 <div class="sidenote"><div class="inner rounded">
-  {% blocktrans with entry.publication_timestamp|humanized_date as date%}Published on {{ date }}{% endblocktrans %}
+  {% blocktrans with entry.publication_timestamp|humanized_date as date%}Published on <br/>{{ date }}{% endblocktrans %}
+  {% if entry.tags.count %}<br />{% trans "with tags:" %}
+    <ul class="entry-tags">
+      {% for tag in entry.tags %}
+        <li><a href="#">{{ tag.name }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
   <div class="foot">
     <a href="{{ entry.get_absolute_url }}">{% trans "Permalink" %}</a> 
   </div>

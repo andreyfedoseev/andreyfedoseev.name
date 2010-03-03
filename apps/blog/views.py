@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.utils.translation import ugettext as _
 import datetime
+from tagging.models import Tag, TaggedItem
 
 
 POSTS_PER_PAGE = 9
@@ -166,6 +167,35 @@ def index_by_date(request, year=None, month=None, page=None):
         kwargs['month'] = month
     data.update(paginate(entries, "blog:index_by_date",
                          kwargs=kwargs, page=page))
+    return render_to_response("blog/index.html", data,
+                              context_instance=RequestContext(request))
+
+
+def by_tag(request):
+    site = Site.objects.get_current()
+    blog = get_object_or_404(Blog, site=site)
+    tags = Tag.objects.usage_for_queryset(blog.published_entries(), counts=True)
+    return render_to_response("blog/by_tag.html",
+                              {'blog': blog, 'tags': tags},
+                              context_instance=RequestContext(request))
+
+
+def index_by_tag(request, tag=None, page=None):
+    if not tag:
+        raise Http404()
+    try:
+        tag = Tag.objects.get(name=tag)
+    except Tag.DoesNotExist:
+        raise Http404()
+    site = Site.objects.get_current()
+    blog = get_object_or_404(Blog, site=site)
+    entries = TaggedItem.objects.get_by_model( blog.published_entries(), tag)
+    if not entries.count():
+        raise Http404()
+
+    data = {'blog': blog, 'tag': tag}
+    data.update(paginate(entries, "blog:index_by_tag",
+                         kwargs={'tag': tag}, page=page))
     return render_to_response("blog/index.html", data,
                               context_instance=RequestContext(request))
 

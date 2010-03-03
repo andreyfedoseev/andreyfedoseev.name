@@ -26,6 +26,15 @@
   </div></div>
 {% endif %}
 
+{% if tag %}
+  <div class="sidenote"><div class="inner rounded">
+    {% blocktrans %}Show only entries with tag "{{ tag }}"{% endblocktrans %}
+    <div class="foot">
+      <a href="{% url blog:index %}">{% trans "Show all entries" %}</a>
+    </div>
+  </div></div>
+{% endif %}
+
 {% endblock %}
 
 {% block content %}

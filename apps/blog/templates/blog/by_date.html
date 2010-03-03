@@ -11,7 +11,7 @@
       {% for month in year.months %}
         <li>
           <a href="{% url blog:index_by_date year=year.value,month=month.value %}">{{ month.title }}</a>
-          <span class="quiet small">({{ month.number }})</span>
+          <span class="quiet small">{{ month.number }}</span>
         </li>
       {% endfor %}
     </ul>
