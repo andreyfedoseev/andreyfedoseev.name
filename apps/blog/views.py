@@ -174,7 +174,8 @@ def index_by_date(request, year=None, month=None, page=None):
 def by_tag(request):
     site = Site.objects.get_current()
     blog = get_object_or_404(Blog, site=site)
-    tags = Tag.objects.usage_for_queryset(blog.published_entries(), counts=True)
+    tags = list(Tag.objects.usage_for_queryset(blog.published_entries(), counts=True))
+    tags.sort(key=lambda x: x.count, reverse=True)
     return render_to_response("blog/by_tag.html",
                               {'blog': blog, 'tags': tags},
                               context_instance=RequestContext(request))
