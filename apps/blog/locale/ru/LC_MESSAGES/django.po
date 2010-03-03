@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-02 13:02-0600\n"
+"POT-Creation-Date: 2010-03-03 01:53-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -231,15 +231,15 @@ msgstr "Главная страница блога"
 msgid "Archive:"
 msgstr "Архив записей:"
 
-#: templates/blog/base.html:58 templates/blog/base.html.py:60
+#: templates/blog/base.html:59 templates/blog/base.html.py:61
 msgid "by type"
 msgstr "по типу"
 
-#: templates/blog/base.html:65 templates/blog/base.html.py:67
+#: templates/blog/base.html:66 templates/blog/base.html.py:68
 msgid "by date"
 msgstr "по датам"
 
-#: templates/blog/base.html:72 templates/blog/base.html.py:74
+#: templates/blog/base.html:73 templates/blog/base.html.py:75
 msgid "by tag"
 msgstr "по тегам"
 
@@ -255,24 +255,24 @@ msgstr "Архив записей по тегам"
 msgid "Archive by type"
 msgstr "Архив записей по типу"
 
-#: templates/blog/entry.html:8
+#: templates/blog/entry.html:8 templates/blog/index.html:57
 #, python-format
-msgid "Published on <br/>%(date)s"
-msgstr "Запись опубликована <br/>%(date)s"
+msgid "Published on %(date)s"
+msgstr "Опубликовано %(date)s"
 
-#: templates/blog/entry.html:9
-msgid "with tags:"
-msgstr "с тегами:"
+#: templates/blog/entry.html:10
+msgid "Tags:"
+msgstr "Теги:"
 
-#: templates/blog/entry.html:17
+#: templates/blog/entry.html:18
 msgid "Permalink"
 msgstr "ссылка на эту запись"
 
-#: templates/blog/entry.html:30
+#: templates/blog/entry.html:31
 msgid "Add comment"
 msgstr "Прокомментировать"
 
-#: templates/blog/entry.html:31
+#: templates/blog/entry.html:32
 msgid "Comments"
 msgstr "Комментарии"
 
@@ -312,11 +312,6 @@ msgstr[2] "%(count)s комментариев"
 #: templates/blog/index.html:53
 msgid "No comments"
 msgstr "Нет комментариев"
-
-#: templates/blog/index.html:57
-#, python-format
-msgid "Published on %(date)s"
-msgstr "Опубликовано %(date)s"
 
 #: templates/blog/index.html:69
 msgid "No entries have been published."
@@ -366,3 +361,4 @@ msgstr "Отправить"
 #: templatetags/blog_tags.py:111
 msgid "Read more"
 msgstr "Читать дальше"
+

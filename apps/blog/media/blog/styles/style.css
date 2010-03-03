@@ -102,6 +102,10 @@
   font-size: 0.9em;
 }
 
+.sidenote>.inner p {
+  margin-bottom: 0.5em;
+}
+
 .sidenote>.inner>.foot {
   text-align: right;
   text-transform: lowercase;

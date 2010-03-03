@@ -5,11 +5,12 @@
 {% block title %}{{ entry }}{% endblock %}
 {% block sidebar %}
 <div class="sidenote"><div class="inner rounded">
-  {% blocktrans with entry.publication_timestamp|humanized_date as date%}Published on <br/>{{ date }}{% endblocktrans %}
-  {% if entry.tags.count %}<br />{% trans "with tags:" %}
+  <p>{% blocktrans with entry.publication_timestamp|humanized_date as date%}Published on {{ date }}{% endblocktrans %}</p>
+  {% if entry.tags.count %}
+    {% trans "Tags:" %}
     <ul class="entry-tags">
       {% for tag in entry.tags %}
-        <li><a href="#">{{ tag.name }}</a></li>
+        <li><a href="{% url blog:index_by_tag tag=tag.name|urlencode %}">{{ tag.name }}</a></li>
       {% endfor %}
     </ul>
   {% endif %}
