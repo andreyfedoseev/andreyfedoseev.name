@@ -1,0 +1,23 @@
+{% load i18n %}
+<div id="sidebar" class="span-6 last">
+  <div class="inner{% if fixed_sidebar %} fixed{% endif %}">
+    {% url blog:index as blog_index_url %}
+    {% ifnotequal request.path blog_index_url %}
+      <h1><a href="{{ blog_index_url }}">{% trans "Andrey Fedoseev's blog" %}</a></h1>
+    {% else %}
+      <h1>{% trans "Andrey Fedoseev's blog" %}</h1>
+    {% endifnotequal %}
+
+    {% block sidebar %}{% endblock %}
+
+    {% include "blog/sidebar/include/links.html" %}
+
+    {% include "blog/sidebar/include/rss.html" %}
+
+    {% include "blog/sidebar/include/display-types.html" %}
+    
+    {% include "blog/sidebar/include/archive-types.html" %}
+    
+  </div>
+</div>   
+<div class="clear"></div>     

@@ -1,0 +1,28 @@
+{% load i18n %}
+{% if display_type %}
+<form action="{% url blog:switch_display_type %}" method="post" name="switch-display-type">
+  <input type="hidden" name="next" value="{{ request.path }}" />
+</form>
+
+<script type="text/javascript">
+  $(function() {
+    $('ul.switch-display-type-links a').click(function() {
+      $("form[name='switch-display-type']").submit();  
+      return false;
+    });
+  });
+</script>
+
+<h6>{% trans "Display as:" %}</h6>
+<ul class="switch-display-type-links">
+  <li>
+  {% ifequal display_type "grid" %}
+    <a href="#">{% trans "as list" %}</a> /
+    <span>{% trans "as grid" %}</span>
+  {% else %}
+    <span>{% trans "as list" %}</span> /
+    <a href="#">{% trans "as grid" %}</a>
+  {% endifequal %}
+  </li>
+</ul>
+{% endif %}

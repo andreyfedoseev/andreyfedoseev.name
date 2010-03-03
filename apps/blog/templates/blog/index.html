@@ -35,13 +35,24 @@
   </div></div>
 {% endif %}
 
+{% if next_page or prev_page %}
+<ul>
+  {% if prev_page %}
+    <li>&larr; <a href="{{ prev_page }}">{% trans "Previous page" %}</a></li>
+  {% endif %}
+  {% if next_page %}
+    <li><a href="{{ next_page }}">{% trans "Next page" %}</a> &rarr;</li>
+  {% endif %}
+</ul>
+{% endif %}
+
 {% endblock %}
 
 {% block content %}
   {% if entries %}
   <div class="list">
     {% for entry in entries %}
-    <div class="post hide append-bottom" id="p{{ entry.id }}"> 
+    <div class="post append-bottom{% ifequal display_type "grid"%} hide{% endifequal %}" id="p{{ entry.id }}"> 
       <h2><a href="{{ entry.get_absolute_url }}">{{ entry }}</a></h2>
       {% render_text entry short %}
       <div class="prepend-top clear">
@@ -57,14 +68,19 @@
       <div class="small quiet">{% blocktrans with entry.publication_timestamp|humanized_date as date%}Published on {{ date }}{% endblocktrans %}</div>
       </div>
     </div>
+    {% ifequal display_type "list" %}
+    <hr/>
+    {% endifequal %}
     {% endfor %}
   </div>
+  {% ifequal display_type "grid" %}
   <div class="grid hide clear">
     {% for entry in entries %}
       {% include "blog/grid_entry.html" %}
     {% endfor %}
   </div>
   <script type="text/javascript">$(document).ready(init_grid);</script>
+  {% endifequal %}
   {% else %}
     <p>{% trans "No entries have been published." %}</p> 
   {% endif %}

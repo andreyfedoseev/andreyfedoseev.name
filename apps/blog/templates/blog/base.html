@@ -18,73 +18,10 @@
   <div id="content" class="span-18"> 
     {% block content %}
     {% endblock %}        
-  </div> 
-  <div id="sidebar" class="span-6 last">
-    <div class="inner">
-      {% url blog:index as blog_index_url %}
-      {% ifnotequal request.path blog_index_url %}
-        <h1><a href="{{ blog_index_url }}">{% trans "Andrey Fedoseev's blog" %}</a></h1>
-      {% else %}
-        <h1>{% trans "Andrey Fedoseev's blog" %}</h1>
-      {% endifnotequal %}
-
-      {% block sidebar %}{% endblock %}
-
-      {% if next_page or prev_page %}
-      <ul>
-        {% if next_page %}
-          <li><a href="{{ next_page }}">{% trans "Next page" %}</a> &rarr;</li>
-        {% endif %}
-        {% if prev_page %}
-          <li>&larr; <a href="{{ prev_page }}">{% trans "Previous page" %}</a></li>
-        {% endif %}
-      </ul>
-      {% endif %}
-      
-      <ul>
-        {% url about as about_url %}
-        {% ifnotequal request.path about_url %}
-          <li><a href="{{ about_url }}">{% trans "About" %}</a></li>
-        {% else %}
-          <li><a href="{{ blog_index_url }}">{% trans "Blog Index" %}</a></li>
-        {% endifnotequal %}
-      </ul>
-
-      <ul>
-        <li><a href="http://feeds.feedburner.com/AndreyFedoseev" class="subscribe">{% trans "RSS" %}</a></li>
-      </ul>
-      
-      <h6>{% trans "Archive:" %}</h6>
-      <ul>
-        <li>
-          {% url blog:by_type as by_type_url %}
-          {% ifnotequal request.path by_type_url %}
-            <a href="{{ by_type_url }}">{% trans "by type" %}</a>
-          {% else %}
-            {% trans "by type" %}
-          {% endifnotequal %}          
-        </li>
-        <li>
-          {% url blog:by_date as by_date_url %}
-          {% ifnotequal request.path by_date_url %}
-            <a href="{{ by_date_url }}">{% trans "by date" %}</a>
-          {% else %}
-            {% trans "by date" %}
-          {% endifnotequal %}
-        </li>
-        <li>
-          {% url blog:by_tag as by_tag_url %}
-          {% ifnotequal request.path by_tag_url %}
-            <a href="{{ by_tag_url }}">{% trans "by tag" %}</a>
-          {% else %}
-            {% trans "by tag" %}
-          {% endifnotequal %}
-        </li>
-      </ul>
-      
-    </div>
-  </div>   
-  <div class="clear"></div>     
+  </div>
+  
+  {% include "blog/sidebar/sidebar.html" %}
+  
   {% block post_content %}{% endblock %}
   
   </div>

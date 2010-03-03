@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-03 04:15-0600\n"
+"POT-Creation-Date: 2010-03-03 10:26-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -202,7 +202,7 @@ msgstr "ссылки"
 msgid "quote entries"
 msgstr "цитаты"
 
-#: views.py:78 views.py:97
+#: views.py:109 views.py:129
 #, fuzzy, python-format
 msgid "%s entries"
 msgstr "текстовые записи"
@@ -212,38 +212,30 @@ msgid "Andrey Fedoseev's blog"
 msgstr "Блог Андрея Федосеева"
 
 #: templates/blog/base.html:36
-msgid "Next page"
-msgstr "Следующая страница"
-
-#: templates/blog/base.html:39
-msgid "Previous page"
-msgstr "Предыдущая страница"
-
-#: templates/blog/base.html:47
 msgid "About"
 msgstr "Об авторе"
 
-#: templates/blog/base.html:49
+#: templates/blog/base.html:38
 msgid "Blog Index"
 msgstr "Главная страница блога"
 
-#: templates/blog/base.html:54
+#: templates/blog/base.html:43
 msgid "RSS"
 msgstr "RSS"
 
-#: templates/blog/base.html:57
+#: templates/blog/base.html:46
 msgid "Archive:"
 msgstr "Архив записей:"
 
-#: templates/blog/base.html:62 templates/blog/base.html.py:64
+#: templates/blog/base.html:51 templates/blog/base.html.py:53
 msgid "by type"
 msgstr "по типу"
 
-#: templates/blog/base.html:70 templates/blog/base.html.py:72
+#: templates/blog/base.html:59 templates/blog/base.html.py:61
 msgid "by date"
 msgstr "по датам"
 
-#: templates/blog/base.html:78 templates/blog/base.html.py:80
+#: templates/blog/base.html:67 templates/blog/base.html.py:69
 msgid "by tag"
 msgstr "по тегам"
 
@@ -259,10 +251,10 @@ msgstr "Архив записей по тегам"
 msgid "Archive by type"
 msgstr "Архив записей по типу"
 
-#: templates/blog/entry.html:8 templates/blog/index.html:57
+#: templates/blog/entry.html:8 templates/blog/index.html:94
 #, python-format
 msgid "Published on %(date)s"
-msgstr "Запись опубликована %(date)s"
+msgstr "Опубликовано %(date)s"
 
 #: templates/blog/entry.html:10
 msgid "Tags:"
@@ -305,7 +297,27 @@ msgstr "Показаны записи за %(year)s год"
 msgid "Show only entries with tag \"%(tag)s\""
 msgstr "Показаны записи с тегом «%(tag)s»"
 
-#: templates/blog/index.html:51
+#: templates/blog/index.html:41
+msgid "Next page"
+msgstr "Следующая страница"
+
+#: templates/blog/index.html:44
+msgid "Previous page"
+msgstr "Предыдущая страница"
+
+#: templates/blog/index.html:62
+msgid "Display as:"
+msgstr "Отображение:"
+
+#: templates/blog/index.html:66 templates/blog/index.html.py:69
+msgid "as list"
+msgstr "списком"
+
+#: templates/blog/index.html:67 templates/blog/index.html.py:70
+msgid "as grid"
+msgstr "сеткой"
+
+#: templates/blog/index.html:88
 #, python-format
 msgid "%(count)s comment"
 msgid_plural "%(count)s comments"
@@ -313,11 +325,11 @@ msgstr[0] "%(count)s комментарий"
 msgstr[1] "%(count)s комментария"
 msgstr[2] "%(count)s комментариев"
 
-#: templates/blog/index.html:53
+#: templates/blog/index.html:90
 msgid "No comments"
 msgstr "Нет комментариев"
 
-#: templates/blog/index.html:69
+#: templates/blog/index.html:111
 msgid "No entries have been published."
 msgstr "Не опубликовано ни одной записи."
 

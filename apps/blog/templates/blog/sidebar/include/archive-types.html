@@ -1,0 +1,28 @@
+{% load i18n %}
+<h6>{% trans "Archive:" %}</h6>
+<ul>
+  <li>
+    {% url blog:by_type as by_type_url %}
+    {% ifnotequal request.path by_type_url %}
+      <a href="{{ by_type_url }}">{% trans "by type" %}</a>
+    {% else %}
+      {% trans "by type" %}
+    {% endifnotequal %}          
+  </li>
+  <li>
+    {% url blog:by_date as by_date_url %}
+    {% ifnotequal request.path by_date_url %}
+      <a href="{{ by_date_url }}">{% trans "by date" %}</a>
+    {% else %}
+      {% trans "by date" %}
+    {% endifnotequal %}
+  </li>
+  <li>
+    {% url blog:by_tag as by_tag_url %}
+    {% ifnotequal request.path by_tag_url %}
+      <a href="{{ by_tag_url }}">{% trans "by tag" %}</a>
+    {% else %}
+      {% trans "by tag" %}
+    {% endifnotequal %}
+  </li>
+</ul>

@@ -5,7 +5,6 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 import cjson
 from django.template.loader import render_to_string
-from blog.utils import force_delay
 
 
 AUTHOR_NAME_COOKIE = "comment_author_name"

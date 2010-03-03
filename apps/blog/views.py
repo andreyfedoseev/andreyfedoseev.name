@@ -4,7 +4,7 @@ from blog.models import Blog, Entry, ENTRY_TYPES
 from django.template.context import RequestContext
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.utils.translation import ugettext as _
 import datetime
 from tagging.models import Tag, TaggedItem
@@ -55,12 +55,43 @@ def paginate(entries, view_name, args=(), kwargs={}, page=None):
             }
 
 
+DISPLAY_TYPE_COOKE = 'blog_display_type'
+COOKIE_MAX_AGE = 60 * 60 * 24 * 30
+GRID_DISPLAY = 'grid'
+LIST_DISPLAY = 'list'
+
+
+def display_type(request):
+    display_type = request.COOKIES.get(DISPLAY_TYPE_COOKE, LIST_DISPLAY)
+    if display_type not in (GRID_DISPLAY, LIST_DISPLAY):
+        display_type = GRID_DISPLAY
+    return display_type
+
+
+def switch_display_type(request):
+    if request.method != 'POST':
+        raise Http404()
+    type = display_type(request)
+    if type == GRID_DISPLAY:
+        type = LIST_DISPLAY
+    else:
+        type = GRID_DISPLAY
+    next = request.POST.get('next', reverse('blog:index'))
+    response = HttpResponseRedirect(next)
+    response.set_cookie(DISPLAY_TYPE_COOKE, type, COOKIE_MAX_AGE)
+    return response
+    
+
 def index(request, page=None):
     site = Site.objects.get_current()
     blog = get_object_or_404(Blog, site=site)
     entries = blog.published_entries()
 
-    data = {'blog': blog}
+    data = {
+        'blog': blog,
+        'fixed_sidebar': True,
+        'display_type': display_type(request)
+    }
     data.update(paginate(entries, "blog:index", page=page))
     return render_to_response("blog/index.html", data,
                               context_instance=RequestContext(request))
@@ -93,8 +124,12 @@ def index_by_type(request, entry_type=None, page=None):
     if not entries.count():
         raise Http404()
 
-    data = {'blog': blog,
-            'entry_type': _("%s entries" % entry_type)}
+    data = {
+        'blog': blog,
+        'entry_type': _("%s entries" % entry_type),
+        'fixed_sidebar': True,
+        'display_type': display_type(request)
+    }
     data.update(paginate(entries, "blog:index_by_type",
                          kwargs={'entry_type': entry_type}, page=page))
     return render_to_response("blog/index.html", data,
@@ -157,8 +192,12 @@ def index_by_date(request, year=None, month=None, page=None):
     if not entries.count():
         raise Http404()
 
-    data = {'blog': blog,
-            'year': year}
+    data = {
+        'blog': blog,
+        'year': year,
+        'fixed_sidebar': True,
+        'display_type': display_type(request)
+    }
     if month:
         data['month'] = month
         data['month_title'] = _(datetime.date.today().replace(month=month).strftime("%B"))
@@ -194,7 +233,12 @@ def index_by_tag(request, tag=None, page=None):
     if not entries.count():
         raise Http404()
 
-    data = {'blog': blog, 'tag': tag}
+    data = {
+        'blog': blog,
+        'tag': tag,
+        'fixed_sidebar': True,
+        'display_type': display_type(request)
+    }
     data.update(paginate(entries, "blog:index_by_tag",
                          kwargs={'tag': tag}, page=page))
     return render_to_response("blog/index.html", data,

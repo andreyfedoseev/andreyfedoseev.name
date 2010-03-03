@@ -1,0 +1,9 @@
+{% load i18n %}
+<ul>
+  {% url about as about_url %}
+  {% ifnotequal request.path about_url %}
+    <li><a href="{{ about_url }}">{% trans "About" %}</a></li>
+  {% else %}
+    <li><a href="{{ blog_index_url }}">{% trans "Blog Index" %}</a></li>
+  {% endifnotequal %}
+</ul>

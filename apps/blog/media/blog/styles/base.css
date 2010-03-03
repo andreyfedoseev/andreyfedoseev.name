@@ -35,6 +35,11 @@ textarea.tall {
   margin-left: 10px;
 }
 
+#sidebar>.inner.fixed {
+  position: fixed;
+  width: 220px;
+}
+
 #sidebar h1 {
   font-size: 120%;
   margin-top: 0px;
