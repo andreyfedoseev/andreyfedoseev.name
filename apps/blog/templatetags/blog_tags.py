@@ -1,24 +1,24 @@
 # -*- coding: utf-8 -*- 
 
+from BeautifulSoup import BeautifulSoup, Tag
 from blog.models import Entry, Image, PHOTO_TYPE, VIDEO_TYPE
 from django import template
+from django.conf import settings
 from django.contrib.humanize.templatetags.humanize import naturalday
 from django.db.models.signals import post_save
 from django.template import BLOCK_TAG_START, BLOCK_TAG_END, VARIABLE_TAG_START, \
     VARIABLE_TAG_END, COMMENT_TAG_START, COMMENT_TAG_END
 from django.template.loader import get_template_from_string
 from django.utils import translation
+from django.utils.encoding import force_unicode, smart_str
 from django.utils.html import escape
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from pytils.dt import ru_strftime, distance_of_time_in_words
 import datetime
 import re
 import shlex
 import subprocess
-from django.conf import settings
-from django.utils.encoding import force_unicode, smart_str
-from django.utils.safestring import mark_safe
-
 
 register = template.Library()
 
@@ -144,7 +144,7 @@ class EntryTextNode(template.Node):
                  {% load oembed_tags %}
                  """
         text = prefix + text
-        return get_template_from_string(text).render(context)
+        return fix_embeds(get_template_from_string(text).render(context))
 
 
 @register.tag(name="render_text")
@@ -254,4 +254,50 @@ def safe_markdown(value, arg=''):
         else:
             return mark_safe(force_unicode(markdown.markdown(smart_str(value))))
 safe_markdown.is_safe = True
+
+
+def fix_embeds(value):
+    soup = BeautifulSoup(value)
+    for object in soup.findAll("object"):
+        movie = None
+        for param in object.findAll("param"):
+            if param['name'] == 'movie':
+                movie = param['value']
+        embeds = object.findAll("embed")
+        if embeds:
+            embed = embeds[0]
+        else:
+            embed = None
+        data = object.get('data')
+        if not data:
+            if movie:
+                object['data'] = movie
+            elif embed and embed.get('src'):
+                object['data'] = embed['src']
+            else:
+                continue
+        object['type'] = 'application/x-shockwave-flash'
+        del object['codebase']
+        del object['clsid']
+        del object['classid']
+        for embed in object.findAll('embed'):
+            embed.extract()
     
+    for embed in soup.findAll('embed'):
+        src = embed.get('src')
+        if not src:
+            continue
+        width = embed.get('width')
+        height = embed.get('height')
+        object = Tag(soup, 'object')
+        object['type'] = 'application/x-shockwave-flash'
+        object['data'] = src
+        if width:
+            object['width'] = width
+        if height:
+            object['height'] = height
+        object.insert(0, Tag(soup, 'param', [('name', 'movie'), ('value', src)]))
+        embed.replaceWith(object)
+
+                
+    return unicode(soup)
