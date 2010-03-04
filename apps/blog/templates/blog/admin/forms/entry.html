@@ -14,8 +14,9 @@
   <script language="javascript">
     $(document).ready(function()    {
        var settings = htmlSettings;
-       oembed = {name:'oembed', className: 'oembed', openWith:'{% templatetag openblock %} oembed {% templatetag closeblock %}', closeWith:'{% templatetag openblock %} endoembed {% templatetag closeblock %}' };
-       settings.markupSet.splice(18, 0, oembed); 
+       var oembed = {name:'oembed', className: 'oembed', openWith:'{% templatetag openblock %} oembed {% templatetag closeblock %}', closeWith:'{% templatetag openblock %} endoembed {% templatetag closeblock %}' };
+       var highlight = {name:'highlight', className: 'codeButton', openWith:'{% templatetag openblock %} highlight [![Syntax]!] {% templatetag closeblock %}', closeWith:'{% templatetag openblock %} endhighlight {% templatetag closeblock %}' };
+       settings.markupSet.splice(18, 0, oembed, highlight); 
        settings.previewParserPath = "{% url blog:preview %}";
        settings.previewInWindow = 'width=800, height=600, resizable=yes, scrollbars=yes'; 
        $('.markitup').markItUp(htmlSettings);

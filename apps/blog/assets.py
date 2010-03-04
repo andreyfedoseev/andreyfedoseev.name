@@ -46,6 +46,7 @@ blog_admin_css = Bundle(
     blueprint,
     jquery_ui_css,
     jquery_markitup_html_css,
+    jquery_markitup_markdown_css,
     os.path.join(PREFIX, 'styles/base.css'),
     os.path.join(PREFIX, 'styles/admin-style.css'),
     filters="cssrewrite,cssutils",
