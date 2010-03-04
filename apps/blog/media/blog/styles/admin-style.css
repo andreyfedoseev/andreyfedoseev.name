@@ -19,24 +19,6 @@ ul.navigation li {
   margin-left: 1em;
 }   
 
-#content.admin {
-  margin-top: 10px; 
-}
-
-#sidebar.admin {
-  position: absolute;
-  top: 40px;
-  left: 50%;
-  width: 245px;
-  padding-left: 245px;
-}
-
-#sidebar.admin .inner {
-  background-color: #eeeeee;
-  width: 224px;
-  padding: 10px;
-}
-
 #upload-image-button.loading {
   padding-left: 20px;
   background: url(../images/ajax-loader-small.gif) no-repeat 0% 50%;
