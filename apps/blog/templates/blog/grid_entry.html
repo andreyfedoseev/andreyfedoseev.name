@@ -3,15 +3,15 @@
 {% with entry|cover as cover %}
 {% if cover %}
 <div class="rounded cell {{ entry.entry_type }} cover" id="cell_p{{ entry.id }}" style="background-image: url({{ cover }});">
-   <div class="inner">
+   <a class="inner" href="#p{{ entry.id }}">
     {{ entry }}
-   </div>
+   </a>
 </div>
 {% else %}
 <div class="rounded cell {{ entry.entry_type }}" id="cell_p{{ entry.id }}">
-  <div class="inner">
+  <a class="inner" href="#p{{ entry.id }}">
     {{ entry }}
-  </div>
+  </a>
 </div>
 {% endif %}
 {% endwith %}

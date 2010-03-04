@@ -6,8 +6,6 @@
 /* Grid */
 .grid .cell {
   background-color: #08bcc3;
-  color: #ffffff;
-  cursor: pointer;
   line-height: 15px;
   margin-bottom: 20px;
   margin-right: 10px;
@@ -20,12 +18,19 @@
   text-shadow: 1px 1px 1px #000;
 }
 
-.grid .cell .inner {
+.grid .cell a.inner {
+  display: block;
   height: 130px;
   padding: 10px;
   background-position: 10px 125px;
   background-repeat: no-repeat;
+  color: #ffffff;
+  text-decoration: none;
 }
+
+.grid .cell a.inner:visited {
+  color: #ffffff;
+} 
 
 .grid .cell.text {
   background-color: #08bcc3;

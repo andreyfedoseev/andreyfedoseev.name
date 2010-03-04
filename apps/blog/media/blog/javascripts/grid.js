@@ -4,7 +4,7 @@ function go_to_post(id) {
 	if (post.size()) {
 		$(".list .post").not(post).hide();
 		post.show();
-		$.scrollTo($("body"), {duration: 500});
+		$.scrollTo($("#"+id), {duration: 500, offset: {top: -150}});
 	}
 }
 
