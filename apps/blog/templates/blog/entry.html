@@ -4,6 +4,11 @@
 {% load i18n %}
 {% load cache %}
 {% block title %}{{ entry }}{% endblock %}
+{% block meta %}
+{% if entry.tags.count %}
+<meta name="keywords" content="{% for tag in entry.tags %}{{ tag.name }}{% if not forloop.last %},{% endif %}{% endfor %}" />
+{% endif %}
+{% endblock %}
 {% block sidebar %}
 <div class="sidenote"><div class="inner rounded">
   <p>{% blocktrans with entry.publication_timestamp|humanized_date as date%}Published on {{ date }}{% endblocktrans %}</p>
