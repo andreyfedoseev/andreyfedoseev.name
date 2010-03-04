@@ -1,7 +1,6 @@
 {% load i18n %}
 {% load blog_tags %}
 {% load gravatar_tags %}
-{% load markup %}
 {% if comment.level == 0%}
 <div class="comment span-18 rounded" id="comment-{{ comment.id }}">
 {% else %}
@@ -12,7 +11,7 @@
   {% endif %}
 {% endif %}
   <div class="comment-text span-18"><div class="inner">
-  {{ comment.text|markdown }}
+  {{ comment.text|safe_markdown }}
   </div></div>
   <div class="span-6 push-6 last">
     <div class="sidenote"><div class="inner rounded">

@@ -15,6 +15,9 @@ import datetime
 import re
 import shlex
 import subprocess
+from django.conf import settings
+from django.utils.encoding import force_unicode, smart_str
+from django.utils.safestring import mark_safe
 
 
 register = template.Library()
@@ -227,4 +230,28 @@ def humanized_date(date):
         else:
             return distance_of_time_in_words(date) 
     return naturalday(date)
+
+@register.filter
+def safe_markdown(value, arg=''):
+    try:
+        import markdown
+    except ImportError:
+        if settings.DEBUG:
+            raise template.TemplateSyntaxError("Error in {% markdown %} filter: The Python markdown library isn't installed.")
+        return force_unicode(value)
+    else:
+        # markdown.version was first added in 1.6b. The only version of markdown
+        # to fully support extensions before 1.6b was the shortlived 1.6a.
+        if hasattr(markdown, 'version'):
+            extensions = [e for e in arg.split(",") if e]
+
+            # Unicode support only in markdown v1.7 or above. Version_info
+            # exist only in markdown v1.6.2rc-2 or above.
+            if getattr(markdown, "version_info", None) < (1,7):
+                return mark_safe(force_unicode(markdown.markdown(smart_str(value), extensions, safe_mode="escape")))
+            else:
+                return mark_safe(markdown.markdown(force_unicode(value), extensions, safe_mode="escape"))
+        else:
+            return mark_safe(force_unicode(markdown.markdown(smart_str(value))))
+safe_markdown.is_safe = True
     
