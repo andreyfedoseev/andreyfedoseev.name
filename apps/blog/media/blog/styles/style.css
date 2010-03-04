@@ -88,6 +88,11 @@
   background: #fff200;
 }
 
+.post pre {
+  padding: 1em;
+  overflow: auto; 
+}
+
 .sidenote {
   padding: 0.5em;
   padding-left: 11px;
@@ -160,6 +165,7 @@ a#add-comment {
 }
 
 .comment pre {
+  padding: 0.5em;
   overflow: auto; 
 }
 
