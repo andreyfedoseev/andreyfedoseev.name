@@ -8,8 +8,6 @@ from django.http import Http404, HttpResponseRedirect
 from django.utils.translation import ugettext as _
 import datetime
 from tagging.models import Tag, TaggedItem
-from django.db.models.signals import post_save
-from django.core.cache import cache
 
 
 POSTS_PER_PAGE = 9
@@ -64,7 +62,16 @@ LIST_DISPLAY = 'list'
 
 
 def display_type(request):
-    display_type = request.COOKIES.get(DISPLAY_TYPE_COOKE, GRID_DISPLAY)
+    display_type = request.COOKIES.get(DISPLAY_TYPE_COOKE)
+    user_agent = request.META.get('HTTP_USER_AGENT')
+    if user_agent:
+        user_agent = user_agent.lower()
+    if not display_type and user_agent:
+        if 'google' in user_agent or \
+           'msn' in user_agent or \
+           'yahoo' in user_agent or \
+           'yandex' in user_agent:
+            return LIST_DISPLAY
     if display_type not in (GRID_DISPLAY, LIST_DISPLAY):
         display_type = GRID_DISPLAY
     return display_type
