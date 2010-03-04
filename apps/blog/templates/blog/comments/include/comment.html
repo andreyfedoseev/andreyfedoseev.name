@@ -19,7 +19,7 @@
       <a class="permalink" href="{{ comment.entry.get_absolute_url }}#comment-{{ comment.id }}">#</a>
       <div class="avatar rounded">
         {% if comment.author_email %}
-          <img src="{% get_gravatar_for_email comment.author_email 40 %}" alt="{{ comment.author_name }}" width="40" height="40" />
+          <img src="{% get_gravatar_for_email comment.author_email %}&amp;s=40" alt="{{ comment.author_name }}" width="40" height="40" />
         {% else %}
           <img src="{{ MEDIA_URL }}static/blog/images/default-avatar.png" alt="{{ comment.author_name }}" width="40" height="40" />
         {% endif %}
