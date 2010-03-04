@@ -1,6 +1,7 @@
 {% extends "blog/base.html" %}
 {% load blog_tags %}
 {% load i18n %}
+{% load cache %}
 {% block title %}{{ blog }}{% endblock %}
 {% block sidebar %}
 
@@ -54,7 +55,9 @@
     {% for entry in entries %}
     <div class="post append-bottom{% ifequal display_type "grid"%} hide{% endifequal %}" id="p{{ entry.id }}"> 
       <h2><a href="{{ entry.get_absolute_url }}">{{ entry }}</a></h2>
+      {% cache 6000 rendered_entry_text_short entry %}
       {% render_text entry short %}
+      {% endcache %}
       <div class="prepend-top clear">
       <div class="small quiet comments-count">
         {% with entry.comments.count as count %}
@@ -84,4 +87,11 @@
   {% else %}
     <p>{% trans "No entries have been published." %}</p> 
   {% endif %}
+  
+{% endblock %}
+
+{% block post_content %}
+<script type="text/javascript">
+  $(function() {sh_highlightDocument();});
+</script>  
 {% endblock %}

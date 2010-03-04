@@ -3,13 +3,18 @@
 from blog.models import Entry, Image, PHOTO_TYPE, VIDEO_TYPE
 from django import template
 from django.contrib.humanize.templatetags.humanize import naturalday
-from django.template.defaultfilters import stringfilter
+from django.db.models.signals import post_save
+from django.template import BLOCK_TAG_START, BLOCK_TAG_END, VARIABLE_TAG_START, \
+    VARIABLE_TAG_END, COMMENT_TAG_START, COMMENT_TAG_END
 from django.template.loader import get_template_from_string
+from django.utils import translation
+from django.utils.html import escape
 from django.utils.translation import ugettext as _
 from pytils.dt import ru_strftime, distance_of_time_in_words
 import datetime
 import re
-from django.utils import translation
+import shlex
+import subprocess
 
 
 register = template.Library()
@@ -84,6 +89,18 @@ def do_image(parser, token):
     return ImageNode(id, format, title)    
 
 
+ESCAPE_RE = re.compile(r"(\{%\s*?escape\s*?(html)?\s*?%\}(.*?)\{%\s*?endescape.\s?%\})", re.S)
+TEMPLATE_TAG_MAPPING = {
+    BLOCK_TAG_START: '{% templatetag openblock %}',
+    BLOCK_TAG_END: '{% templatetag closeblock %}',
+    VARIABLE_TAG_START: '{% templatetag openvariable %}',
+    VARIABLE_TAG_END: '{% templatetag closevariable %}',
+    COMMENT_TAG_START: '{% templatetag opencomment %}',
+    COMMENT_TAG_END: '{% templatetag closecomment %}',
+}
+TEMPLATE_TAGS_BITS_RE = re.compile("(%s)" % "|".join(TEMPLATE_TAG_MAPPING.keys()), re.S)
+
+
 class EntryTextNode(template.Node):
     
     def __init__(self, var, format):
@@ -109,7 +126,16 @@ class EntryTextNode(template.Node):
             if len(parts) > 1:
                 text = parts[0]
                 text += """<p class="read-more"><a href="%s#cut">%s</a></p>""" % (request.build_absolute_uri(entry.get_absolute_url()), _(u"Read more"))
-        text = text.replace('<!-- more -->', '<a name="cut"></a>')         
+        text = text.replace('<!-- more -->', '<a name="cut"></a>')
+
+        for block, html, content in ESCAPE_RE.findall(text):
+            escaped = u""
+            for bit in TEMPLATE_TAGS_BITS_RE.split(content):
+                escaped += TEMPLATE_TAG_MAPPING.get(bit, bit)
+            if html:
+                escaped = escape(escaped)
+            text = text.replace(block, escaped) 
+
         prefix = """
                  {% load blog_tags %}
                  {% load oembed_tags %}
@@ -131,6 +157,38 @@ def do_entry_text(parser, token):
         if format != 'short':
             format = None
     return EntryTextNode(args[0], format)    
+
+
+class HightlightNode(template.Node):
+    
+    def __init__(self, nodelist, format):
+        self.nodelist = nodelist
+        self.format = format
+        
+    def render(self, context):
+        output = self.nodelist.render(context)
+        args = shlex.split("highlight -S %s -f" % str(self.format))
+        try:
+            p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            out, errors = p.communicate(output.encode('utf-8'))
+            if out:
+                output = out.decode('utf-8')
+        except:
+            pass
+        
+        return output
+
+
+@register.tag(name="highlight")
+def do_highlight(parser, token):
+    parts = token.split_contents()
+    tag_name = parts[0]
+    args = parts[1:]
+    if len(args) != 1:
+        raise template.TemplateSyntaxError, "%r tag requires exactly one argument" % tag_name
+    nodelist = parser.parse(('endhighlight',))
+    parser.delete_first_token()    
+    return HightlightNode(nodelist, args[0])    
 
 
 OEMBED_RE = re.compile(r"\{%\s*?oembed.*?%\}(.*?)\{%\sendoembed.*?\%}", re.M)

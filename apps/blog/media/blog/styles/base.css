@@ -1,7 +1,7 @@
 /* Basic */
 body {
   font-size: 15px;
-  font-family: Helvetica, Arial, Verdana;
+  font-family: Arial, Helvetica, Verdana, sans-serif;
 }
 
 pre,code,tt {

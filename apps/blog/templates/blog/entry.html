@@ -2,6 +2,7 @@
 {% load blog_tags %}
 {% load pytils_dt %}
 {% load i18n %}
+{% load cache %}
 {% block title %}{{ entry }}{% endblock %}
 {% block sidebar %}
 <div class="sidenote"><div class="inner rounded">
@@ -21,7 +22,9 @@
 {% endblock %}
 {% block content %}<div class="post">
     <h2>{{ entry }}</h2>
+    {% cache 6000 rendered_entry_text entry %}
     {% render_text entry %}
+    {% endcache %}
   </div> 
 {% endblock %}
 {% block post_content %}
@@ -41,5 +44,9 @@
       });
     </script>
   {% endwith %}
+
+<script type="text/javascript">
+  $(function() {sh_highlightDocument();});
+</script>  
 {% endblock %}
   

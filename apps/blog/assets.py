@@ -5,7 +5,7 @@ from jquery.assets import jquery, jquery_cookie, jquery_url, jquery_ajaxupload, 
     jquery_ui_css, jquery_ui, jquery_markitup_html_css, jquery_markitup_html, \
     jquery_template, jquery_inline_label, jquery_scroll_to, jquery_ui_core, \
     jquery_ui_highlight, jquery_markitup_core, jquery_markitup_markdown, \
-    jquery_markitup_markdown_css, jquery_markitup_core_css, jquery_tooltip,\
+    jquery_markitup_markdown_css, jquery_markitup_core_css, jquery_tooltip, \
     jquery_tooltip_css, jquery_history
 import os.path
 
@@ -20,6 +20,7 @@ blog_frontend_css = Bundle(
     jquery_tooltip_css,
     os.path.join(PREFIX, 'styles/base.css'),
     os.path.join(PREFIX, 'styles/style.css'),
+    os.path.join(PREFIX, 'styles/highlight.css'),
     filters="cssrewrite,cssutils",
     output="gen/frontend.css",
 )
