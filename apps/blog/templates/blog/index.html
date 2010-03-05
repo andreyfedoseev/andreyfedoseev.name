@@ -2,7 +2,7 @@
 {% load blog_tags %}
 {% load i18n %}
 {% load cache %}
-{% block title %}{{ blog }}{% endblock %}
+{% block title %}{{ blog }}{% if entry_type %} / {{ entry_type|capfirst }}{% endif %}{% if year %}{% if month %} / {% blocktrans with month_title|lower as month %}Entries for {{ month }} {{ year }}{% endblocktrans %}{% else %} / {% blocktrans %}Entries for {{ year }}{% endblocktrans %}{% endif %}{% endif %}{% if tag %} / {% blocktrans %}Entries with tag "{{ tag }}" {% endblocktrans %}{% endif %}{% ifnotequal page.number 1 %} / {% blocktrans with page.number as number %}Page {{ number }}{% endblocktrans %}{% endifnotequal %}{% endblock %}
 {% block meta %}
 {% url blog:index as blog_index_url %}
 {% ifequal request.path blog_index_url %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-04 11:49-0600\n"
+"POT-Creation-Date: 2010-03-05 11:32-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,15 +38,15 @@ msgstr "Не удалось загрузить изображение."
 msgid "New image was uploaded."
 msgstr "Изображение загружено."
 
-#: forms.py:43 models.py:14 models.py:63
+#: forms.py:43 models.py:14 models.py:66
 msgid "Title"
 msgstr "Заголовок"
 
-#: forms.py:48 forms.py:141 models.py:50 models.py:64
+#: forms.py:48 forms.py:141 models.py:53 models.py:67
 msgid "Text"
 msgstr "Текст"
 
-#: forms.py:52 models.py:126
+#: forms.py:52 models.py:129
 msgid "Images"
 msgstr "Изображения"
 
@@ -54,7 +54,7 @@ msgstr "Изображения"
 msgid "Entry Type"
 msgstr "Тип записи"
 
-#: forms.py:62 models.py:67
+#: forms.py:62 models.py:70
 msgid "Published"
 msgstr "Опубликовано"
 
@@ -66,15 +66,15 @@ msgstr "Дата публикации"
 msgid "Publication time"
 msgstr "Время публикации"
 
-#: forms.py:77 models.py:77
+#: forms.py:77 models.py:80
 msgid "Disable comments"
 msgstr "Отключить комментарии"
 
-#: forms.py:80 models.py:78
+#: forms.py:80 models.py:81
 msgid "Hide comments"
 msgstr "Скрыть комментарии"
 
-#: forms.py:83 models.py:75
+#: forms.py:83 models.py:78
 msgid "Include in RSS"
 msgstr "Добавить в RSS-поток"
 
@@ -114,7 +114,7 @@ msgstr "Отправлять уведомления об ответах"
 msgid "Site"
 msgstr "Сайт"
 
-#: models.py:28 models.py:61
+#: models.py:28 models.py:64
 msgid "Blog"
 msgstr "Блог"
 
@@ -122,59 +122,59 @@ msgstr "Блог"
 msgid "Blogs"
 msgstr "Блоги"
 
-#: models.py:51
+#: models.py:54
 msgid "Photo"
 msgstr "Фотография"
 
-#: models.py:52
+#: models.py:55
 msgid "Video"
 msgstr "Видео"
 
-#: models.py:53
+#: models.py:56
 msgid "Audio"
 msgstr "Аудио"
 
-#: models.py:54
+#: models.py:57
 msgid "Link"
 msgstr "Ссылка"
 
-#: models.py:55
+#: models.py:58
 msgid "Quote"
 msgstr "Цитата"
 
-#: models.py:66
+#: models.py:69
 msgid "Slug"
 msgstr "Слаг"
 
-#: models.py:68
+#: models.py:71
 msgid "Publication timestamp"
 msgstr "Дата и время публикации"
 
-#: models.py:70
+#: models.py:73
 msgid "Meta description"
 msgstr "META-описание"
 
-#: models.py:73
+#: models.py:76
 msgid "Entry type"
 msgstr "Тип записи"
 
-#: models.py:80
+#: models.py:83
 msgid "Update for"
 msgstr "Обновление для"
 
-#: models.py:86 models.py:113
+#: models.py:89 models.py:116
 msgid "Entry"
 msgstr "Запись"
 
-#: models.py:87
+#: models.py:90
 msgid "Entries"
 msgstr "Записи"
 
-#: models.py:120 models.py:125
+#: models.py:123 models.py:128
 msgid "Image"
 msgstr "Изображение"
 
-#: models.py:121
+#: models.py:124
 msgid "Order"
 msgstr "Порядок"
 
@@ -202,12 +202,12 @@ msgstr "ссылки"
 msgid "quote entries"
 msgstr "цитаты"
 
-#: views.py:118 views.py:138
+#: views.py:119 views.py:139
 #, fuzzy, python-format
 msgid "%s entries"
 msgstr "текстовые записи"
 
-#: templates/blog/base.html:27 templates/blog/base.html.py:29
+#: templates/blog/base.html:28 templates/blog/base.html.py:30
 msgid "Andrey Fedoseev's blog"
 msgstr "Блог Андрея Федосеева"
 
@@ -223,7 +223,7 @@ msgstr "Архив записей по тегам"
 msgid "Archive by type"
 msgstr "Архив записей по типу"
 
-#: templates/blog/entry.html:14 templates/blog/index.html:75
+#: templates/blog/entry.html:14 templates/blog/index.html:78
 #, python-format
 msgid "Published on %(date)s"
 msgstr "Опубликовано %(date)s"
@@ -244,47 +244,68 @@ msgstr "Прокомментировать"
 msgid "Comments"
 msgstr "Комментарии"
 
-#: templates/blog/index.html:7
+#: templates/blog/index.html:5
+#, python-format
+msgid "Entries for %(month)s %(year)s"
+msgstr "Записи за %(month)s %(year)s года"
+
+#: templates/blog/index.html:5
+#, python-format
+msgid "Entries for %(year)s"
+msgstr "Записи за %(year)s год"
+
+#: templates/blog/index.html:5
+#, python-format
+msgid "Entries with tag \"%(tag)s\" "
+msgstr "Записи с тегом «%(tag)s»"
+
+#: templates/blog/index.html:5
+#, python-format
+msgid "Page %(number)s"
+msgstr "Страница %(number)s"
+
+#: templates/blog/index.html:9
 msgid ""
 "Andrey Fedoseev's blog about web development with Django, user interfaces, "
 "photography and music."
-msgstr "Блог Андрея Федосеева о веб-разработке с помощью Django, пользовательских "
+msgstr ""
+"Блог Андрея Федосеева о веб-разработке с помощью Django, пользовательских "
 "интерфейсах, фотографии и музыке."
 
-#: templates/blog/index.html:14
+#: templates/blog/index.html:17
 #, python-format
 msgid "Show only %(entry_type)s"
 msgstr "Показаны только %(entry_type)s"
 
-#: templates/blog/index.html:16 templates/blog/index.html.py:29
-#: templates/blog/index.html:38
+#: templates/blog/index.html:19 templates/blog/index.html.py:32
+#: templates/blog/index.html:41
 msgid "Show all entries"
 msgstr "Все записи"
 
-#: templates/blog/index.html:24
+#: templates/blog/index.html:27
 #, python-format
 msgid "Show entries for %(month)s %(year)s"
 msgstr "Показаны записи за %(month)s %(year)s года"
 
-#: templates/blog/index.html:26
+#: templates/blog/index.html:29
 #, python-format
 msgid "Show entries for %(year)s"
 msgstr "Показаны записи за %(year)s год"
 
-#: templates/blog/index.html:36
+#: templates/blog/index.html:39
 #, python-format
 msgid "Show only entries with tag \"%(tag)s\""
 msgstr "Показаны записи с тегом «%(tag)s»"
 
-#: templates/blog/index.html:46
+#: templates/blog/index.html:49
 msgid "Previous page"
 msgstr "Предыдущая страница"
 
-#: templates/blog/index.html:49
+#: templates/blog/index.html:52
 msgid "Next page"
 msgstr "Следующая страница"
 
-#: templates/blog/index.html:69
+#: templates/blog/index.html:72
 #, python-format
 msgid "%(count)s comment"
 msgid_plural "%(count)s comments"
@@ -292,11 +313,11 @@ msgstr[0] "%(count)s комментарий"
 msgstr[1] "%(count)s комментария"
 msgstr[2] "%(count)s комментариев"
 
-#: templates/blog/index.html:71
+#: templates/blog/index.html:74
 msgid "No comments"
 msgstr "Нет комментариев"
 
-#: templates/blog/index.html:92
+#: templates/blog/index.html:95
 msgid "No entries have been published."
 msgstr "Не опубликовано ни одной записи."
 
@@ -328,7 +349,7 @@ msgstr "Отмена"
 msgid "Upload an image"
 msgstr "Загрузить изображение"
 
-#: templates/blog/comments/include/comment.html:36
+#: templates/blog/comments/include/comment.html:35
 msgid "Reply"
 msgstr "Ответить"
 
@@ -386,6 +407,6 @@ msgstr "Главная страница блога"
 msgid "RSS"
 msgstr "RSS"
 
-#: templatetags/blog_tags.py:128
+#: templatetags/blog_tags.py:136
 msgid "Read more"
 msgstr "Читать дальше"
