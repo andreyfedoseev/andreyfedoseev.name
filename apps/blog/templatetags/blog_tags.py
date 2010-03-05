@@ -261,42 +261,42 @@ def fix_embeds(value):
     for object in soup.findAll("object"):
         movie = None
         for param in object.findAll("param"):
-            if param['name'] == 'movie':
-                movie = param['value']
+            if param["name"] == "movie":
+                movie = param["value"]
         embeds = object.findAll("embed")
         if embeds:
             embed = embeds[0]
         else:
             embed = None
-        data = object.get('data')
+        data = object.get("data")
         if not data:
             if movie:
-                object['data'] = movie
-            elif embed and embed.get('src'):
-                object['data'] = embed['src']
+                object["data"] = movie
+            elif embed and embed.get("src"):
+                object["data"] = embed["src"]
             else:
                 continue
-        object['type'] = 'application/x-shockwave-flash'
-        del object['codebase']
-        del object['clsid']
-        del object['classid']
-        for embed in object.findAll('embed'):
+        
+        if not object.get("type") and embed.get("type"):
+            object["type"] = embed["type"]
+        del object["classid"]
+        for embed in object.findAll("embed"):
             embed.extract()
     
-    for embed in soup.findAll('embed'):
-        src = embed.get('src')
-        if not src:
+    for embed in soup.findAll("embed"):
+        src = embed.get("src")
+        type = embed.get("type")
+        if not src or not type:
             continue
-        width = embed.get('width')
-        height = embed.get('height')
-        object = Tag(soup, 'object')
-        object['type'] = 'application/x-shockwave-flash'
-        object['data'] = src
+        width = embed.get("width")
+        height = embed.get("height")
+        object = Tag(soup, "object")
+        object["data"] = src
+        object["type"] = type
         if width:
-            object['width'] = width
+            object["width"] = width
         if height:
-            object['height'] = height
-        object.insert(0, Tag(soup, 'param', [('name', 'movie'), ('value', src)]))
+            object["height"] = height
         embed.replaceWith(object)
 
                 
