@@ -50,6 +50,7 @@ def paginate(entries, view_name, args=(), kwargs={}, page=None):
         prev_page = None 
 
     return {'entries': page.object_list,
+            'page': page,
             'next_page': next_page,
             'prev_page': prev_page, 
             }
