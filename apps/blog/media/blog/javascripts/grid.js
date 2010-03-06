@@ -10,10 +10,11 @@ function go_to_post(id) {
 
 function init_grid() {
 	$.historyInit(go_to_post);
-	$(".grid .cell").click(function(){
-		var id = $(this).attr("id").replace("cell_","");
+	$(".grid .cell a").click(function(){
+		var id = $(this).parents(".cell").attr("id").replace("cell_","");
 		window.location = "#"+id;
 		$.historyLoad(id);
+		return false;
 	});             
 //	var anchor = $.url.attr("anchor");
 //	go_to_post(anchor);

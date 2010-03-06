@@ -9,7 +9,7 @@
 </div>
 {% else %}
 <div class="rounded cell {{ entry.entry_type }}" id="cell_p{{ entry.id }}">
-  <a class="inner" href="#p{{ entry.id }}">
+  <a class="inner" href="{{ entry.get_absolute_url }}">
     {{ entry }}
   </a>
 </div>
