@@ -16,8 +16,5 @@ function init_grid() {
 		$.historyLoad(id);
 		return false;
 	});             
-//	var anchor = $.url.attr("anchor");
-//	go_to_post(anchor);
-	$(".grid").removeClass("hide");
 }
 

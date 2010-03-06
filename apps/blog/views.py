@@ -79,14 +79,14 @@ def display_type(request):
 
 
 def switch_display_type(request):
-    if request.method != 'POST':
+    if request.method != 'GET':
         raise Http404()
     type = display_type(request)
     if type == GRID_DISPLAY:
         type = LIST_DISPLAY
     else:
         type = GRID_DISPLAY
-    next = request.POST.get('next', reverse('blog:index'))
+    next = request.GET.get('next', reverse('blog:index'))
     response = HttpResponseRedirect(next)
     response.set_cookie(DISPLAY_TYPE_COOKE, type, COOKIE_MAX_AGE)
     return response
