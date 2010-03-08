@@ -7,6 +7,8 @@
 {% url blog:index as blog_index_url %}
 {% ifequal request.path blog_index_url %}
 <meta name="description" content="{% trans "Andrey Fedoseev's blog about web development with Django, user interfaces, photography and music." %}" />
+{% else %}
+<meta name="robots" content="noindex" />
 {% endifequal %}
 {% endblock %}
 

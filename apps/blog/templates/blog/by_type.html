@@ -2,6 +2,9 @@
 {% load blog_tags %}
 {% load i18n %}
 {% block title %}{% trans "Archive by type" %}{% endblock %}
+{% block meta %}
+<meta name="robots" content="noindex" />
+{% endblock %}
 {% block content %}
   <h2>{% trans "Archive by type" %}</h2>
   <ul class="type-archive">
