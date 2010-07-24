@@ -1,6 +1,5 @@
-from django.conf.urls.defaults import patterns, url
 from blog import feeds
-
+from django.conf.urls.defaults import patterns, url
 
 feeds = {
     'recent': feeds.Recent,

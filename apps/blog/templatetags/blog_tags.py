@@ -29,23 +29,28 @@ class ImageNode(template.Node):
         self.id = id
         self.format = format
         self.title = title
+
+    def build_absolute_uri(self, request, url):
+        if request:
+            return request.build_absolute_uri(url)
+        return url
         
     def render(self, context):
         try:
             image = Image.objects.get(pk=self.id)
         except Image.DoesNotExist:
             return u""
-        request = context['request']
+        request = context.get('request')
         title = self.title or image.image.name.split('/')[-1]
         data = {
             'title': title,
-            'original_url': request.build_absolute_uri(image.image.url),
+            'original_url': self.build_absolute_uri(request, image.image.url),
             'original_width': image.image.width,
             'original_height': image.image.height,
-            'thumb_url': request.build_absolute_uri(image.image.thumbnail.absolute_url),
+            'thumb_url': self.build_absolute_uri(request, image.image.thumbnail.absolute_url),
             'thumb_width': image.image.thumbnail.width(),
             'thumb_height': image.image.thumbnail.height(),
-            'scaled_url': request.build_absolute_uri(image.image.extra_thumbnails['scaled'].absolute_url),
+            'scaled_url': self.build_absolute_uri(request, image.image.extra_thumbnails['scaled'].absolute_url),
             'scaled_width': image.image.extra_thumbnails['scaled'].width(),
             'scaled_height': image.image.extra_thumbnails['scaled'].height(),
         }            
@@ -122,9 +127,9 @@ class EntryTextNode(template.Node):
             entry = var
             text = entry.text
             
-        request = context['request']
             
         if entry and self.format == 'short':
+            request = context['request']
             parts = text.split('<!-- more -->', 1)
             if len(parts) > 1:
                 text = parts[0]

@@ -1,20 +1,42 @@
-{% load assets %}
+{% load compress %}
 
-{% assets "blog_frontend_css" %}
-  <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" media="screen, projection" /> 
-{% endassets %} 
-
-{% assets "blog_print_css" %}
-  <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" media="print" /> 
-{% endassets %} 
-
-<!--[if lt IE 8]>
-{% assets "blog_ie_css" %}
-  <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" media="screen, projection" /> 
-{% endassets %} 
-<![endif]-->
-
-{% assets "blog_frontend_js" %}
-  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-{% endassets %} 
+{% compress css %}
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}blueprint/reset.css" media="screen, projection" /> 
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}blueprint/typography.css" media="screen, projection" /> 
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}blueprint/grid.css" media="screen, projection" /> 
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}blueprint/forms.css" media="screen, projection" /> 
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery/markitup/skins/simple/style.css" media="screen, projection" /> 
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery/markitup/sets/markdown/style.css" media="screen, projection" /> 
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery/jquery-tooltip/jquery.tooltip.css" media="screen, projection" /> 
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}blog/styles/base.css" media="screen, projection" /> 
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}blog/styles/style.css" media="screen, projection" /> 
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}blog/styles/highlight.css" media="screen, projection" />
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}blueprint/print.css" media="print" /> 
+{% endcompress %}  
  
+<!--[if lt IE 8]>
+{% compress css %}
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}blueprint/ie.css" media="screen, projection" /> 
+{% endcompress %} 
+<![endif]--> 
+ 
+{% compress js %} 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery-1.4.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery.json-2.2.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery.delay.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery.bgiframe.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery.delegate.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery.dimensions.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery.cookie.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery.url.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery.history.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery.scrollTo.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery-ui/ui/ui.core.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery-ui/ui/effects.core.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery-ui/ui/effects.highlight.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/markitup/jquery.markitup.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/markitup/sets/markdown/set.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery-tooltip/jquery.tooltip.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}blog/javascripts/grid.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}blog/javascripts/comments.js"></script>
+{% endcompress %} 

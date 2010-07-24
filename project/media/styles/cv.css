@@ -1,0 +1,18 @@
+.cv dl {
+  font-size: 120%;
+}
+
+.cv dt {
+  margin-bottom: 0.3em;
+  text-align: right;
+}
+
+.cv h5 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.cv dd {
+  margin-bottom: 0.3em;
+  margin-left: 0px;
+}

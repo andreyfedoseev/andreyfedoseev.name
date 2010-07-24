@@ -33,9 +33,12 @@ class EntryManager(models.Manager):
     
     def published(self, include_updates=False):
         if include_updates:
-            return super(EntryManager, self).get_query_set().filter(published=True)
+            return super(EntryManager, self).get_query_set().filter(published=True,
+                             publication_timestamp__lte=datetime.datetime.now())
         else:
-            return super(EntryManager, self).get_query_set().filter(published=True, update_for=None)
+            return super(EntryManager, self).get_query_set().filter(published=True,
+                             update_for=None,
+                             publication_timestamp__lte=datetime.datetime.now())
 
 
 TEXT_TYPE = "text"

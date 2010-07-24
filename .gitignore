@@ -15,7 +15,12 @@ develop-eggs/
 parts/
 eggs/
 downloads/
+virtualenv/
 project/media/upload/
-project/media/gen/
-project/media/static/
+project/media/CACHE/
+project/media/admin/
+project/media/blog/
+project/media/blueprint/
+project/media/debug_toolbar/
+project/media/jquery/
 
