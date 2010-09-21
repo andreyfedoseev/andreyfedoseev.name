@@ -13,14 +13,6 @@ from tagging.models import Tag, TaggedItem
 POSTS_PER_PAGE = 9
 
 
-_(u'text entries')
-_(u'photo entries')
-_(u'audio entries')
-_(u'video entries')
-_(u'link entries')
-_(u'quote entries')
-
-
 def paginate(entries, view_name, args=(), kwargs={}, page=None):
     paginator = Paginator(entries, POSTS_PER_PAGE)
     try:
@@ -52,7 +44,7 @@ def paginate(entries, view_name, args=(), kwargs={}, page=None):
     return {'entries': page.object_list,
             'page': page,
             'next_page': next_page,
-            'prev_page': prev_page, 
+            'prev_page': prev_page,
             }
 
 
@@ -64,15 +56,6 @@ LIST_DISPLAY = 'list'
 
 def display_type(request):
     display_type = request.COOKIES.get(DISPLAY_TYPE_COOKE)
-#    user_agent = request.META.get('HTTP_USER_AGENT')
-#    if user_agent:
-#        user_agent = user_agent.lower()
-#    if not display_type and user_agent:
-#        if 'google' in user_agent or \
-#           'msn' in user_agent or \
-#           'yahoo' in user_agent or \
-#           'yandex' in user_agent:
-#            return LIST_DISPLAY
     if display_type not in (GRID_DISPLAY, LIST_DISPLAY):
         display_type = GRID_DISPLAY
     return display_type
@@ -239,7 +222,7 @@ def index_by_tag(request, tag=None, page=None):
         raise Http404()
     site = Site.objects.get_current()
     blog = get_object_or_404(Blog, site=site)
-    entries = TaggedItem.objects.get_by_model( blog.published_entries(), tag)
+    entries = TaggedItem.objects.get_by_model(blog.published_entries(), tag)
     if not entries.count():
         raise Http404()
 

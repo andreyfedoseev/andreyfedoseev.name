@@ -23,4 +23,6 @@ project/media/blog/
 project/media/blueprint/
 project/media/debug_toolbar/
 project/media/jquery/
-
+project/settings.py
+project/development.py
+project/production.py
