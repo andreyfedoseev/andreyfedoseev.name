@@ -105,7 +105,7 @@ class Entry(models.Model):
         
 
     def threaded_comments(self):
-        return self.comments.filter(parent=None).order_by('tree_id')
+        return self.comments.order_by('tree_id', 'lft')
 
 
 tagging.register(Entry)

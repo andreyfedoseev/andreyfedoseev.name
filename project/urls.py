@@ -3,6 +3,8 @@ from django.conf.urls.defaults import patterns, include, handler500, url, \
 from django.conf import settings
 from django.contrib import admin
 from blog.sitemap import BlogSitemap
+
+
 admin.autodiscover()
 
 
@@ -17,7 +19,6 @@ urlpatterns = patterns(
     url(r'^about/$', 'django.views.generic.simple.direct_to_template', {'template': 'blog/about.html'}, name="about"),
     url(r'^cv/$', 'django.views.generic.simple.direct_to_template', {'template': 'cv.html'}, name="cv"),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^accounts/', include('registration.auth_urls')),
     url(r'^robots.txt$', include('robots.urls')),
     url(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 )

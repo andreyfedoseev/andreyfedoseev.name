@@ -37,9 +37,9 @@
     <div id="comments" >
       <div class="append-bottom span-18">
         <a href="#" id="add-comment" class="rounded">{% trans "Add comment" %}</a>
-        <h4{% if not comments.count %} style="display: none;"{% endif %}>{% trans "Comments" %}</h4>
+        <h4{% if not comments.exists %} style="display: none;"{% endif %}>{% trans "Comments" %}</h4>
       </div>
-      {% for comment in entry.threaded_comments %}
+      {% for comment in comments %}
         {% include "blog/comments/include/comment.html" %}
       {% endfor %}
     </div>

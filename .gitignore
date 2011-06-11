@@ -26,3 +26,4 @@ project/media/debug_toolbar/
 project/media/jquery/
 project/development.py
 project/production.py
+project/manage.py

@@ -3,11 +3,6 @@ import logging
 
 gettext = lambda s: s
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s %(levelname)s %(message)s',
-)
-
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
@@ -15,13 +10,6 @@ ADMINS = (
 MANAGERS = ADMINS
 
 INTERNAL_IPS = ('127.0.0.1',)
-
-DATABASE_ENGINE = 'sqlite3'    # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'project.db'
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
 TIME_ZONE = 'America/Chicago'
 
@@ -54,6 +42,7 @@ STATICFILES_MEDIA_DIRNAMES = (
 STATICFILES_PREPEND_LABEL_APPS = (
     'django.contrib.admin',
 )
+STATICFILES_STORAGE = 'staticfiles.storage.StaticFileStorage'
 
 ADMIN_MEDIA_ROOT = os.path.join(STATIC_ROOT, 'admin_media')
 ADMIN_MEDIA_PREFIX = '/admin_media/'
@@ -68,10 +57,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'johnny.middleware.LocalStoreClearMiddleware',
-    'johnny.middleware.QueryCacheMiddleware',
     'django_notify.middleware.NotificationsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+#    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'project.urls'
@@ -85,20 +72,18 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.markup',
+    'pytils',
     'debug_toolbar',
-    'johnny',
     'staticfiles',
     'compressor',
     'south',
-    'pytils',
-    'robots',
     'sorl.thumbnail',
+    'simplegravatar',
+    'oembed',
+    'robots',
+    'tagging',
     'blueprint',
     'jquery',
-    'oembed',
-    'gravatar',
-    'registration',
-    'tagging',
     'blog',
     'project',
 )
@@ -124,15 +109,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 SITE_ID = 1
 
-GRAVATAR_DEFAULT_IMAGE = "http://andreyfedoseev.name" + STATIC_URL + "blog/images/default-avatar.png"
-
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
 
-CACHE_BACKEND = 'johnny.backends.memcached://localhost:11211'
-JOHNNY_MIDDLEWARE_KEY_PREFIX = 'jc_andreyfedoseev.name'
-
 FORCE_LOWERCASE_TAGS = True
 MAX_TAG_LENGTH = 100
 
+SIMPLEGRAVATAR_DEFAULT = "identicon"
