@@ -82,7 +82,6 @@ INSTALLED_APPS = (
     'oembed',
     'robots',
     'tagging',
-    'blueprint',
     'jquery',
     'blog',
     'project',
