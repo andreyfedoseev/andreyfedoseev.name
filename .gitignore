@@ -22,7 +22,6 @@ project/media/CACHE/
 project/media/admin/
 project/media/blog/
 project/media/debug_toolbar/
-project/media/jquery/
 project/development.py
 project/production.py
 project/manage.py
