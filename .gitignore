@@ -5,6 +5,7 @@
 *.sql
 .project
 .pydevproject
+.idea/
 .settings
 .svn/
 commit.txt
