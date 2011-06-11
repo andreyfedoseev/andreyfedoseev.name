@@ -89,7 +89,7 @@ INSTALLED_APPS = (
     'johnny',
     'staticfiles',
     'compressor',
-#    'south',
+    'south',
     'pytils',
     'robots',
     'sorl.thumbnail',
