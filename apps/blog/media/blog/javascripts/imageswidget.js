@@ -62,8 +62,9 @@
 			}
 			var self = this;
 			$.getJSON(this.get_images_url, {ids: ids}, function(data) {
-				for (var i = 0; i < data.length; i++) {
-					var image = data[i];
+                var images = data.images;
+				for (var i = 0; i < images.length; i++) {
+					var image = images[i];
 					self.data[image.id] = image;
 					var id = IMAGE_ID_PREFIX + image.id;
 					var src = image.thumb_url;

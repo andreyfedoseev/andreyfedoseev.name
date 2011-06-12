@@ -86,50 +86,55 @@ class EntryForm(forms.Form):
     tags = TagField(required=False, label=_(u"Tags"),
                     widget=forms.TextInput({'class': 'title span-18 last'}))
     
+    def __init__(self, *args, **kwargs):
+        self.instance = kwargs.pop("instance", None)
+        if self.instance:
+            initial = kwargs.pop("initial", {})
+            initial['title'] = self.instance.title
+            initial['text'] = self.instance.text
+            initial['entry_type'] = self.instance.entry_type
+            initial['published'] = self.instance.published
+            initial['publication_date'] = self.instance.publication_timestamp and self.instance.publication_timestamp.date() 
+            initial['publication_time'] = self.instance.publication_timestamp and self.instance.publication_timestamp.time()
+            initial['images'] = [image.id for image in Image.objects.filter(entry=self.instance)]
+            initial['disable_comments'] = self.instance.disable_comments
+            initial['hide_comments'] = self.instance.hide_comments
+            initial['include_in_rss'] = self.instance.include_in_rss
+            initial['tags'] = edit_string_for_tags(Tag.objects.get_for_object(self.instance))
+            kwargs["initial"] = initial
+        super(EntryForm, self).__init__(*args, **kwargs)
 
-def getFormData(entry):
-    data = {}
-    data['title'] = entry.title
-    data['text'] = entry.text
-    data['entry_type'] = entry.entry_type
-    data['published'] = entry.published
-    data['publication_date'] = entry.publication_timestamp and entry.publication_timestamp.date() 
-    data['publication_time'] = entry.publication_timestamp and entry.publication_timestamp.time()
-    data['images'] = [image.id for image in Image.objects.filter(entry=entry)]
-    data['disable_comments'] = entry.disable_comments
-    data['hide_comments'] = entry.hide_comments
-    data['include_in_rss'] = entry.include_in_rss
-    data['tags'] = edit_string_for_tags(Tag.objects.get_for_object(entry))
-    return data
-
-
-def saveEntry(entry, data):
-    entry.title = data.get('title')
-    entry.text = data.get('text')
-    entry.entry_type = data.get('entry_type', TEXT_TYPE)
-    entry.published = data.get('published', False)
-    publication_date = data.get('publication_date')
-    publication_time = data.get('publication_time')
-    now = datetime.datetime.now()
-    if entry.published and not publication_date:
-        publication_date = now.date()
-    if entry.published and not publication_time:
-        publication_time = now.time()
-    if publication_date and publication_time:
-        entry.publication_timestamp = datetime.datetime.combine(publication_date, publication_time)
-    entry.disable_comments = data.get('disable_comments', False)
-    entry.hide_comments = data.get('hide_comments', False)
-    entry.include_in_rss = data.get('include_in_rss', False)
-    entry.save()
-    images = data.get("images", [])
-    if images:
-        for image_id in images:
-            image = Image.objects.get(pk=int(image_id))
-            if image.entry != entry:
-                image.entry = entry
-                image.save()
-    Tag.objects.update_tags(entry, data.get('tags', None))
-    return entry
+    def save(self, commit=True):
+        if not self.instance:
+            return None
+        data = self.cleaned_data
+        self.instance.title = data.get('title')
+        self.instance.text = data.get('text')
+        self.instance.entry_type = data.get('entry_type', TEXT_TYPE)
+        self.instance.published = data.get('published', False)
+        publication_date = data.get('publication_date')
+        publication_time = data.get('publication_time')
+        now = datetime.datetime.now()
+        if self.instance.published and not publication_date:
+            publication_date = now.date()
+        if self.instance.published and not publication_time:
+            publication_time = now.time()
+        if publication_date and publication_time:
+            self.instance.publication_timestamp = datetime.datetime.combine(publication_date, publication_time)
+        self.instance.disable_comments = data.get('disable_comments', False)
+        self.instance.hide_comments = data.get('hide_comments', False)
+        self.instance.include_in_rss = data.get('include_in_rss', False)
+        if commit:
+            self.instance.save()
+        images = data.get("images", [])
+        if images:
+            for image_id in images:
+                image = Image.objects.get(pk=int(image_id))
+                if image.entry != self.instance:
+                    image.entry = self.instance
+                    image.save()
+        Tag.objects.update_tags(self.instance, data.get('tags', None))
+        return self.instance
 
 
 class CommentForm(forms.Form):

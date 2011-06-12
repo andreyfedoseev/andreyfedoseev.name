@@ -15,6 +15,7 @@ sitemaps = {
 urlpatterns = patterns(
     '',
     url(r'^$', 'project.views.frontpage', name='frontpage'),
+    url(r'^login$', 'django.contrib.auth.views.login', name="auth_login"),
     url(r'^blog/', include('blog.urls', namespace="blog", app_name='blog')),
     url(r'^about/$', 'django.views.generic.simple.direct_to_template', {'template': 'blog/about.html'}, name="about"),
     url(r'^cv/$', 'django.views.generic.simple.direct_to_template', {'template': 'cv.html'}, name="cv"),
