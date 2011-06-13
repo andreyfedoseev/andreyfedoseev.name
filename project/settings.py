@@ -84,6 +84,7 @@ INSTALLED_APPS = (
     'oembed',
     'robots',
     'tagging',
+    'coffeescript',
     'blog',
     'project',
 )

@@ -5,7 +5,8 @@
     <meta charset="utf-8"/>
     <title>{% block title %}{% trans "Manage Blog" %}{% endblock %}</title> 
     <link rel="icon" href="{{MEDIA_URL}}images/favicon.png"/> 
-    {% include "blog/admin/include/resources.html" %}
+    {% include "blog/admin/include/css.html" %}
+    {% block extra-css %}{% endblock %}
   </head>
   <body>
     <ul class="navigation container">
@@ -24,5 +25,7 @@
       </div>
       {% block post_content %}{% endblock %}
     </div>
+    {% include "blog/admin/include/js.html" %}
+    {% block extra-js %}{% endblock %}
   </body>
 </html>

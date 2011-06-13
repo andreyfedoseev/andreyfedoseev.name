@@ -25,3 +25,6 @@ project/media/debug_toolbar/
 project/development.py
 project/production.py
 project/manage.py
+
+/project/media/COFFEESCRIPT_CACHE/
+/apps/coffeescript
