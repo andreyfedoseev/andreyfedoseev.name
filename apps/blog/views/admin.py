@@ -5,12 +5,13 @@ from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView, UpdateView
+import json
 
 
 class Index(TemplateView):
@@ -52,7 +53,7 @@ class AddEntry(SingleObjectTemplateResponseMixin, ModelFormMixin, ProcessFormVie
 
     def post(self, request, *args, **kwargs):
         if "cancel" in request.POST:
-            return HttpResponseRedirect(reverse("blog:admin-index"))
+            return HttpResponseRedirect(reverse("blog:admin_index"))
         self.object = Entry(blog=self.blog)
         return super(AddEntry, self).post(request, *args, **kwargs)
 
@@ -67,7 +68,7 @@ class AddEntry(SingleObjectTemplateResponseMixin, ModelFormMixin, ProcessFormVie
         return result
 
     def get_success_url(self):
-        return reverse("blog:edit-entry", args=(self.object.id,))
+        return reverse("blog:admin_edit_entry", args=(self.object.id,))
 
 
 class EditEntry(UpdateView):
@@ -79,7 +80,7 @@ class EditEntry(UpdateView):
 
     def post(self, request, *args, **kwargs):
         if "cancel" in request.POST:
-            return HttpResponseRedirect(reverse("blog:admin-index"))
+            return HttpResponseRedirect(reverse("blog:admin_index"))
         return super(EditEntry, self).post(request, *args, **kwargs)
 
     def form_invalid(self, form):
@@ -93,41 +94,38 @@ class EditEntry(UpdateView):
         return result
 
     def get_success_url(self):
-        return reverse("blog:edit-entry", args=(self.object.id,))
-
+        return reverse("blog:admin_edit_entry", args=(self.object.id,))
 
 
 @permission_required('add_image')
-@ajax_request
 def ajax_upload_image(request):
     files = request.FILES
-    if request.method != "POST" or not files:
-        raise Http404()
-    file = files['userfile']
-    image = Image()
-    image.image = file
-    image.save()
-    return dict(id=image.id, status="success", message=_(u'New image was uploaded.'))
+    file = files.get('file')
+    if not file:
+        return HttpResponse(json.dumps(dict(status="error")))
+    image = Image.objects.create(image=file)
+    image_data = {
+        'id': image.id,
+        'filename': image.image.name.split('/')[-1],
+        'src': image.image.thumbnail.absolute_url,
+    }
+    response = dict(status="success", message=_(u'New image was uploaded.'),
+                    image=image_data)
+    return HttpResponse(json.dumps(response))
 
 
 @permission_required('add_image')
 @ajax_request
-def ajax_get_images(request):
-    ids = map(int, request.GET.getlist("ids[]"))
+def ajax_list_entry_images(request, entry_id=None):
+    if not entry_id:
+        raise Http404()
+    entry = get_object_or_404(Entry, id=int(entry_id))
     images = []
-    for image in Image.objects.filter(id__in=ids):
+    for image in entry.image_set.all():
         images.append({
             'id': image.id,
             'filename': image.image.name.split('/')[-1],
-            'url': image.image.url,
-            'width': image.image.width,
-            'height': image.image.height,
-            'thumb_url': image.image.thumbnail.absolute_url,
-            'thumb_width': image.image.thumbnail.width(),
-            'thumb_height': image.image.thumbnail.height(),
-            'scaled_url': image.image.extra_thumbnails['scaled'].absolute_url,
-            'scaled_width': image.image.extra_thumbnails['scaled'].width(),
-            'scaled_height': image.image.extra_thumbnails['scaled'].height(),
+            'src': image.image.thumbnail.absolute_url,
         })
     return dict(images=images)
 
@@ -135,6 +133,6 @@ def ajax_get_images(request):
 @permission_required('delete_image')
 @ajax_request
 def ajax_delete_image(request):
-    id = int(request.GET.get("id"))
+    id = int(request.POST.get("id"))
     Image.objects.get(pk=id).delete()
     return dict(status="success")

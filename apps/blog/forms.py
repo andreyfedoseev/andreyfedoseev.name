@@ -1,23 +1,20 @@
 from blog.models import Image, TEXT_TYPE, ENTRY_TYPES
 from django import forms
 from django.forms.fields import EMPTY_VALUES
-from django.forms.util import ValidationError
 from django.utils.translation import ugettext_lazy as _
-import datetime
 from django.forms.widgets import TextInput
 from tagging.forms import TagField
 from tagging.utils import edit_string_for_tags
 from tagging.models import Tag
+import datetime
 
 
-class ImagesWidget(forms.widgets.Input):
-    
-    input_type = "hidden"
+class ImagesWidget(forms.HiddenInput):
     
     def render(self, name, value, attrs=None):
         if isinstance(value, list):
             value = ",".join([str(v) for v in value])
-        return super(ImagesWidget, self).render(name, value, attrs=None)
+        return super(ImagesWidget, self).render(name, value, attrs)
     
 
 class ImagesField(forms.Field):
@@ -26,7 +23,7 @@ class ImagesField(forms.Field):
     
     def clean(self, value):        
         if self.required and value in EMPTY_VALUES:
-            raise ValidationError(self.error_messages['required'])
+            raise forms.ValidationError(self.error_messages['required'])
         values = value.split(",")
         try:
             values = [int(v) for v in values if v]
@@ -39,12 +36,14 @@ class EntryForm(forms.Form):
 
     title = forms.CharField(max_length=300,
                             required=True,
-                            widget=forms.TextInput({'class': 'inline-label title span-18 last'}),
+                            widget=forms.TextInput({"class": "title",
+                                                    "placeholder": _(u"Title")}),
                             label=_(u"Title"),
                             )
 
     text = forms.CharField(required=True,
-                           widget=forms.Textarea({'class': 'inline-label  span-18 last tall markitup'}),
+                           widget=forms.Textarea({"class": "text markitup",
+                                                  "placeholder": _(u"Text")}),
                            label=_(u"Text"),
                            )
 
@@ -52,8 +51,8 @@ class EntryForm(forms.Form):
                          label=_(u"Images"),
                          )
 
-    entry_type = forms.ChoiceField(ENTRY_TYPES, required=True, initial=TEXT_TYPE,
-                                   widget=forms.Select({'class': 'large'}),
+    entry_type = forms.ChoiceField(ENTRY_TYPES, initial=TEXT_TYPE,
+                                   widget=forms.Select({'class': 'entry-type'}),
                                    label=_(u"Entry Type"),
                                    )
     
@@ -84,9 +83,11 @@ class EntryForm(forms.Form):
                                         widget=forms.CheckboxInput({"class": "checkbox"}))
 
     tags = TagField(required=False, label=_(u"Tags"),
-                    widget=forms.TextInput({'class': 'title span-18 last'}))
+                    widget=forms.TextInput({"class": "tags",
+                                            "placeholder": _(u"Tags")}))
     
     def __init__(self, *args, **kwargs):
+        #noinspection PyArgumentEqualDefault
         self.instance = kwargs.pop("instance", None)
         if self.instance:
             initial = kwargs.pop("initial", {})
@@ -133,7 +134,7 @@ class EntryForm(forms.Form):
                 if image.entry != self.instance:
                     image.entry = self.instance
                     image.save()
-        Tag.objects.update_tags(self.instance, data.get('tags', None))
+        Tag.objects.update_tags(self.instance, data.get('tags'))
         return self.instance
 
 

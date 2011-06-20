@@ -1,0 +1,46 @@
+/* Colors */
+@base-text-color: #000;
+@base-link-color: #009;
+@dark-gray: #999;
+@mid-gray: #ccc;
+@light-gray: #eee;
+@error-color: red;
+@message-color: #544322;
+@message-background: #FC6;
+@message-border-color: #A88743;
+
+/* Typography */
+@font-family: Arial, Helvetica, Verdana, sans-serif;
+@base-font-size: 15px;
+
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.list-no-style {
+  list-style-type: none;
+}
+
+/* Borders */
+.solid-border(@width: 1px, @color: @dark-gray) {
+  border: @width solid @color;
+}
+
+/* Layout */
+@page-width: 960px;
+.full-width-column {
+  width: @page-width;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Message */
+.message-mixin {
+  color: @message-color;
+  background-color: @message-background;
+  .solid-border(1px, @message-border-color);
+}

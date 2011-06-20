@@ -8,19 +8,22 @@
     {% include "blog/admin/include/css.html" %}
     {% block extra-css %}{% endblock %}
   </head>
-  <body>
-    <ul class="navigation container">
-      <li><a href="{% url blog:admin-index %}">{% trans "Blog admin" %}</a></li>
-      <li><a href="{% url admin:index %}">{% trans "Django admin" %}</a></li>
-    </ul>
-    <div class="container">
+  <body class="admin">
+    <nav class="global">
+      <ul class="navigation">
+        <li><a href="{% url blog:admin_add_entry %}">{% trans "New entry" %}</a></li>
+        <li><a href="{% url blog:admin_index %}">{% trans "Blog admin" %}</a></li>
+        <li><a href="{% url admin:index %}">{% trans "Django admin" %}</a></li>
+      </ul>
+    </nav>
+    <div class="columns">
       {% block pre_content %}{% endblock %}
-      <div id="content" class="admin span-18">
+      <div id="content">
         {% include "blog/include/status-messages.html" %}
         {% block content %}
         {% endblock %}
       </div>
-      <div id="sidebar" class="admin span-6 last">
+      <div id="sidebar">
         {% block sidebar %}{% endblock %}
       </div>
       {% block post_content %}{% endblock %}

@@ -28,3 +28,5 @@ project/manage.py
 
 /project/media/COFFEESCRIPT_CACHE/
 /apps/coffeescript
+/project/media/LESS_CACHE/
+/apps/less

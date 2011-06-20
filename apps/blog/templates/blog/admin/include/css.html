@@ -1,14 +1,11 @@
 {% load compress %}
+{% load less %}
 
 {% compress css %}
   <link rel="stylesheet" href="{{ STATIC_URL }}blueprint/reset.css" media="screen, projection" /> 
-  <link rel="stylesheet" href="{{ STATIC_URL }}blueprint/typography.css" media="screen, projection" /> 
-  <link rel="stylesheet" href="{{ STATIC_URL }}blueprint/grid.css" media="screen, projection" /> 
-  <link rel="stylesheet" href="{{ STATIC_URL }}blueprint/forms.css" media="screen, projection" /> 
   <link rel="stylesheet" href="{{ STATIC_URL }}javascripts/jquery/Aristo/jquery-ui-1.8.7.custom.css" media="screen, projection" />
   <link rel="stylesheet" href="{{ STATIC_URL }}javascripts/jquery/markitup/skins/simple/style.css" media="screen, projection" />
   <link rel="stylesheet" href="{{ STATIC_URL }}javascripts/jquery/markitup/sets/html/style.css" media="screen, projection" />
   <link rel="stylesheet" href="{{ STATIC_URL }}javascripts/jquery/markitup/sets/markdown/style.css" media="screen, projection" />
-  <link rel="stylesheet" href="{{ STATIC_URL }}blog/styles/base.css" media="screen, projection" /> 
-  <link rel="stylesheet" href="{{ STATIC_URL }}blog/styles/admin-style.css" media="screen, projection" /> 
-{% endcompress %} 
+  <link rel="stylesheet" href="{{ STATIC_URL }}{% less "styles/blog/admin.less" %}" media="screen, projection" />
+{% endcompress %}

@@ -1,13 +1,12 @@
 {% extends "blog/admin/base.html" %}
 {% load i18n %}
 {% block content %}
-<a href="{% url blog:add-entry %}">{% trans "New entry" %}</a>
 
-<table><tbody>
-{% for entry in blog.entry_set.all %}
-  <tr>
-    <td><a href="{% url blog:edit-entry entry.id %}">{{ entry.title }}</a></td>
-  </tr>
-{% endfor %}
-</tbody></table>
+<ul>
+  {% for entry in blog.entry_set.all %}
+    <li>
+      <a href="{% url blog:admin_edit_entry entry.id %}">{{ entry.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
 {% endblock %}

@@ -19,7 +19,7 @@ class Blog(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('blog:blog.views.index', ())
+        return 'blog:blog.views.index', ()
 
     def published_entries(self):
         return Entry.objects.published().filter(blog=self)
@@ -99,9 +99,9 @@ class Entry(models.Model):
     @models.permalink
     def get_absolute_url(self):
         if self.slug:
-            return ('blog:blog.views.entry', [self.id, self.slug])
+            return 'blog:blog.views.entry', [self.id, self.slug]
         else:
-            return ('blog:blog.views.entry', [self.id])
+            return 'blog:blog.views.entry', [self.id]
         
 
     def threaded_comments(self):

@@ -1,0 +1,146 @@
+@import "base.less";
+
+@sidebar-width: 220px;
+@content-margin-right: 40px;
+@content-width: @page-width - @sidebar-width - @content-margin-right;
+
+a,a:visited {
+  color: @base-link-color;
+}
+
+a:hover {
+  color: @base-text-color;
+}
+
+nav.global {
+  background-color: @light-gray;
+  border-bottom: 3px solid @mid-gray;
+  margin-bottom: 1em;
+  ul {
+    .list-no-style;
+    .align-right;
+    .full-width-column;
+    padding: 0.5em 0;
+    li {
+      display: inline-block;
+      margin-left: 1em;
+    }
+  }
+}
+
+.columns {
+  .full-width-column;
+}
+
+#content {
+  float: left;
+  width: @content-width;
+  margin-right: @content-margin-right;
+}
+
+#sidebar {
+  float: left;
+  width: @sidebar-width;
+}
+
+form.entry {
+  #content {
+    .field {
+      margin-bottom: 1em;
+    }
+    input[type='text'], textarea {
+      padding: 2px;
+      width: @content-width - 4;
+      margin: 0;
+      .solid-border;
+    }
+    #id_text {
+      resize: vertical;
+      height: 500px;
+    }
+  }
+  .title, .tags {
+    font-size: @base-font-size * 1.5;
+  }
+  .buttons {
+    .align-right;
+  }
+  #sidebar {
+    .field {
+      margin-bottom: 0.5em;
+    }
+  }
+}
+
+#images-widget {
+  ul.images {
+    .list-no-style;
+    li {
+      position: relative;
+      display: inline-block;
+      margin-right: 3px;
+      margin-bottom: 3px;
+      padding: 3px;
+      .solid-border(1px, @light-gray);
+      width: 188px;
+      span {
+        display: inline-block;
+        padding: 2px;
+        .solid-border(1px, @mid-gray);
+        width: 180px;
+        text-align: center;
+      }
+      a {
+        vertical-align: middle;
+        display: inline-block;
+        background-color: @light-gray;
+        .solid-border(1px, @mid-gray);
+      }
+      a.original {
+        width: 20px;
+        height: 16px;
+      }
+      a.scaled {
+        width: 16px;
+        height: 12px;
+      }
+      a.thumb {
+        width: 12px;
+        height: 10px;
+      }
+      a.delete {
+        background: transparent url(../../images/blog/cross.png) no-repeat;
+        border: none;
+        position: absolute;
+        bottom: 4px;
+        right: 4px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+  #upload-image-button {
+    display: inline-block;
+  }
+  label {
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 0.5em;
+    margin-top: 1em;
+  }
+}
+
+ul.errors {
+  .list-no-style;
+  color: @error-color;
+  font-size: @base-font-size - 2;
+}
+
+#status-messages {
+  .message {
+    margin-bottom: 1em;
+    padding: 0.5em 1em;
+    .message-mixin;
+  }
+}
+

@@ -3,13 +3,5 @@
   {% for message in messages %}
     <div class="message{% if message.tags %} {{ message.tags }}"{% endif %}>{{ message }}</div>
   {% endfor %}
-  <script type="text/javascript">
-    $(function() {
-      var messages = $("div.message.success");
-    	messages.delay(5000, function() {
-        messages.fadeOut();
-      });
-    });
-  </script>
 {% endif %}
 </div>

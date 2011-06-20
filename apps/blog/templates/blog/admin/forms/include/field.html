@@ -1,8 +1,11 @@
-<div class="field append-bottom">
-  {{ field.label_tag }}
-  {% for error in field.errors %}
-  <div class="error small">{{ error }}</div>
-  {% endfor %}
+<div class="field">
+  {% if "placeholder" not in field.field.widget.attrs %}
+    {{ field.label_tag }}
+  {% endif %}
+  <ul class="errors">
+    {% for error in field.errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+  </ul>
   {{ field }}
-  <div class="clear"></div>
 </div>
