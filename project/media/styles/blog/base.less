@@ -12,6 +12,20 @@ a.dashed {
   border-bottom-style: dashed;
 }
 
+blockquote {
+  margin-left: 0.5em;
+  padding-left: 0.5em;
+  border-left: 4px solid @mid-gray;
+}
+
 .ui-widget {
   font-size: 14px;
+}
+
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
 }

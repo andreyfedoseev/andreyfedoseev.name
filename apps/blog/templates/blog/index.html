@@ -1,100 +1,51 @@
 {% extends "blog/base.html" %}
-{% load blog_tags %}
 {% load i18n %}
-{% load cache %}
-{% block title %}{{ blog }}{% if entry_type %} / {{ entry_type|capfirst }}{% endif %}{% if year %}{% if month %} / {% blocktrans with month_title|lower as month %}Entries for {{ month }} {{ year }}{% endblocktrans %}{% else %} / {% blocktrans %}Entries for {{ year }}{% endblocktrans %}{% endif %}{% endif %}{% if tag %} / {% blocktrans %}Entries with tag "{{ tag }}" {% endblocktrans %}{% endif %}{% ifnotequal page.number 1 %} / {% blocktrans with page.number as number %}Page {{ number }}{% endblocktrans %}{% endifnotequal %}{% endblock %}
-{% block meta %}
-{% url blog:index as blog_index_url %}
-{% ifequal request.path blog_index_url %}
-<meta name="description" content="{% trans "Andrey Fedoseev's blog about web development with Django, user interfaces, photography and music." %}" />
-{% else %}
-<meta name="robots" content="noindex" />
-{% endifequal %}
+{% load coffeescript %}
+{% block extra-head %}
+  {% if is_frontpage %}
+    <meta name="description" content="{{ blog.description }}" />
+  {% endif %}
+  {% if blog.feed_url %}
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ blog.feed_url }}" />
+  {% endif %}
+  {% if tag %}
+    <link rel="alternate" type="application/rss+xml" title="{% blocktrans with tag.name as tag %}Tag: {{ tag }}{% endblocktrans %}" href="{% url blog:tag_feed tag=tag.name %}" />
+  {% endif %}
 {% endblock %}
 
-{% block sidebar %}
-
-{% if entry_type %}
-  <div class="sidenote"><div class="inner rounded">
-    {% blocktrans %}Show only {{ entry_type }}{% endblocktrans %}
-    <div class="foot">
-      <a href="{% url blog:index %}">{% trans "Show all entries" %}</a>
-    </div>
-  </div></div>
-{% endif %}
-
-{% if year %}
-  <div class="sidenote"><div class="inner rounded">
-    {% if month %}
-      {% blocktrans with month_title|lower as month %}Show entries for {{ month }} {{ year }}{% endblocktrans %}
-    {% else %}
-      {% blocktrans %}Show entries for {{ year }}{% endblocktrans %}
-    {% endif %} 
-    <div class="foot">
-      <a href="{% url blog:index %}">{% trans "Show all entries" %}</a>
-    </div>
-  </div></div>
-{% endif %}
-
-{% if tag %}
-  <div class="sidenote"><div class="inner rounded">
-    {% blocktrans %}Show only entries with tag "{{ tag }}"{% endblocktrans %}
-    <div class="foot">
-      <a href="{% url blog:index %}">{% trans "Show all entries" %}</a>
-    </div>
-  </div></div>
-{% endif %}
-
-{% if next_page or prev_page %}
-<ul>
-  {% if prev_page %}
-    <li>&larr; <a href="{{ prev_page }}">{% trans "Previous page" %}</a></li>
-  {% endif %}
-  {% if next_page %}
-    <li><a href="{{ next_page }}">{% trans "Next page" %}</a> &rarr;</li>
-  {% endif %}
-</ul>
-{% endif %}
-
-{% endblock %}
+{% block bodyclass %}index{% if is_frontpage %} frontpage{% endif %}{% endblock %}
 
 {% block content %}
-  {% if entries %}
-  <div class="list">
-    {% for entry in entries %}
-    <div class="post append-bottom{% ifequal display_type "grid"%} hide{% endifequal %}" id="p{{ entry.id }}"> 
-      <h2><a href="{{ entry.get_absolute_url }}">{{ entry }}</a></h2>
-      {% cache 6000 rendered_entry_text_short entry %}
-      {% render_text entry short %}
-      {% endcache %}
-      <div class="prepend-top clear">
-      <div class="small quiet comments-count">
-        {% with entry.comments.count as count %}
-          {% if count %}
-            <a href="{{ entry.get_absolute_url }}#comments">{% blocktrans count count as count %}{{ count }} comment{% plural %}{{ count }} comments{% endblocktrans %}</a>
-          {% else %}
-            <a href="{{ entry.get_absolute_url }}#add-comment">{% trans "No comments" %}</a>
-          {% endif %}  
-        {% endwith %}
-      </div>
-      <div class="small quiet">{% blocktrans with entry.publication_timestamp|humanized_date as date%}Published on {{ date }}{% endblocktrans %}</div>
-      </div>
+
+  {% if is_frontpage %}
+    {% include "blog/include/about.html" %}
+  {% endif %}
+
+  {% if tag %}
+    <section>
+    <h1>{% blocktrans with tag.name as tag %}Tag: {{ tag }}{% endblocktrans %}</h1>
+  {% endif %}
+
+    <div class="entries">
+      {% include "blog/include/entries-list.html" %}
     </div>
-    {% ifequal display_type "list" %}
-    <hr/>
-    {% endifequal %}
-    {% endfor %}
-  </div>
-  {% ifequal display_type "grid" %}
-  <div class="grid clear">
-    {% for entry in entries %}
-      {% include "blog/grid_entry.html" %}
-    {% endfor %}
-  </div>
-  <script type="text/javascript">$(document).ready(init_grid);</script>
-  {% endifequal %}
-  {% else %}
-    <p>{% trans "No entries have been published." %}</p> 
+
+    <nav class="pages">
+      <a class="prev" {% if not prev_page %}style="display: none;"{% endif %} href="{{ prev_page }}">&larr; <span>{% trans "Previous page" %}</span></a>
+      <a class="next" {% if not next_page %}style="display: none;"{% endif %} href="{{ next_page }}"><span>{% trans "Next page" %}</span> &rarr;</a>
+    </nav>
+
+  {% if tag %}
+    </section>
   {% endif %}
   
+{% endblock %}
+
+{% block extra-js %}
+  <script>
+    {% inlinecoffeescript %}
+      window.init_highlight()
+      window.init_blog_index()
+    {% endinlinecoffeescript %}
+  </script>
 {% endblock %}

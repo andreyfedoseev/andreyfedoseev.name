@@ -1,0 +1,26 @@
+{% load compress %}
+{% load coffeescript %}
+
+{% if debug %}
+  <script src="{{ STATIC_URL }}javascripts/jquery/jquery.min.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/jquery-ui.min.js"></script>
+{% else %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+{% endif %}
+
+{% compress js %}
+  <script type="text/javascript" src="{% url i18n.js %}"></script>
+  <script src="{{ STATIC_URL }}{% coffeescript "javascripts/blog/blog.coffee" %}"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/amplify.store.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/history.adapter.jquery.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/history.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/highlight/highlight.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/highlight/languages/python.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/highlight/languages/css.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/highlight/languages/xml.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/highlight/languages/django.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/jquery.validate.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/jquery.qtip.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/markdown-js/markdown.js"></script>
+{% endcompress %}

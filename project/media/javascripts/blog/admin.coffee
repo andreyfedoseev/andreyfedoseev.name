@@ -113,5 +113,11 @@ class BlogAdmin
         image_field.val(image_field.val() + ",#{image.id}")
     )
 
+    @validator = @form.validate(
+      submitHandler: (e)->
+        e.preventDefault()
+        $.
+    )
+
 
 window.BlogAdmin = BlogAdmin

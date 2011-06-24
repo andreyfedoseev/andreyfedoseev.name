@@ -1,24 +1,17 @@
-# -*- coding: utf-8 -*- 
-
-from BeautifulSoup import BeautifulSoup, Tag
-from blog.models import Entry, Image, PHOTO_TYPE, VIDEO_TYPE
+# -*- coding: utf-8 -*-
+from blog.models import Image
 from django import template
 from django.conf import settings
 from django.contrib.humanize.templatetags.humanize import naturalday
-from django.db.models.signals import post_save
-from django.template import BLOCK_TAG_START, BLOCK_TAG_END, VARIABLE_TAG_START, \
-    VARIABLE_TAG_END, COMMENT_TAG_START, COMMENT_TAG_END
-from django.template.loader import get_template_from_string
 from django.utils import translation
 from django.utils.encoding import force_unicode, smart_str
-from django.utils.html import escape
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext as _
 from pytils.dt import ru_strftime, distance_of_time_in_words
 import datetime
 import re
 import shlex
 import subprocess
+
 
 register = template.Library()
 
@@ -97,76 +90,6 @@ def do_image(parser, token):
     return ImageNode(id, format, title)    
 
 
-ESCAPE_RE = re.compile(r"(\{%\s*?escape\s*?(html)?\s*?%\}(.*?)\{%\s*?endescape.\s?%\})", re.S)
-TEMPLATE_TAG_MAPPING = {
-    BLOCK_TAG_START: '{% templatetag openblock %}',
-    BLOCK_TAG_END: '{% templatetag closeblock %}',
-    VARIABLE_TAG_START: '{% templatetag openvariable %}',
-    VARIABLE_TAG_END: '{% templatetag closevariable %}',
-    COMMENT_TAG_START: '{% templatetag opencomment %}',
-    COMMENT_TAG_END: '{% templatetag closecomment %}',
-}
-TEMPLATE_TAGS_BITS_RE = re.compile("(%s)" % "|".join(TEMPLATE_TAG_MAPPING.keys()), re.S)
-
-
-class EntryTextNode(template.Node):
-    
-    def __init__(self, var, format):
-        self.var = template.Variable(var)
-        self.format = format
-        
-    def render(self, context):
-        try:
-            var = self.var.resolve(context)
-        except template.VariableDoesNotExist:
-            return ''
-        if isinstance(var, basestring):
-            entry = None
-            text = var
-        elif isinstance(var, Entry):
-            entry = var
-            text = entry.text
-            
-            
-        if entry and self.format == 'short':
-            request = context['request']
-            parts = text.split('<!-- more -->', 1)
-            if len(parts) > 1:
-                text = parts[0]
-                text += """<p class="read-more"><a href="%s#cut">%s</a></p>""" % (request.build_absolute_uri(entry.get_absolute_url()), _(u"Read more"))
-        text = text.replace('<!-- more -->', '<a name="cut"></a>')
-
-        for block, html, content in ESCAPE_RE.findall(text):
-            escaped = u""
-            for bit in TEMPLATE_TAGS_BITS_RE.split(content):
-                escaped += TEMPLATE_TAG_MAPPING.get(bit, bit)
-            if html:
-                escaped = escape(escaped)
-            text = text.replace(block, escaped) 
-
-        prefix = """
-                 {% load blog_tags %}
-                 {% load oembed_tags %}
-                 """
-        text = prefix + text
-        return fix_embeds(get_template_from_string(text).render(context))
-
-
-@register.tag(name="render_text")
-def do_entry_text(parser, token):
-    parts = token.split_contents()
-    tag_name = parts[0]
-    args = parts[1:]
-    if len(args) < 1 or len(args) > 2:
-        raise template.TemplateSyntaxError, "%r tag requires from one to two arguments" % tag_name
-    format = None
-    if len(args) == 2:
-        format = args[1]
-        if format != 'short':
-            format = None
-    return EntryTextNode(args[0], format)    
-
-
 class HightlightNode(template.Node):
     
     def __init__(self, nodelist, format):
@@ -199,27 +122,9 @@ def do_highlight(parser, token):
     return HightlightNode(nodelist, args[0])    
 
 
-OEMBED_RE = re.compile(r"\{%\s*?oembed.*?%\}(.*?)\{%\sendoembed.*?\%}", re.M)
-YOUTUBE_URL_RE = re.compile(r"http\://www.youtube.com/watch\?v=(\w*)")
+OEMBED_RE = re.compile(r"\{%\s*?oembed.*?%\}(.*?)\{%\sendoembed.*?\s%}", re.M)
+YOUTUBE_URL_RE = re.compile(r"http://www.youtube.com/watch\?v=(\w*)")
 
-
-@register.filter
-def cover(entry):
-    if not isinstance(entry, Entry):
-        return None
-
-    if entry.entry_type == PHOTO_TYPE:
-        try:
-            return entry.image_set.all()[0].image.extra_thumbnails['scaled'].absolute_url 
-        except IndexError:
-            pass
-    elif entry.entry_type == VIDEO_TYPE:
-        oembeds = OEMBED_RE.findall(entry.text)
-        for oembed in oembeds: 
-            for youtube_video in YOUTUBE_URL_RE.findall(oembed):
-                return "http://i.ytimg.com/vi/%s/0.jpg" % youtube_video
-    
-    return None 
 
 @register.filter
 def humanized_date(date):
@@ -235,6 +140,7 @@ def humanized_date(date):
         else:
             return distance_of_time_in_words(date) 
     return naturalday(date)
+
 
 @register.filter
 def safe_markdown(value, arg=''):
@@ -259,50 +165,3 @@ def safe_markdown(value, arg=''):
         else:
             return mark_safe(force_unicode(markdown.markdown(smart_str(value))))
 safe_markdown.is_safe = True
-
-
-def fix_embeds(value):
-    soup = BeautifulSoup(value)
-    for object in soup.findAll("object"):
-        movie = None
-        for param in object.findAll("param"):
-            if param["name"] == "movie":
-                movie = param["value"]
-        embeds = object.findAll("embed")
-        if embeds:
-            embed = embeds[0]
-        else:
-            embed = None
-        data = object.get("data")
-        if not data:
-            if movie:
-                object["data"] = movie
-            elif embed and embed.get("src"):
-                object["data"] = embed["src"]
-            else:
-                continue
-        
-        if not object.get("type") and embed.get("type"):
-            object["type"] = embed["type"]
-        del object["classid"]
-        for embed in object.findAll("embed"):
-            embed.extract()
-    
-    for embed in soup.findAll("embed"):
-        src = embed.get("src")
-        type = embed.get("type")
-        if not src or not type:
-            continue
-        width = embed.get("width")
-        height = embed.get("height")
-        object = Tag(soup, "object")
-        object["data"] = src
-        object["type"] = type
-        if width:
-            object["width"] = width
-        if height:
-            object["height"] = height
-        embed.replaceWith(object)
-
-                
-    return unicode(soup)

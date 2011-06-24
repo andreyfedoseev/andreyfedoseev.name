@@ -1,52 +1,48 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-{% load i18n %}
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru"> 
-  <head> 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
-    {% block meta %}{% endblock %} 
-    <meta name="google-site-verification" content="x2ZAuUS4Bc581RdBqcKRWDdjYvKe6-wJ7PhqglEKE6k" /> 
-    <title>{% block title %}{% endblock %}</title> 
-    <link rel="icon" href="{{MEDIA_URL}}images/favicon.png"/> 
-    <link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/AndreyFedoseev" /> 
+<!DOCTYPE html>
+<html>
+  {% load i18n %}
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="google-site-verification" content="x2ZAuUS4Bc581RdBqcKRWDdjYvKe6-wJ7PhqglEKE6k" />
+    <title>{% block title %}{% if page_title %}{{ page_title }} | {% endif %}{{ blog.title }}{% endblock %}</title>
+    <link rel="icon" href="{{ STATIC_URL }}images/favicon.png"/>
+    <link rel="openid.server" href="http://www.myopenid.com/server" />
+    <link rel="openid.delegate" href="http://andreyfedoseev.myopenid.com/" />
 
-    {% include "blog/include/resources.html" %}
+    {% include "blog/include/css.html" %}
+    {% block extra-css %}{% endblock %}
+    {% block extra-head %}{% endblock %}
+  </head>
+  <body class="{% block bodyclass %}{% endblock %}">
+  <header class="global">
+    {% if is_frontpage %}
+      <h1>{{ blog.title }}</h1>
+    {% else %}
+      <h1><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></h1>
+    {% endif %}
+    {% include "blog/include/navigation.html" %}
+  </header>
 
-    <link rel="openid.server" href="http://www.myopenid.com/server" /> 
-    <link rel="openid.delegate" href="http://andreyfedoseev.myopenid.com/" /> 
-  </head> 
-  <body><div class="container prepend-top">
-  <div id="content" class="span-18"> 
-    {% block content %}
-    {% endblock %}        
-  </div>
-  
-  <div id="sidebar" class="span-6 last">
-    <div class="inner{% if fixed_sidebar %} fixed{% endif %}">
-      {% url blog:index as blog_index_url %}
-      {% ifnotequal request.path blog_index_url %}
-        <h1><a href="{{ blog_index_url }}">{% trans "Andrey Fedoseev's blog" %}</a></h1>
-      {% else %}
-        <h1>{% trans "Andrey Fedoseev's blog" %}</h1>
-      {% endifnotequal %}
-  
-      {% block sidebar %}{% endblock %}
-  
-      {% include "blog/sidebar/include/links.html" %}
-  
-      {% include "blog/sidebar/include/rss.html" %}
-  
-      {% include "blog/sidebar/include/display-types.html" %}
-      
-      {% include "blog/sidebar/include/archive-types.html" %}
-      
+  <div class="page">
+    <div class="content" id="content">
+      {% block content %}
+        
+      {% endblock %}
     </div>
-  </div>   
-  <div class="clear"></div>     
-  
-  {% block post_content %}{% endblock %}
-  
+
   </div>
+
+  <footer class="global">
+    {% include "blog/include/navigation.html" %}
+    {% if blog.author_name %}
+    <p class="copyright">
+      © {{ blog.author_name }}, 2010 — {% now "Y" %}
+    </p>
+    {% endif %}
+  </footer>
+
+  {% include "blog/include/js.html" %}
+  {% block extra-js %}{% endblock %}
   {% include "include/google-analytics.html" %}
-</body> 
+</body>
 </html>

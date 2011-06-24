@@ -1,9 +1,7 @@
 from blog.models import Blog
-from django.contrib.sites.models import Site
-from django.http import HttpResponsePermanentRedirect
+from django.shortcuts import get_object_or_404, redirect
 
 
 def frontpage(request):
-    site = Site.objects.get_current()
-    blog = Blog.objects.get(site=site)
-    return HttpResponsePermanentRedirect(blog.get_absolute_url())
+    blog = get_object_or_404(Blog, language=request.LANGUAGE_CODE)
+    return redirect(blog, permanent=True)

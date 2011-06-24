@@ -1,7 +1,8 @@
-from blog.models import Image, TEXT_TYPE, ENTRY_TYPES
+from blog.models import Image, Comment
 from django import forms
+from django.forms import ModelForm
 from django.forms.fields import EMPTY_VALUES
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from django.forms.widgets import TextInput
 from tagging.forms import TagField
 from tagging.utils import edit_string_for_tags
@@ -34,6 +35,9 @@ class ImagesField(forms.Field):
 
 class EntryForm(forms.Form):
 
+    success_message = _(u"Your changes were saved.")
+    error_message = _(u"Please correct the indicated errors.")
+
     title = forms.CharField(max_length=300,
                             required=True,
                             widget=forms.TextInput({"class": "title",
@@ -51,11 +55,6 @@ class EntryForm(forms.Form):
                          label=_(u"Images"),
                          )
 
-    entry_type = forms.ChoiceField(ENTRY_TYPES, initial=TEXT_TYPE,
-                                   widget=forms.Select({'class': 'entry-type'}),
-                                   label=_(u"Entry Type"),
-                                   )
-    
     published = forms.BooleanField(required=False, initial=False,
                                    widget=forms.CheckboxInput({"class": "checkbox"}),
                                    label=_(u"Published"),
@@ -93,7 +92,6 @@ class EntryForm(forms.Form):
             initial = kwargs.pop("initial", {})
             initial['title'] = self.instance.title
             initial['text'] = self.instance.text
-            initial['entry_type'] = self.instance.entry_type
             initial['published'] = self.instance.published
             initial['publication_date'] = self.instance.publication_timestamp and self.instance.publication_timestamp.date() 
             initial['publication_time'] = self.instance.publication_timestamp and self.instance.publication_timestamp.time()
@@ -111,7 +109,6 @@ class EntryForm(forms.Form):
         data = self.cleaned_data
         self.instance.title = data.get('title')
         self.instance.text = data.get('text')
-        self.instance.entry_type = data.get('entry_type', TEXT_TYPE)
         self.instance.published = data.get('published', False)
         publication_date = data.get('publication_date')
         publication_time = data.get('publication_time')
@@ -138,23 +135,29 @@ class EntryForm(forms.Form):
         return self.instance
 
 
-class CommentForm(forms.Form):
-    
-    reply_to = forms.IntegerField(required=False,
-                                  widget=forms.HiddenInput())
+class CommentForm(ModelForm):
+
+    success_message = _(u"Your comment was added.")
+    error_message = _(u"Please correct the indicated errors.")
+
+    parent = forms.ModelChoiceField(queryset=Comment.objects.all(),
+                                    required=False,
+                                    widget=forms.HiddenInput())
     
     text = forms.CharField(required=True, widget=forms.Textarea(),
                            label=_(u"Text"),
-                           help_text=_("You can use Markdown here."))
+                           help_text=_("""You can use <a class="dashed markdown" href="#">Markdown</a> here."""))
     
     author_name = forms.CharField(required=True, label=_(u"Your name"),
                                   widget=TextInput())
     author_email = forms.EmailField(required=False, label=_(u"Your email"),
                                     widget=TextInput(),
-                                    help_text=_("Email address is used to get your Gravatar."))
+                                    help_text=_("Optional. Used to get your Gravatar."))
     author_url = forms.URLField(required=False, label=_(u"Your site URL"),
                                 widget=TextInput(),
-                                help_text=_("Link to your site is displayed near every comment that you submit."))
+                                help_text=_("Optional."))
     
-    notify = forms.BooleanField(required=False, label=_(u"Send notification on replies"))
-    
+    class Meta:
+        model = Comment
+        fields = ["parent", "text", "author_name", "author_email",
+                  "author_url"]

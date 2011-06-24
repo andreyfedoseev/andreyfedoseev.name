@@ -1,7 +1,10 @@
 from autoslug.fields import AutoSlugField
+from blog.utils import render_text
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.db import models
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from sorl.thumbnail.fields import ImageWithThumbnailsField
 import datetime
@@ -10,16 +13,24 @@ import tagging
 
 
 class Blog(models.Model):
-    
+
+    language = models.CharField(max_length=5, choices=settings.LANGUAGES,
+                                default=settings.LANGUAGE_CODE,
+                                unique=True)
     title = models.CharField(max_length=300, verbose_name=_(u"Title"))
-    site = models.OneToOneField(Site, verbose_name=_(u"Site"))
-    
+    description = models.TextField(verbose_name=_(u"Description"), null=True,
+                                   blank=True, default=u"")
+    author_name = models.CharField(max_length=100)
+    author = models.ForeignKey(User)
+
+    feed_url = models.URLField(null=True, blank=True)
+
     def __unicode__(self):
         return self.title
 
     @models.permalink
     def get_absolute_url(self):
-        return 'blog:blog.views.index', ()
+        return "blog:index", []
 
     def published_entries(self):
         return Entry.objects.published().filter(blog=self)
@@ -41,39 +52,19 @@ class EntryManager(models.Manager):
                              publication_timestamp__lte=datetime.datetime.now())
 
 
-TEXT_TYPE = "text"
-PHOTO_TYPE = "photo"
-VIDEO_TYPE = "video"
-AUDIO_TYPE = "audio"
-LINK_TYPE = "link"
-QUOTE_TYPE = "quote"
-
-
-ENTRY_TYPES = (
-    (TEXT_TYPE, _(u"Text")),
-    (PHOTO_TYPE, _(u"Photo")),
-    (VIDEO_TYPE, _(u"Video")),
-    (AUDIO_TYPE, _(u"Audio")),
-    (LINK_TYPE, _(u"Link")),
-    (QUOTE_TYPE, _(u"Quote")),
-)
-
-
 class Entry(models.Model):
     
     blog = models.ForeignKey(Blog, verbose_name=_(u"Blog"))
     
     title = models.CharField(max_length=300, null=True, blank=True, verbose_name=_(u"Title"))
     text = models.TextField(null=True, blank=True, verbose_name=_(u"Text"))
-    
-    slug = AutoSlugField(populate_from='title', unique=True, verbose_name=_(u"Slug"))
+
+    slug = AutoSlugField(populate_from="title", unique=True, verbose_name=_(u"Slug"))
     published = models.BooleanField(default=False, verbose_name=_(u"Published"))
     publication_timestamp = models.DateTimeField(null=True, blank=True, verbose_name=_(u"Publication timestamp"))
+    modified_on = models.DateTimeField(verbose_name=_("Modified on"), auto_now=True)
     
     meta_description = models.TextField(null=True, blank=True, verbose_name=_(u"Meta description"))
-    
-    entry_type = models.CharField(max_length=20, null=False, blank=False, default=TEXT_TYPE,
-                                  choices=ENTRY_TYPES, verbose_name=_(u"Entry type"))
     
     include_in_rss = models.BooleanField(default=True, verbose_name=_(u"Include in RSS"))
     
@@ -83,7 +74,7 @@ class Entry(models.Model):
     update_for = models.ForeignKey('self', null=True, blank=True, verbose_name=_(u"Update for"))
     
     objects = EntryManager()    
-    
+
     class Meta:
         ordering = ['-publication_timestamp']
         verbose_name = _(u"Entry")
@@ -98,14 +89,30 @@ class Entry(models.Model):
     
     @models.permalink
     def get_absolute_url(self):
-        if self.slug:
-            return 'blog:blog.views.entry', [self.id, self.slug]
-        else:
-            return 'blog:blog.views.entry', [self.id]
-        
+        return 'blog:entry', [], dict(id=self.id, slug=self.slug)
 
     def threaded_comments(self):
         return self.comments.order_by('tree_id', 'lft')
+
+    MORE_MARKER = "<!-- more -->"
+
+    @property
+    def short_text(self):
+        text = self.text
+        #noinspection PyUnresolvedReferences
+        parts = text.split(self.MORE_MARKER, 1)
+        if len(parts) > 1:
+            text = parts[0]
+            site = Site.objects.get_current()
+            full_url = "http://%s%s" % (site.domain, self.get_absolute_url())
+            text += """<p class="read-more"><a href="%s#cut">%s</a></p>""" % (full_url, _(u"Read more"))
+        return mark_safe(render_text(text))
+
+    @property
+    def full_text(self):
+        #noinspection PyUnresolvedReferences
+        text = self.text.replace(self.MORE_MARKER, "<a name=\"cut\"></a>")
+        return mark_safe(render_text(text))
 
 
 tagging.register(Entry)

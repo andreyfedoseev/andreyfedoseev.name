@@ -1,13 +1,21 @@
-{% load blog_tags %}
 <!DOCTYPE html>
-<html lang="ru">
-  <head> 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
-    {% include "blog/admin/include/preview-resources.html" %}
+<html>
+  {% load i18n %}
+  {% load coffeescript %}
+  <head>
+    <title>{% trans "Preview" %}</title>
+    <meta charset="utf-8" />
+    {% include "blog/include/css.html" %}
   </head> 
   <body>
-  <div id="content" class="prepend-top append-bottom prepend-1 span-18">
-    {% render_text request.POST.data %}
-  </div>       
-  </body> 
+  <article class="entry preview">
+    {{ text }}
+  </article>
+  {% include "blog/include/js.html" %}
+  <script>
+    {% inlinecoffeescript %}
+      window.init_highlight()
+    {% endinlinecoffeescript %}
+  </script>
+  </body>
 </html>

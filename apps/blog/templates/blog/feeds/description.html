@@ -1,5 +1,1 @@
-{% load blog_tags %}
-{% load cache %}
-{% cache 6000 rendered_entry_text_short obj %}
-{% render_text obj short %}
-{% endcache %}
+{{ obj.short_text }}

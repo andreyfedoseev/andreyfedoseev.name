@@ -1,0 +1,13 @@
+{% load i18n %}
+<nav>
+  <ul>
+    {% if not is_frontpage %}
+      <li><a href="{% url blog:index %}#about">{% trans "About" %}</a></li>
+    {% endif %}
+    <li><a href="{% url blog:archive %}">{% trans "Archive" %}</a></li>
+    <li><a href="{% url blog:tags %}">{% trans "Tags" %}</a></li>
+    {% if blog.feed_url %}
+      <li class="rss"><a href="{{ feed_url }}">{% trans "RSS" %}</a></li>
+    {% endif %}
+  </ul>
+</nav>

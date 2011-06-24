@@ -1,0 +1,35 @@
+{% extends "blog/base.html" %}
+{% load i18n %}
+
+{% block bodyclass %}archive{% endblock %}
+
+{% block content %}
+  <section>
+    <h1>{% trans "Archive" %}</h1>
+    <nav>
+      <ul>
+        {% for year in years %}
+          <li>
+            {% if year == current_year %}
+              <span>{{ year }}</span>
+            {% else %}
+              <a href="{% url blog:archive year=year %}">{{ year }}</a>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+    {% for month in months %}
+      <section>
+        <h1>{{ month.name }}</h1>
+        <ul>
+          {% for entry in month.entries %}
+            <li>
+              <span>{{ entry.publication_timestamp|date:"j" }}</span>
+              <a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endfor %}
+  </section>
+{% endblock %}

@@ -8,304 +8,280 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-05 11:32-0600\n"
+"POT-Creation-Date: 2011-06-24 10:50-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: adminviews.py:42
-msgid "New entry was created."
-msgstr "Запись добавлена."
-
-#: adminviews.py:45 adminviews.py:72
-msgid "Please correct the indicated errors."
-msgstr "Исправьте указанные ошибки."
-
-#: adminviews.py:70
+#: forms.py:38
 msgid "Your changes were saved."
 msgstr "Изменения сохранены."
 
-#: adminviews.py:92
-msgid "Image upload has failed."
-msgstr "Не удалось загрузить изображение."
+#: forms.py:39 forms.py:141 views/admin.py:75
+msgid "Please correct the indicated errors."
+msgstr "Исправьте указанные ошибки."
 
-#: adminviews.py:100
-msgid "New image was uploaded."
-msgstr "Изображение загружено."
-
-#: forms.py:43 models.py:14 models.py:66
+#: forms.py:44 forms.py:45 models.py:20 models.py:57
 msgid "Title"
 msgstr "Заголовок"
 
-#: forms.py:48 forms.py:141 models.py:53 models.py:67
+#: forms.py:50 forms.py:51 forms.py:148 models.py:58
 msgid "Text"
 msgstr "Текст"
 
-#: forms.py:52 models.py:129
+#: forms.py:55 models.py:134
 msgid "Images"
 msgstr "Изображения"
 
-#: forms.py:57
-msgid "Entry Type"
-msgstr "Тип записи"
-
-#: forms.py:62 models.py:70
+#: forms.py:60 models.py:61
 msgid "Published"
 msgstr "Опубликовано"
 
-#: forms.py:65
+#: forms.py:63
 msgid "Publish on"
 msgstr "Дата публикации"
 
-#: forms.py:71
+#: forms.py:69
 msgid "Publication time"
 msgstr "Время публикации"
 
-#: forms.py:77 models.py:80
+#: forms.py:75 models.py:69
 msgid "Disable comments"
 msgstr "Отключить комментарии"
 
-#: forms.py:80 models.py:81
+#: forms.py:78 models.py:70
 msgid "Hide comments"
 msgstr "Скрыть комментарии"
 
-#: forms.py:83 models.py:78
+#: forms.py:81 models.py:67
 msgid "Include in RSS"
 msgstr "Добавить в RSS-поток"
 
-#: forms.py:86
+#: forms.py:84 forms.py:86 templates/blog/entry.html:26
+#: templates/blog/include/entries-list.html:14
+#: templates/blog/include/navigation.html:8 views/tags.py:27
 msgid "Tags"
 msgstr "Теги"
 
-#: forms.py:142
-msgid "You can use Markdown here."
-msgstr "Вы можете отформатировать текст, используя разметку Markdown"
+#: forms.py:140
+msgid "Your comment was added."
+msgstr ""
 
-#: forms.py:144
+#: forms.py:149
+msgid "You can use <a class=\"dashed markdown\" href=\"#\">Markdown</a> here."
+msgstr ""
+"Можно использовать разметку <a class=\"dashed markdown\" href=\"#"
+"\">Markdown</a>."
+
+#: forms.py:151
 msgid "Your name"
 msgstr "Ваше имя"
 
-#: forms.py:146
+#: forms.py:153
 msgid "Your email"
 msgstr "Ваша электронная почта"
 
-#: forms.py:148
-msgid "Email address is used to get your Gravatar."
-msgstr "Адрес электронной почты используется, чтобы показать ваш Gravatar."
+#: forms.py:155
+msgid "Optional. Used to get your Gravatar."
+msgstr "Необязательно. Нужно для автарки."
 
-#: forms.py:149
+#: forms.py:156
 msgid "Your site URL"
 msgstr "Адрес вашего сайта"
 
-#: forms.py:151
-msgid "Link to your site is displayed near every comment that you submit."
-msgstr "Ссылка на ваш сайт отображается рядом с каждым вашим комментарием."
+#: forms.py:158
+msgid "Optional."
+msgstr "Необязательно."
 
-#: forms.py:153
-msgid "Send notification on replies"
-msgstr "Отправлять уведомления об ответах"
+#: models.py:21
+msgid "Description"
+msgstr "Описание"
 
-#: models.py:15
-msgid "Site"
-msgstr "Сайт"
-
-#: models.py:28 models.py:64
+#: models.py:37 models.py:55
 msgid "Blog"
 msgstr "Блог"
 
-#: models.py:29
+#: models.py:38
 msgid "Blogs"
 msgstr "Блоги"
 
-#: models.py:54
-msgid "Photo"
-msgstr "Фотография"
-
-#: models.py:55
-msgid "Video"
-msgstr "Видео"
-
-#: models.py:56
-msgid "Audio"
-msgstr "Аудио"
-
-#: models.py:57
-msgid "Link"
-msgstr "Ссылка"
-
-#: models.py:58
-msgid "Quote"
-msgstr "Цитата"
-
-#: models.py:69
+#: models.py:60
 msgid "Slug"
 msgstr "Слаг"
 
-#: models.py:71
+#: models.py:62
 msgid "Publication timestamp"
 msgstr "Дата и время публикации"
 
-#: models.py:73
+#: models.py:63
+msgid "Modified on"
+msgstr "Изменено"
+
+#: models.py:65
 msgid "Meta description"
 msgstr "META-описание"
 
-#: models.py:76
-msgid "Entry type"
-msgstr "Тип записи"
-
-#: models.py:83
+#: models.py:72
 msgid "Update for"
 msgstr "Обновление для"
 
-#: models.py:89 models.py:116
+#: models.py:78 models.py:121
 msgid "Entry"
 msgstr "Запись"
 
-#: models.py:90
+#: models.py:79
 msgid "Entries"
 msgstr "Записи"
 
-#: models.py:123 models.py:128
+#: models.py:106
+msgid "Read more"
+msgstr "Читать дальше"
+
+#: models.py:128 models.py:133
 msgid "Image"
 msgstr "Изображение"
 
-#: models.py:124
+#: models.py:129
 msgid "Order"
 msgstr "Порядок"
 
-#: views.py:16
-msgid "text entries"
-msgstr "текстовые записи"
+#: templates/blog/archive.html:8 templates/blog/include/navigation.html:7
+msgid "Archive"
+msgstr "Архив"
 
-#: views.py:17
-msgid "photo entries"
-msgstr "фотографии"
+#: templates/blog/base.html:38
+msgid "Andrey Fedoseev"
+msgstr "Андрей Федосеев"
 
-#: views.py:18
-msgid "audio entries"
-msgstr "записи с аудио"
+#: templates/blog/entry.html:17
+msgid "Edit"
+msgstr "Редактировать"
 
-#: views.py:19
-msgid "video entries"
-msgstr "записи с видео"
+#: templates/blog/entry.html:20 templates/blog/include/entries-list.html:8
+msgid "Published on"
+msgstr "Опубликовано"
 
-#: views.py:20
-msgid "link entries"
-msgstr "ссылки"
-
-#: views.py:21
-msgid "quote entries"
-msgstr "цитаты"
-
-#: views.py:119 views.py:139
-#, fuzzy, python-format
-msgid "%s entries"
-msgstr "текстовые записи"
-
-#: templates/blog/base.html:28 templates/blog/base.html.py:30
-msgid "Andrey Fedoseev's blog"
-msgstr "Блог Андрея Федосеева"
-
-#: templates/blog/by_date.html:4 templates/blog/by_date.html.py:6
-msgid "Archive by date"
-msgstr "Архив записей по датам"
-
-#: templates/blog/by_tag.html:4 templates/blog/by_tag.html.py:6
-msgid "Archive by tags"
-msgstr "Архив записей по тегам"
-
-#: templates/blog/by_type.html:4 templates/blog/by_type.html.py:6
-msgid "Archive by type"
-msgstr "Архив записей по типу"
-
-#: templates/blog/entry.html:14 templates/blog/index.html:78
-#, python-format
-msgid "Published on %(date)s"
-msgstr "Опубликовано %(date)s"
-
-#: templates/blog/entry.html:16
-msgid "Tags:"
-msgstr "Теги:"
-
-#: templates/blog/entry.html:24
-msgid "Permalink"
-msgstr "ссылка на эту запись"
-
-#: templates/blog/entry.html:39
-msgid "Add comment"
-msgstr "Прокомментировать"
-
-#: templates/blog/entry.html:40
+#: templates/blog/entry.html:37
 msgid "Comments"
 msgstr "Комментарии"
 
-#: templates/blog/index.html:5
+#: templates/blog/entry.html:38 templates/blog/entry.html.py:47
+msgid "Add comment"
+msgstr "Написать комментарий"
+
+#: templates/blog/index.html:21 views/index.py:75
 #, python-format
-msgid "Entries for %(month)s %(year)s"
-msgstr "Записи за %(month)s %(year)s года"
-
-#: templates/blog/index.html:5
-#, python-format
-msgid "Entries for %(year)s"
-msgstr "Записи за %(year)s год"
-
-#: templates/blog/index.html:5
-#, python-format
-msgid "Entries with tag \"%(tag)s\" "
-msgstr "Записи с тегом «%(tag)s»"
-
-#: templates/blog/index.html:5
-#, python-format
-msgid "Page %(number)s"
-msgstr "Страница %(number)s"
-
-#: templates/blog/index.html:9
-msgid ""
-"Andrey Fedoseev's blog about web development with Django, user interfaces, "
-"photography and music."
-msgstr ""
-"Блог Андрея Федосеева о веб-разработке с помощью Django, пользовательских "
-"интерфейсах, фотографии и музыке."
-
-#: templates/blog/index.html:17
-#, python-format
-msgid "Show only %(entry_type)s"
-msgstr "Показаны только %(entry_type)s"
-
-#: templates/blog/index.html:19 templates/blog/index.html.py:32
-#: templates/blog/index.html:41
-msgid "Show all entries"
-msgstr "Все записи"
-
-#: templates/blog/index.html:27
-#, python-format
-msgid "Show entries for %(month)s %(year)s"
-msgstr "Показаны записи за %(month)s %(year)s года"
+msgid "Tag: %(tag)s"
+msgstr "Тег: %(tag)s"
 
 #: templates/blog/index.html:29
-#, python-format
-msgid "Show entries for %(year)s"
-msgstr "Показаны записи за %(year)s год"
-
-#: templates/blog/index.html:39
-#, python-format
-msgid "Show only entries with tag \"%(tag)s\""
-msgstr "Показаны записи с тегом «%(tag)s»"
-
-#: templates/blog/index.html:49
 msgid "Previous page"
 msgstr "Предыдущая страница"
 
-#: templates/blog/index.html:52
+#: templates/blog/index.html:30
 msgid "Next page"
 msgstr "Следующая страница"
 
-#: templates/blog/index.html:72
+#: templates/blog/tags.html:8
+msgid "Main tags"
+msgstr "Главные теги"
+
+#: templates/blog/tags.html:16
+msgid "Other tags"
+msgstr "Остальные теги"
+
+#: templates/blog/admin/base.html:6
+msgid "Manage Blog"
+msgstr "Управление блогом"
+
+#: templates/blog/admin/base.html:14 templates/blog/admin/entry.html:5
+msgid "New entry"
+msgstr "Новая запись"
+
+#: templates/blog/admin/base.html:15
+msgid "Blog admin"
+msgstr "Админка блога"
+
+#: templates/blog/admin/base.html:16
+msgid "Django admin"
+msgstr "Админка Django"
+
+#: templates/blog/admin/entry.html:17
+msgid "View on site"
+msgstr "Посмотреть на сайте"
+
+#: templates/blog/admin/entry.html:19
+msgid "Cancel"
+msgstr "Отмена"
+
+#: templates/blog/admin/entry.html:20
+msgid "Save"
+msgstr "Сохранить"
+
+#: templates/blog/admin/entry.html:68
+msgid "Upload an image"
+msgstr "Загрузить изображение"
+
+#: templates/blog/admin/preview.html:6
+#: templates/blog/include/comment-form.html:64
+msgid "Preview"
+msgstr "Предварительный просмотр"
+
+#: templates/blog/comments/include/comment.html:33
+#: templates/blog/include/comment.html:18
+msgid "Reply"
+msgstr "Ответить"
+
+#: templates/blog/include/comment-form.html:15
+msgid ""
+"This is a paragraph, which is text surrounded by whitespace. Paragraphs can "
+"be on one\n"
+"line (or many), and can drone on for hours.\n"
+"\n"
+"Here is a Markdown link to [Google](http://google.com), and a literal.\n"
+"\n"
+"Now some inline markup like _italics_,  **bold**, and `code()`.\n"
+"\n"
+"> Blockquotes are like quoted text in email replies\n"
+">> And, they can be nested\n"
+"\n"
+"* Bullet lists are easy too\n"
+"\n"
+"1. A numbered list\n"
+"\n"
+"And now some code:\n"
+"\n"
+"&nbsp;&nbsp;&nbsp;&nbsp;// Code is just text indented a bit\n"
+"&nbsp;&nbsp;&nbsp;&nbsp;which(is_easy) to_remember();\n"
+msgstr ""
+"Параграфы отбиваются пустыми строками. Параграф может состоять из нескольких "
+"строк.\n"
+"\n"
+"Вот так выглядит ссылка на сайт [Google](http://google.com).\n"
+"\n"
+"Можно использовать _курсив_,  **полужирный шрифт**, и оформлять `код()`.\n"
+"\n"
+"> Это цитата\n"
+">> А это вложенная цитата\n"
+"\n"
+"* Простой список\n"
+"\n"
+"1. Пронумерованный список\n"
+"\n"
+"&nbsp;&nbsp;&nbsp;&nbsp;// Исходный код это текст с отступами\n"
+"&nbsp;&nbsp;&nbsp;&nbsp;which(is_easy) to_remember();\n"
+
+#: templates/blog/include/comment-form.html:66
+msgid "Submit"
+msgstr "Отправить"
+
+#: templates/blog/include/entries-list.html:23
 #, python-format
 msgid "%(count)s comment"
 msgid_plural "%(count)s comments"
@@ -313,100 +289,28 @@ msgstr[0] "%(count)s комментарий"
 msgstr[1] "%(count)s комментария"
 msgstr[2] "%(count)s комментариев"
 
-#: templates/blog/index.html:74
+#: templates/blog/include/entries-list.html:25
 msgid "No comments"
 msgstr "Нет комментариев"
 
-#: templates/blog/index.html:95
-msgid "No entries have been published."
-msgstr "Не опубликовано ни одной записи."
-
-#: templates/blog/admin/base.html:6
-msgid "Manage Blog"
-msgstr "Управление блогом"
-
-#: templates/blog/admin/base.html:14
-msgid "Blog admin"
-msgstr "Админка блога"
-
-#: templates/blog/admin/base.html:15
-msgid "Django admin"
-msgstr "Админка Django"
-
-#: templates/blog/admin/index.html:4 templates/blog/admin/forms/entry.html:4
-msgid "New entry"
-msgstr "Новая запись"
-
-#: templates/blog/admin/forms/entry.html:28
-msgid "Save"
-msgstr "Сохранить"
-
-#: templates/blog/admin/forms/entry.html:29
-msgid "Cancel"
-msgstr "Отмена"
-
-#: templates/blog/admin/forms/include/images.html:11
-msgid "Upload an image"
-msgstr "Загрузить изображение"
-
-#: templates/blog/comments/include/comment.html:35
-msgid "Reply"
-msgstr "Ответить"
-
-#: templates/blog/comments/include/commentform.html:32
-#: templates/blog/comments/include/commentform.html:45
-msgid "why?"
-msgstr "зачем?"
-
-#: templates/blog/comments/include/commentform.html:62
-msgid "Submit"
-msgstr "Отправить"
-
-#: templates/blog/sidebar/include/archive-types.html:2
-msgid "Archive:"
-msgstr "Архив записей:"
-
-#: templates/blog/sidebar/include/archive-types.html:7
-#: templates/blog/sidebar/include/archive-types.html:9
-msgid "by type"
-msgstr "по типу"
-
-#: templates/blog/sidebar/include/archive-types.html:15
-#: templates/blog/sidebar/include/archive-types.html:17
-msgid "by date"
-msgstr "по датам"
-
-#: templates/blog/sidebar/include/archive-types.html:23
-#: templates/blog/sidebar/include/archive-types.html:25
-msgid "by tag"
-msgstr "по тегам"
-
-#: templates/blog/sidebar/include/display-types.html:16
-msgid "Display as:"
-msgstr "Отображение:"
-
-#: templates/blog/sidebar/include/display-types.html:20
-#: templates/blog/sidebar/include/display-types.html:23
-msgid "as list"
-msgstr "списком"
-
-#: templates/blog/sidebar/include/display-types.html:21
-#: templates/blog/sidebar/include/display-types.html:24
-msgid "as grid"
-msgstr "сеткой"
-
-#: templates/blog/sidebar/include/links.html:5
+#: templates/blog/include/navigation.html:5
 msgid "About"
 msgstr "Об авторе"
 
-#: templates/blog/sidebar/include/links.html:7
-msgid "Blog Index"
-msgstr "Главная страница блога"
+#: views/admin.py:80
+msgid "New entry was created."
+msgstr "Запись добавлена."
 
-#: templates/blog/sidebar/include/rss.html:3
-msgid "RSS"
-msgstr "RSS"
+#: views/admin.py:151
+msgid "New image was uploaded."
+msgstr "Изображение загружено."
 
-#: templatetags/blog_tags.py:136
-msgid "Read more"
-msgstr "Читать дальше"
+#: views/archive.py:36
+#, python-format
+msgid "Archive for %(year)i"
+msgstr "Архив за %(year)i год"
+
+#: views/index.py:77
+#, python-format
+msgid "Page %(number)i"
+msgstr "Страница %(number)i"

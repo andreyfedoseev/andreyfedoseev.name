@@ -1,34 +1,57 @@
-from django.contrib.syndication.feeds import Feed
-from django.utils import feedgenerator
-from django.contrib.sites.models import Site
+from django.contrib.syndication.views import Feed
+from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
 from blog.models import Blog
+from tagging.models import Tag, TaggedItem
+from django.utils.translation import ugettext as _
 
 
-class Recent(Feed):
+class RecentFeed(Feed):
     
-    feed_type = feedgenerator.Rss201rev2Feed
-    
-    title_template = "blog/feeds/title.html"
-    description_template = "blog/feeds/description.html"
-    
-    def get_object(self, bits):
-        site = Site.objects.get_current()
-        return Blog.objects.get(site=site)
+    def get_object(self, request, *args, **kwargs):
+        return get_object_or_404(Blog, language=request.LANGUAGE_CODE)
     
     def title(self, obj):
-        return unicode(obj)
+        return obj.title
     
     def link(self, obj):
         return obj.get_absolute_url()
     
     def description(self, obj):
-        return u''
+        return obj.description
     
     def items(self, obj):
         return obj.published_entries().filter(include_in_rss=True)[:10]
+
+    def item_title(self, item):
+        return item.title
+
+    def item_description(self, item):
+        return item.short_text
 
     def item_link(self, item):
         return item.get_absolute_url()
     
     def item_pubdate(self, item):
         return item.publication_timestamp
+
+
+class TagFeed(RecentFeed):
+
+    def get_object(self, request, *args, **kwargs):
+        self.blog = get_object_or_404(Blog, language=request.LANGUAGE_CODE)
+        return  get_object_or_404(Tag, name=kwargs["tag"])
+
+    def title(self, obj):
+        return u" - ".join([self.blog.title, _("Tag: %(tag)s") % dict(tag=obj.name)])
+
+    def description(self, obj):
+        return self.blog.description
+
+    def link(self, obj):
+        return reverse("blog:index", kwargs=dict(tag=obj.name))
+
+    def items(self, obj):
+        return TaggedItem.objects.get_by_model(self.blog.published_entries().filter(
+                                                    include_in_rss=True),
+                                               obj)[:10]

@@ -1,51 +1,64 @@
-from annoying.decorators import ajax_request
+from annoying.decorators import ajax_request, JsonResponse
 from blog.forms import EntryForm
 from blog.models import Blog, Entry, Image
+from blog.utils import render_text
 from django.contrib import messages
-from django.contrib.auth.decorators import permission_required
-from django.contrib.sites.models import Site
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import Http404, HttpResponseRedirect, HttpResponse
-from django.shortcuts import get_object_or_404
+from django.http import Http404, HttpResponse, HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect
+from django.utils.decorators import method_decorator
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
+from django.views.generic import View
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView, UpdateView
 import json
 
 
-class Index(TemplateView):
+#noinspection PyUnresolvedReferences
+class BlogAdminMixin(object):
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        self.blog = get_object_or_404(Blog, language=request.LANGUAGE_CODE)
+        user = request.user
+        if user == self.blog.author or user.is_superuser:
+            return super(BlogAdminMixin, self).dispatch(request, *args, **kwargs)
+        return HttpResponseForbidden()
+
+    def get_context_data(self, **kwargs):
+        data = super(BlogAdminMixin, self).get_context_data(**kwargs)
+        data["blog"] = self.blog
+        return data
+
+
+class Index(BlogAdminMixin, TemplateView):
 
     template_name = "blog/admin/index.html"
 
-    def get_context_data(self, **kwargs):
-        site = Site.objects.get_current()
-        blog = get_object_or_404(Blog, site=site)
-        return locals()
 
-
-class EntryPreview(TemplateView):
+class EntryPreview(BlogAdminMixin, TemplateView):
 
     template_name = "blog/admin/preview.html"
+
+    def get_context_data(self, **kwargs):
+        data = super(EntryPreview, self).get_context_data(**kwargs)
+        text = self.request.POST.get("data", u"")
+        text = text.replace(Entry.MORE_MARKER, u"")
+        data["text"] = mark_safe(render_text(text))
+        return data
 
     def post(self, request, *args, **kwargs):
         return self.get(request, *args, **kwargs)
 
 
-class AddEntry(SingleObjectTemplateResponseMixin, ModelFormMixin, ProcessFormView):
+class AddEntry(BlogAdminMixin, SingleObjectTemplateResponseMixin, ModelFormMixin, ProcessFormView):
 
     form_class = EntryForm
 
-    template_name = "blog/admin/forms/entry.html"
-
-    def dispatch(self, request, *args, **kwargs):
-        site = Site.objects.get_current()
-        self.blog = get_object_or_404(Blog, site=site)
-        return super(AddEntry, self).dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        kwargs["blog"] = self.blog
-        return kwargs
+    template_name = "blog/admin/entry.html"
 
     def get(self, request, *args, **kwargs):
         self.object = None
@@ -53,7 +66,7 @@ class AddEntry(SingleObjectTemplateResponseMixin, ModelFormMixin, ProcessFormVie
 
     def post(self, request, *args, **kwargs):
         if "cancel" in request.POST:
-            return HttpResponseRedirect(reverse("blog:admin_index"))
+            return redirect("blog:admin_index")
         self.object = Entry(blog=self.blog)
         return super(AddEntry, self).post(request, *args, **kwargs)
 
@@ -71,68 +84,97 @@ class AddEntry(SingleObjectTemplateResponseMixin, ModelFormMixin, ProcessFormVie
         return reverse("blog:admin_edit_entry", args=(self.object.id,))
 
 
-class EditEntry(UpdateView):
+class EditEntry(BlogAdminMixin, TemplateView):
 
-    model = Entry
-    form_class = EntryForm
-    context_object_name = "entry"
-    template_name = "blog/admin/forms/entry.html"
+    template_name = "blog/admin/entry.html"
+
+    def get_context_data(self, **kwargs):
+        data = super(EditEntry, self).get_context_data(**kwargs)
+        if "entry_id" in kwargs:
+            data["entry"] = get_object_or_404(Entry, id=int(kwargs["entry_id"]))
+        return data
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        entry = context.get("entry")
+        context["form"] = EntryForm(instance=entry)
+        return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
         if "cancel" in request.POST:
-            return HttpResponseRedirect(reverse("blog:admin_index"))
-        return super(EditEntry, self).post(request, *args, **kwargs)
+            return redirect("blog:admin_index")
+        context = self.get_context_data(**kwargs)
+        entry = context.get("entry")
+        new_entry = False
+        if not entry:
+            new_entry = True
+            entry = Entry(blog=self.blog)
+        form = EntryForm(request.POST, instance=entry)
+        if form.is_valid():
+            entry = form.save()
+            if request.is_ajax():
+                return JsonResponse(dict(status="success",
+                                         message=form.success_message))
+            else:
+                messages.success(self.request, form.success_message)
+                if new_entry:
+                    return redirect("blog:admin_edit_entry", entry_id=entry.id)
+                context["form"] = EntryForm(instance=entry)
+                return self.render_to_response(context)
 
-    def form_invalid(self, form):
-        result = super(EditEntry, self).form_invalid(form)
-        messages.error(self.request, _(u"Please correct the indicated errors."))
-        return result
-
-    def form_valid(self, form):
-        result = super(EditEntry, self).form_valid(form)
-        messages.success(self.request, _(u"Your changes were saved."))
-        return result
-
-    def get_success_url(self):
-        return reverse("blog:admin_edit_entry", args=(self.object.id,))
-
-
-@permission_required('add_image')
-def ajax_upload_image(request):
-    files = request.FILES
-    file = files.get('file')
-    if not file:
-        return HttpResponse(json.dumps(dict(status="error")))
-    image = Image.objects.create(image=file)
-    image_data = {
-        'id': image.id,
-        'filename': image.image.name.split('/')[-1],
-        'src': image.image.thumbnail.absolute_url,
-    }
-    response = dict(status="success", message=_(u'New image was uploaded.'),
-                    image=image_data)
-    return HttpResponse(json.dumps(response))
+        else:
+            if request.is_ajax():
+                errors = {}
+                for field_name, errors_list in form.errors.items():
+                    errors[field_name] = errors_list[0]
+                return JsonResponse(dict(status="error", errors=errors,
+                                         message=form.error_message))
+            else:
+                messages.error(self.request, form.error_message)
+                context["form"] = EntryForm(request.POST)
+                return self.render_to_response(context)
 
 
-@permission_required('add_image')
-@ajax_request
-def ajax_list_entry_images(request, entry_id=None):
-    if not entry_id:
-        raise Http404()
-    entry = get_object_or_404(Entry, id=int(entry_id))
-    images = []
-    for image in entry.image_set.all():
-        images.append({
+class UploadImage(BlogAdminMixin, View):
+
+    def post(self, request, *args, **kwargs):
+        files = request.FILES
+        file = files.get('file')
+        if not file:
+            return HttpResponse(json.dumps(dict(status="error")))
+        image = Image.objects.create(image=file)
+        image_data = {
             'id': image.id,
             'filename': image.image.name.split('/')[-1],
             'src': image.image.thumbnail.absolute_url,
-        })
-    return dict(images=images)
+        }
+        response = dict(status="success", message=_(u'New image was uploaded.'),
+                        image=image_data)
+        return HttpResponse(json.dumps(response))
 
 
-@permission_required('delete_image')
-@ajax_request
-def ajax_delete_image(request):
-    id = int(request.POST.get("id"))
-    Image.objects.get(pk=id).delete()
-    return dict(status="success")
+class ListEntryImages(BlogAdminMixin, View):
+
+    @method_decorator(ajax_request)
+    def get(self, request, *args, **kwargs):
+        entry_id = kwargs.get("entry_id")
+        if not entry_id:
+            raise Http404()
+        entry = get_object_or_404(Entry, id=int(entry_id))
+        images = []
+        for image in entry.image_set.all():
+            images.append({
+                'id': image.id,
+                'filename': image.image.name.split('/')[-1],
+                'src': image.image.thumbnail.absolute_url,
+            })
+        return dict(images=images)
+
+
+class DeleteImage(BlogAdminMixin, View):
+
+    @method_decorator(ajax_request)
+    def post(self, request, *args, **kwargs):
+        id = int(request.POST.get("id"))
+        Image.objects.get(pk=id).delete()
+        return dict(status="success")

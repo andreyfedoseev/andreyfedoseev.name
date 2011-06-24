@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load blog_tags %}
+{% for entry in entries %}
+  <article class="entry">
+    <header>
+      <h1><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h1>
+      <p>
+        {% trans "Published on" %} <time datetime="{{ entry.publication_timestamp|date:"c" }}" pubdate>{{ entry.publication_timestamp|humanized_date }}</time>
+      </p>
+    </header>
+    {{ entry.short_text }}
+    <footer>
+      {% if entry.tags.exists %}
+      {% trans "Tags" %}:
+      <ul>
+        {% for tag in entry.tags %}
+          <li><a href="{% url blog:index tag=tag.name %}">{{ tag }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <a href="{{ entry.get_absolute_url }}#comments" class="comments">
+        {% if entry.comments.exists %}
+          {% blocktrans count count=entry.comments.count %}{{ count }} comment{% plural %}{{ count }} comments{% endblocktrans %}
+        {% else %}
+          {% trans "No comments" %}
+        {% endif %}
+      </a>
+    </footer>
+  </article>
+{% endfor %}

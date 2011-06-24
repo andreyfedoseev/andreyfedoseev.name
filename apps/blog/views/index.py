@@ -1,92 +1,90 @@
-from django.shortcuts import render_to_response, get_object_or_404
-from django.contrib.sites.models import Site
-from blog.models import Blog, Entry, ENTRY_TYPES
-from django.template.context import RequestContext
+from annoying.decorators import JsonResponse
+from blog.views import BlogViewMixin
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404
+from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
-import datetime
+from django.views.generic import TemplateView
 from tagging.models import Tag, TaggedItem
 
 
-POSTS_PER_PAGE = 9
+class Index(BlogViewMixin, TemplateView):
 
+    template_name = "blog/index.html"
+    POSTS_PER_PAGE = 5
 
-def paginate(entries, view_name, args=(), kwargs={}, page=None):
-    paginator = Paginator(entries, POSTS_PER_PAGE)
-    try:
-        page = int(page)
-    except (ValueError, TypeError):
-        page = 1
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            data = self.get_context_data(**kwargs)
+            entries = render_to_string("blog/include/entries-list.html",
+                                       dict(entries=data["entries"]))
+            return JsonResponse(dict(
+                entries=entries,
+                page_title=data["page_title"],
+                next_page=data["next_page"],
+                prev_page=data["prev_page"]
+            ))
+        
+        return super(Index, self).get(request, *args, **kwargs)
 
-    try:
-        page = paginator.page(page)
-    except (EmptyPage, InvalidPage):
-        page = paginator.page(paginator.num_pages)
+    def get_context_data(self, **kwargs):
+        data = super(Index, self).get_context_data(**kwargs)
 
-    if page.has_next():
-        kw = kwargs.copy()
-        kw['page'] = page.next_page_number()
-        next_page = reverse(view_name, args=args, kwargs=kw)
-    else:
+        entries = self.blog.published_entries()
+        tag = kwargs.get("tag")
+        if tag:
+            tag = get_object_or_404(Tag, name=tag)
+            entries = TaggedItem.objects.get_by_model(entries, tag)
+        if not entries.exists():
+            raise Http404()
+        paginator = Paginator(entries, self.POSTS_PER_PAGE)
+        page_number = kwargs.get("page", 1) or 1
+        page_number = int(page_number)
+        current_page = None
         next_page = None
-    if page.has_previous():
-        if page.previous_page_number() == 1:  
-            prev_page = reverse(view_name, args=args, kwargs=kwargs)
-        else:
-            kw = kwargs.copy()
-            kw['page'] = page.previous_page_number()
-            prev_page = reverse(view_name, args=args, kwargs=kw)
-    else:
-        prev_page = None 
+        prev_page = None
+        try:
+            current_page = paginator.page(page_number)
+        except (EmptyPage, InvalidPage):
+            raise Http404()
 
-    return {'entries': page.object_list,
-            'page': page,
-            'next_page': next_page,
-            'prev_page': prev_page,
-            }
+        if current_page.has_next():
+            if tag:
+                next_page = reverse("blog:index", kwargs=dict(page=page_number+1,
+                                                              tag=tag.name))
+            else:
+                next_page = reverse("blog:index", kwargs=dict(page=page_number+1))
+        if page_number == 2:
+            if tag:
+                prev_page = reverse("blog:index", kwargs=dict(tag=tag.name))
+            else:
+                prev_page = reverse("blog:index")
+        elif current_page.has_previous():
+            if tag:
+                prev_page = reverse("blog:index", kwargs=dict(page=page_number-1,
+                                                              tag=tag.name))
+            else:
+                prev_page = reverse("blog:index", kwargs=dict(page=page_number-1))
 
+        is_frontpage = page_number == 1 and not tag
 
-DISPLAY_TYPE_COOKE = 'blog_display_type'
-COOKIE_MAX_AGE = 60 * 60 * 24 * 30
-GRID_DISPLAY = 'grid'
-LIST_DISPLAY = 'list'
+        page_title_parts = []
+        if tag:
+            page_title_parts.append(_("Tag: %(tag)s") % dict(tag=tag.name))
+        if page_number != 1:
+            page_title_parts.append(_("Page %(number)i") % dict(number=page_number))
 
+        page_title = u" | ".join(page_title_parts)
 
-def display_type(request):
-    display_type = request.COOKIES.get(DISPLAY_TYPE_COOKE)
-    if display_type not in (GRID_DISPLAY, LIST_DISPLAY):
-        display_type = GRID_DISPLAY
-    return display_type
+        data.update(
+            dict(page_title=page_title,
+                 entries=current_page.object_list,
+                 prev_page=prev_page,
+                 next_page=next_page,
+                 is_frontpage=is_frontpage,
+                 tag=tag)
+        )
 
-
-def switch_display_type(request):
-    if request.method != 'GET':
-        raise Http404()
-    type = display_type(request)
-    if type == GRID_DISPLAY:
-        type = LIST_DISPLAY
-    else:
-        type = GRID_DISPLAY
-    next = request.GET.get('next', reverse('blog:index'))
-    response = HttpResponseRedirect(next)
-    response.set_cookie(DISPLAY_TYPE_COOKE, type, COOKIE_MAX_AGE)
-    return response
-    
-
-def index(request, page=None):
-    site = Site.objects.get_current()
-    blog = get_object_or_404(Blog, site=site)
-    entries = blog.published_entries()
-
-    data = {
-        'blog': blog,
-        'fixed_sidebar': True,
-        'display_type': display_type(request)
-    }
-    data.update(paginate(entries, "blog:index", page=page))
-    return render_to_response("blog/index.html", data,
-                              context_instance=RequestContext(request))
-    
-
+        return data

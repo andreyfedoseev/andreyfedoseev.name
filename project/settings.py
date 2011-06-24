@@ -15,7 +15,7 @@ TIME_ZONE = 'America/Chicago'
 
 LANGUAGES = (
     ('ru', gettext('Russian')),
-#    ('en', gettext('English')),
+    ('en', gettext('English')),
 )
 
 LANGUAGE_CODE = 'ru'
@@ -56,7 +56,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
+    'project.middleware.LocaleMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 #    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )

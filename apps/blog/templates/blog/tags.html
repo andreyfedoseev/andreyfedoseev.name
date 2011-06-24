@@ -1,0 +1,26 @@
+{% extends "blog/base.html" %}
+{% load i18n %}
+
+{% block bodyclass %}tags{% endblock %}
+
+{% block content %}
+  <section class="main">
+    <h1>{% trans "Main tags" %}</h1>
+    <p>
+      {% for tag in main_tags %}
+        <span>
+          <a class="rss" href="{% url blog:tag_feed tag=tag.name %}"></a>
+          <a href="{% url blog:index tag=tag.name %}">{{ tag.name }}</a>
+        </span>
+      {% endfor %}
+    </p>
+  </section>
+  <section class="other">
+    <h1>{% trans "Other tags" %}</h1>
+    <p>
+      {% for tag in other_tags %}
+        <a href="{% url blog:index tag=tag.name %}">{{ tag.name }}</a>
+      {% endfor %}
+    </p>
+  </section>
+{% endblock %}

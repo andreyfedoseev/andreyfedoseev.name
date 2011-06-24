@@ -1,0 +1,68 @@
+{% load i18n %}
+<form id="comment-form" action="{% url blog:add_comment entry_id=entry.id %}" method="post">
+  {{ form.parent }}
+  
+  <div class="field text">
+    {{ form.text.label_tag }}
+    <div class="errors"></div>
+    {{ form.text }}
+    <div class="help">
+      {{ form.text.help_text|safe }}
+    </div>
+    <div id="preview-area"></div>
+  </div>
+
+  <div style="display: none;" id="markdown-help">{% filter linebreaksbr %}{% blocktrans %}This is a paragraph, which is text surrounded by whitespace. Paragraphs can be on one
+line (or many), and can drone on for hours.
+
+Here is a Markdown link to [Google](http://google.com), and a literal.
+
+Now some inline markup like _italics_,  **bold**, and `code()`.
+
+> Blockquotes are like quoted text in email replies
+>> And, they can be nested
+
+* Bullet lists are easy too
+
+1. A numbered list
+
+And now some code:
+
+&nbsp;&nbsp;&nbsp;&nbsp;// Code is just text indented a bit
+&nbsp;&nbsp;&nbsp;&nbsp;which(is_easy) to_remember();
+{% endblocktrans %}{% endfilter %}</div>
+
+  <div class="field name">
+    {{ form.author_name.label_tag }}
+    <div class="errors"></div>
+    {{ form.author_name }}
+    <div class="help">
+      &nbsp;{{ form.author_name.help_text }}
+    </div>
+  </div>
+
+  <div class="field email">
+    {{ form.author_email.label_tag }}
+    <div class="errors"></div>
+    {{ form.author_email }}
+    <div class="help">
+      {{ form.author_email.help_text }}
+    </div>
+  </div>
+  
+  
+  <div class="field url">
+    {{ form.author_url.label_tag }}
+    <div class="errors"></div>
+    {{ form.author_url }}
+    <div class="help">
+      {{ form.author_url.help_text }}
+    </div>
+  </div>
+  
+  <div class="buttons">
+    <label for="id_preview"><input type="checkbox" id="id_preview" /> {% trans "Preview" %}</label>
+    <span class="indicator"></span>
+    <input type="submit" value="{% trans "Submit" %}" />
+  </div>
+</form>
