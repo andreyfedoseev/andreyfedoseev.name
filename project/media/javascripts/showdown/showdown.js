@@ -1293,4 +1293,4 @@ var escapeCharacters_callback = function(wholeMatch,m1) {
 	return "~E"+charCodeToEscape+"E";
 }
 
-} // end of Showdown.converter
+}; // end of Showdown.converter
