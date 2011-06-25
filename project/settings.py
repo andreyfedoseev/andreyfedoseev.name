@@ -121,3 +121,8 @@ MAX_TAG_LENGTH = 100
 SIMPLEGRAVATAR_DEFAULT = "identicon"
 
 LOGIN_URL = "/login"
+
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.CSSMinFilter',
+]
