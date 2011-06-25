@@ -2,11 +2,15 @@ from annoying.decorators import JsonResponse, ajax_request
 from blog.forms import CommentForm, BlogAuthorCommentForm
 from blog.models import Entry, Comment
 from blog.views import BlogViewMixin
+from django.conf import settings
+from django.contrib.sites.models import Site
+from django.core.mail import EmailMessage
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.template import Context
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
+from django.utils.translation import ugettext as _
 from django.views.generic import View
 
 
@@ -42,6 +46,22 @@ class AddComment(BlogViewMixin, View):
                 cookies[AUTHOR_NAME_COOKIE] = form.cleaned_data['author_name']
                 cookies[AUTHOR_EMAIL_COOKIE] = form.cleaned_data['author_email']
                 cookies[AUTHOR_URL_COOKIE] = form.cleaned_data['author_url']
+
+                # Send notification to author
+                link = "http://%s%s#comment%i" % (Site.objects.get_current().domain,
+                                                  entry.get_absolute_url(),
+                                                  comment.id)
+                message_text = render_to_string("blog/email/author-notification.html",
+                                                Context(dict(comment=comment,
+                                                             link=link,
+                                                             entry=entry,
+                                                             blog=self.blog)))
+                message = EmailMessage(subject=_(u'New comment to \xab%(title)s\xbb') % dict(title=entry.title),
+                                       body=message_text,
+                                       to=[self.blog.author.email],
+                                       from_email=settings.DEFAULT_FROM_EMAIL)
+                message.content_subtype = "html"
+                message.send(fail_silently=True)
 
         else:
             errors = {}
