@@ -6,6 +6,9 @@
   <link rel="stylesheet" href="{{ STATIC_URL }}{% less "styles/blog/blog.less" %}" />
 {% endcompress %}
 
-<!--[if lte IE 7 ]>
+<!--[if lt IE 9 ]>
   <link rel="stylesheet" href="{{ STATIC_URL }}{% less "styles/blog/ie.less" %}" />
+<![endif]-->
+<!--[if lt IE 8 ]>
+  <link rel="stylesheet" href="{{ STATIC_URL }}{% less "styles/blog/ie7.less" %}" />
 <![endif]-->

@@ -12,6 +12,9 @@
     {% include "blog/include/css.html" %}
     {% block extra-css %}{% endblock %}
     {% block extra-head %}{% endblock %}
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
   <body class="{% block bodyclass %}{% endblock %}">
   <header class="global">

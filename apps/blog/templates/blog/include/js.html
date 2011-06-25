@@ -9,6 +9,10 @@
 
 <script src="{% url i18n.js %}"></script>
 
+<!--[if lt IE 9]>
+  <script src="{{ STATIC_URL }}javascripts/jquery/json2.js"></script>
+<![endif]-->
+
 {% compress js %}
   <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.effects.core.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.effects.drop.js"></script>
