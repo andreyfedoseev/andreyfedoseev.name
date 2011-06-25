@@ -1,5 +1,6 @@
 from blog.feeds import RecentFeed, TagFeed
-from blog.views.admin import EntryPreview, Index as AdminIndex, EditEntry, UploadImage, ListEntryImages, DeleteImage
+from blog.views.admin import EntryPreview, Index as AdminIndex, EditEntry, \
+    UploadImage, ListEntryImages, DeleteImage
 from blog.views.archive import Archive
 from blog.views.comments import AddComment
 from blog.views.entry import Entry

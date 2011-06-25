@@ -4,7 +4,6 @@ from blog.models import Blog, Entry, Image
 from blog.utils import render_text
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.decorators import method_decorator
@@ -12,8 +11,6 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from django.views.generic import View
 from django.views.generic.base import TemplateView
-from django.views.generic.detail import SingleObjectTemplateResponseMixin
-from django.views.generic.edit import ModelFormMixin, ProcessFormView, UpdateView
 import json
 
 
@@ -52,36 +49,6 @@ class EntryPreview(BlogAdminMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         return self.get(request, *args, **kwargs)
-
-
-class AddEntry(BlogAdminMixin, SingleObjectTemplateResponseMixin, ModelFormMixin, ProcessFormView):
-
-    form_class = EntryForm
-
-    template_name = "blog/admin/entry.html"
-
-    def get(self, request, *args, **kwargs):
-        self.object = None
-        return super(AddEntry, self).get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        if "cancel" in request.POST:
-            return redirect("blog:admin_index")
-        self.object = Entry(blog=self.blog)
-        return super(AddEntry, self).post(request, *args, **kwargs)
-
-    def form_invalid(self, form):
-        result = super(AddEntry, self).form_invalid(form)
-        messages.error(self.request, _(u"Please correct the indicated errors."))
-        return result
-
-    def form_valid(self, form):
-        result = super(AddEntry, self).form_valid(form)
-        messages.success(self.request, _(u"New entry was created."))
-        return result
-
-    def get_success_url(self):
-        return reverse("blog:admin_edit_entry", args=(self.object.id,))
 
 
 class EditEntry(BlogAdminMixin, TemplateView):
