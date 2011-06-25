@@ -8,7 +8,7 @@ import re
 
 
 def fix_embeds(value):
-    soup = BeautifulSoup(value)
+    soup = BeautifulSoup(value, selfClosingTags=["param"])
     for object in soup.findAll("object"):
         movie = None
         for param in object.findAll("param"):
