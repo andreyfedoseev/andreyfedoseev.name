@@ -86,6 +86,7 @@ INSTALLED_APPS = (
     'tagging',
     'coffeescript',
     'less',
+    'flatblocks',
     'blog',
     'project',
 )

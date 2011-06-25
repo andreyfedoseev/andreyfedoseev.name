@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   {% load i18n %}
+  {% load flatblock_tags %}
   <head>
     <meta charset="utf-8"/>
     <meta name="google-site-verification" content="x2ZAuUS4Bc581RdBqcKRWDdjYvKe6-wJ7PhqglEKE6k" />
@@ -46,6 +47,6 @@
 
   {% include "blog/include/js.html" %}
   {% block extra-js %}{% endblock %}
-  {% include "include/google-analytics.html" %}
+  {% flatblock "analytics" %}
 </body>
 </html>
