@@ -15,30 +15,35 @@ window.init_blog_index = ->
     $entries_ct = $("#content div.entries")
     $title = $("title")
     base_window_title = $.trim($title.text().split("|").pop())
-    $links.click((e)=>
-      e.preventDefault()
-      $target = $(e.target)
-      if $target.is("span")
-        $target = $target.parent()
-      next = $target.hasClass("next")
-      $entries_ct.effect("drop", {direction: if next then "left" else "right"}, ->
-        $entries_ct.show()
-        $entries_ct.addClass("loading")
-        $entries_ct.empty()
-        console.log($target.attr("href"))
-        History.pushState({next: next}, null, $target.attr("href"))
-      )
-    )
-    History.Adapter.bind(window, "statechange", =>
-      state = History.getState()
-      url = state.url
-      next = state.data.next
-      $.getJSON(url, (data)=>
-        $entries_ct.removeClass("loading")
+
+    pages = {}
+
+    fetch_page = (url, callback=null, foreground=true)->
+      if url not of pages
+        if foreground
+          $entries_ct.addClass("loading")
+        $.getJSON(url, (data)->
+          pages[url] = data
+          if foreground
+            $entries_ct.removeClass("loading")
+          if callback
+            callback(data)
+        )
+      else
+        if callback
+          callback(pages[url])
+
+    prefetch_pages = ->
+      if $next.attr("href")
+        fetch_page($next.attr("href"), null, false)
+      if $prev.attr("href")
+        fetch_page($prev.attr("href"), null, false)
+
+    show_page = (url, next=false)->
+      fetch_page(url, (data)->
         $entries_ct.hide()
         $entries_ct.html(data.entries)
         $entries_ct.effect("drop", {mode: "show", direction: if next then "right" else "left"})
-        data.entries = null
         if data.next_page
           $next.attr("href", data.next_page)
           $next.show()
@@ -53,8 +58,30 @@ window.init_blog_index = ->
           $title.text("#{data.page_title} | #{base_window_title}")
         else
           $title.text(base_window_title)
+        prefetch_pages()
+      )
+
+    $links.click((e)=>
+      e.preventDefault()
+      $target = $(e.target)
+      if $target.is("span")
+        $target = $target.parent()
+      next = $target.hasClass("next")
+      $entries_ct.effect("drop", {direction: if next then "left" else "right"}, ->
+        $entries_ct.show()
+        $entries_ct.empty()
+        History.pushState({next: next}, null, $target.attr("href"))
       )
     )
+
+    History.Adapter.bind(window, "statechange", =>
+      state = History.getState()
+      url = state.url
+      next = state.data.next
+      show_page(url, next)
+    )
+
+    prefetch_pages()
 
 
 window.init_comment_form = ->

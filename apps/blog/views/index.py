@@ -43,8 +43,8 @@ class Index(BlogViewMixin, TemplateView):
         page_number = kwargs.get("page", 1) or 1
         page_number = int(page_number)
         current_page = None
-        next_page = None
-        prev_page = None
+        next_page = ""
+        prev_page = ""
         try:
             current_page = paginator.page(page_number)
         except (EmptyPage, InvalidPage):
@@ -67,6 +67,12 @@ class Index(BlogViewMixin, TemplateView):
                                                               tag=tag.name))
             else:
                 prev_page = reverse("blog:index", kwargs=dict(page=page_number-1))
+
+        if next_page:
+            next_page = self.request.build_absolute_uri(next_page)
+        if prev_page:
+            prev_page = self.request.build_absolute_uri(prev_page)
+
 
         is_frontpage = page_number == 1 and not tag
 
