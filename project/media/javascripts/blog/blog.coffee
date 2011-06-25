@@ -135,12 +135,17 @@ window.init_comment_form = ->
     text_changed = true
   )
 
+  markdown_converter = new Showdown.converter()
+
   update_preview = ->
     if not preview_enabled
       return
     if text_changed
       text_changed = false
-      $preview_area.html(markdown.toHTML($text.val()))
+      $preview_area.html(markdown_converter.makeHtml($text.val()))
+      $preview_area.find("pre code").each((i, el)->
+        hljs.highlightBlock(el, '    ')
+      )
     setTimeout(update_preview, 100)
 
   enable_preview = ->
