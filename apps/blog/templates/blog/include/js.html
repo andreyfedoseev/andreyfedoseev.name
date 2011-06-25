@@ -3,16 +3,15 @@
 
 {% if debug %}
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.min.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/jquery/jquery-ui.min.js"></script>
 {% else %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
 {% endif %}
 
 <script src="{% url i18n.js %}"></script>
 
 {% compress js %}
-  <script src="{{ STATIC_URL }}{% coffeescript "javascripts/blog/blog.coffee" %}"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.effects.core.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.effects.drop.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/amplify.store.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/history.adapter.jquery.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/history.js"></script>
@@ -24,4 +23,5 @@
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.validate.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.qtip.js"></script>
   <script src="{{ STATIC_URL }}javascripts/markdown-js/markdown.js"></script>
+  <script src="{{ STATIC_URL }}{% coffeescript "javascripts/blog/blog.coffee" %}"></script>
 {% endcompress %}

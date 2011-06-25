@@ -3,15 +3,18 @@
 
 {% if debug %}
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.min.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/jquery/jquery-ui.min.js"></script>
 {% else %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
 {% endif %}
 
 <script src="{% url i18n.js %}"></script>
 
 {% compress js %}
+  <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.ui.core.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.ui.datepicker.js"></script>
+  {% if request.LANGUAGE_CODE != "en" %}
+    <script src="{{ STATIC_URL }}javascripts/jquery/ui/i18n/jquery.ui.datepicker-{{ request.LANGUAGE_CODE }}.js"></script>
+  {% endif %}
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.tmpl.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.ocupload.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.validate.js"></script>
