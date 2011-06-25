@@ -135,7 +135,7 @@ class EntryForm(forms.Form):
         return self.instance
 
 
-class CommentForm(ModelForm):
+class BlogAuthorCommentForm(ModelForm):
 
     success_message = _(u"Your comment was added.")
     error_message = _(u"Please correct the indicated errors.")
@@ -143,11 +143,18 @@ class CommentForm(ModelForm):
     parent = forms.ModelChoiceField(queryset=Comment.objects.all(),
                                     required=False,
                                     widget=forms.HiddenInput())
-    
+
     text = forms.CharField(required=True, widget=forms.Textarea(),
                            label=_(u"Text"),
                            help_text=_("""You can use <a class="dashed markdown" href="#">Markdown</a> here."""))
-    
+
+    class Meta:
+        model = Comment
+        fields = ["parent", "text"]
+
+
+class CommentForm(BlogAuthorCommentForm):
+
     author_name = forms.CharField(required=True, label=_(u"Your name"),
                                   widget=TextInput())
     author_email = forms.EmailField(required=False, label=_(u"Your email"),
@@ -156,7 +163,7 @@ class CommentForm(ModelForm):
     author_url = forms.URLField(required=False, label=_(u"Your site URL"),
                                 widget=TextInput(),
                                 help_text=_("Optional."))
-    
+
     class Meta:
         model = Comment
         fields = ["parent", "text", "author_name", "author_email",

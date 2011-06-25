@@ -146,8 +146,9 @@ class Comment(models.Model):
 
     timestamp = models.DateTimeField(null=False, blank=False, default=datetime.datetime.now)
     
-    author = models.ForeignKey(User, null=True, blank=True, related_name="blog_comments")
-    author_name = models.CharField(max_length=100)
+    by_blog_author = models.BooleanField(default=False)
+
+    author_name = models.CharField(max_length=100, null=True, blank=True)
     author_email = models.EmailField(max_length=100, null=True, blank=True)
     author_url = models.URLField(max_length=200, null=True, blank=True)
     

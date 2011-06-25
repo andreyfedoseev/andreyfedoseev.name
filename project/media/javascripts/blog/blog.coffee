@@ -112,6 +112,38 @@ window.init_comment_form = ->
     $footer_show_comment.show()
   )
 
+  $comments.delegate("a.delete", "click", (e)->
+    e.preventDefault()
+    $target = $(this)
+    $comment = $(this).closest("article.comment")
+    level = $comment.data("lvl")
+    thread = [$comment[0]]
+    for c in $comment.nextAll("article.comment")
+      l = $(c).data("lvl")
+      if l > level
+        thread.push(c)
+      else
+        break
+    if thread.length == 1
+      msg = gettext("Delete this comment?")
+    else
+      count = thread.length - 1
+      msg = ngettext("Delete this comment and reply?",
+                     "Delete this comment and %(count)s replies?",
+                     count)
+      msg = interpolate(msg, {count: count}, true)
+    apprise(msg,
+      verify: true,
+      textYes: gettext("Yes"),
+      textNo: gettext("No")
+    (r)->
+      if r
+        $(thread).fadeOut()
+        $.post($target.attr("href"), {}, (response)->
+        )
+    )
+  )
+
   $form.find("a.markdown").qtip(
     content:
       text: ->
@@ -167,6 +199,8 @@ window.init_comment_form = ->
       disable_preview()
   )
 
+  $comments_header = $comments.find("header:first")
+
   $form.validate(
     rules:
       author_name:
@@ -200,7 +234,7 @@ window.init_comment_form = ->
           if $comment.length
             $(response.comment).insertAfter($comment).fadeIn()
           else
-            $(response.comment).appendTo($comments).fadeIn()
+            $(response.comment).insertAfter($comments_header).fadeIn()
           $form.detach().insertAfter($comments.find("article.comment").last())
         $buttons_ct.removeClass("loading")
         $submit_btn.removeAttr("disabled")

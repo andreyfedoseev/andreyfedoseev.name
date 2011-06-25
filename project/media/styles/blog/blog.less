@@ -190,6 +190,11 @@ footer.global {
       font-size: 1.1em;
     }
   }
+  .comment {
+    header {
+      margin-top: 0;
+    }
+  }
 }
 
 @comment-level-margin: 1.5em;
@@ -228,7 +233,21 @@ footer.global {
   footer {
     font-size: 0.8em;
     .align-right;
+    ul {
+      .list-no-style;
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      li {
+        display: inline-block;
+        margin-left: 1em;
+      }
+    }
   }
+}
+
+.comment.by-author {
+  border: 1px solid @light-gray;
 }
 
 .comment.lvl0 {

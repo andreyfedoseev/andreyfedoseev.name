@@ -1,4 +1,4 @@
-from blog.forms import CommentForm
+from blog.forms import CommentForm, BlogAuthorCommentForm
 from blog.models import Entry as EntryModel
 from blog.views import BlogViewMixin
 from blog.views.comments import AUTHOR_NAME_COOKIE, AUTHOR_EMAIL_COOKIE, AUTHOR_URL_COOKIE
@@ -19,12 +19,15 @@ class Entry(BlogViewMixin, TemplateView):
             return redirect(entry, permanent=True)
         page_title = entry.title
 
-        initial = {}
-        if self.request.user.is_anonymous():
-            initial['author_name'] = self.request.COOKIES.get(AUTHOR_NAME_COOKIE, "").decode('utf-8')
-            initial['author_email'] = self.request.COOKIES.get(AUTHOR_EMAIL_COOKIE, "").decode('utf-8')
-            initial['author_url'] = self.request.COOKIES.get(AUTHOR_URL_COOKIE, "").decode('utf-8')
-        comment_form = CommentForm(initial=initial)
+        if self.is_author:
+            comment_form = BlogAuthorCommentForm()
+        else:
+            initial = {}
+            if self.request.user.is_anonymous():
+                initial['author_name'] = self.request.COOKIES.get(AUTHOR_NAME_COOKIE, "").decode('utf-8')
+                initial['author_email'] = self.request.COOKIES.get(AUTHOR_EMAIL_COOKIE, "").decode('utf-8')
+                initial['author_url'] = self.request.COOKIES.get(AUTHOR_URL_COOKIE, "").decode('utf-8')
+            comment_form = CommentForm(initial=initial)
 
         data.update(dict(entry=entry, page_title=page_title,
                          comment_form=comment_form))

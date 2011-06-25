@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-24 07:45-0500\n"
+"POT-Creation-Date: 2011-06-25 11:44-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,37 +19,41 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: media/CACHE/js/8b2650bb5c1e.js:97
-#: media/COFFEESCRIPT_CACHE/javascripts/blog/admin-fb479774565a.js:55
-msgid "Cancel"
-msgstr "Отмена"
-
-#: media/COFFEESCRIPT_CACHE/javascripts/blog/admin-fb479774565a.js:49
-msgid "Delete this image?"
-msgstr "Удалить это изображение?"
-
-#: media/COFFEESCRIPT_CACHE/javascripts/blog/admin-fb479774565a.js:60
-msgid "Delete"
-msgstr "Удалить"
-
-#: media/COFFEESCRIPT_CACHE/javascripts/blog/blog-93714718e1fa.js:96
-#: media/COFFEESCRIPT_CACHE/javascripts/blog/blog-93714718e1fa.js:106
 msgid "This field is required."
 msgstr "Это поле нужно заполнить."
 
-#: media/COFFEESCRIPT_CACHE/javascripts/blog/blog-93714718e1fa.js:97
 msgid "Name is too short."
 msgstr "Слишком короткое имя."
 
-#: media/COFFEESCRIPT_CACHE/javascripts/blog/blog-93714718e1fa.js:100
 msgid "Enter a valid email address."
 msgstr "Это не похоже на email."
 
-#: media/COFFEESCRIPT_CACHE/javascripts/blog/blog-93714718e1fa.js:103
 msgid "Enter a valid URL."
 msgstr "Это не похоже на URL."
 
-#: media/COFFEESCRIPT_CACHE/javascripts/blog/blog-93714718e1fa.js:107
 msgid "Text is too short."
 msgstr "Слишком короткий текст."
 
+msgid "Delete this image?"
+msgstr "Удалить это изображение?"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Delete this comment?"
+msgstr "Удалить этот комментарий?"
+
+msgid "Delete this comment and reply?"
+msgid_plural "Delete this comment and %(count)s replies?"
+msgstr[0] "Удалить этот комментарий и ответ?"
+msgstr[1] "Удалить этот комментарий и %(count)s ответа?"
+msgstr[2] "Удалить этот комментарий и %(count)s ответов?"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "No"
+msgstr "Нет"

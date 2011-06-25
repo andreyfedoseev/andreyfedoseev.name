@@ -2,7 +2,7 @@ from blog.feeds import RecentFeed, TagFeed
 from blog.views.admin import EntryPreview, Index as AdminIndex, EditEntry, \
     UploadImage, ListEntryImages, DeleteImage
 from blog.views.archive import Archive
-from blog.views.comments import AddComment
+from blog.views.comments import AddComment, DeleteComment
 from blog.views.entry import Entry
 from blog.views.index import Index
 from blog.views.tags import Tags
@@ -22,6 +22,7 @@ urlpatterns = patterns('blog.views',
 
     # Comments
     url(r'^add-comment/(?P<entry_id>\d+)/$', AddComment.as_view(), name="add_comment"),
+    url(r'^delete-comment/(?P<comment_id>\d+)/$', DeleteComment.as_view(), name="delete_comment"),
 
     # Tags
     url(r'^tags/$', Tags.as_view(), name="tags"),

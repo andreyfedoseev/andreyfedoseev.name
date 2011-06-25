@@ -1,21 +1,35 @@
 {% load i18n %}
 {% load blog_tags %}
 {% load simplegravatar %}
-<article class="comment lvl{{ comment.level }}" data-id="{{ comment.id }}" id="comment{{ comment.id }}">
+<article class="comment lvl{{ comment.level }} {% if comment.by_blog_author %}by-author{% endif %}"
+         data-id="{{ comment.id }}" data-lvl="{{ comment.level }}"
+         id="comment{{ comment.id }}">
   <header>
-    {% show_gravatar comment.author_email 20 %}
-    <span class="author">
-      {% if comment.author_url %}
-        <a href="{{ comment.author_url }}" rel="nofollow">{{ comment.author_name }}</a>
-      {% else %}
-        {{ comment.author_name }}
-      {% endif %}
-    </span>
+    {% if comment.by_blog_author %}
+      {% show_gravatar blog.author.email 20 %}
+      <span class="author">
+        <a href="{{ blog_absolute_uri }}">{{ blog.author_name }}</a>
+      </span>
+    {% else %}
+      {% show_gravatar comment.author_email 20 %}
+      <span class="author">
+        {% if comment.author_url %}
+          <a href="{{ comment.author_url }}" rel="nofollow">{{ comment.author_name }}</a>
+        {% else %}
+          {{ comment.author_name }}
+        {% endif %}
+      </span>
+    {% endif %}
     <time class="clearfix" datetime="{{ comment.timestamp|date:"c" }}">{{ comment.timestamp|humanized_date }}</time>
   </header>
   {{ comment.text|safe_markdown }}
   <footer>
-    <a class="reply dashed" href="#comment{{ comment.id }}">{% trans "Reply" %}</a>
+    <ul>
+      {% if is_author %}
+        <li><a class="delete dashed" href="{% url blog:delete_comment comment_id=comment.id %}">{% trans "Delete" %}</a></li>
+      {% endif %}
+      <li><a class="reply dashed" href="#comment{{ comment.id }}">{% trans "Reply" %}</a></li>
+    </ul>
   </footer>
 </article>
 
