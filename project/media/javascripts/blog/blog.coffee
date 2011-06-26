@@ -160,43 +160,24 @@ window.init_comment_form = ->
   )
 
   $preview_area = $form.find("#preview-area")
-  preview_enabled = null
-  text_changed = false
-
-  $text.keyup((e)->
-    text_changed = true
-  )
 
   markdown_converter = new Showdown.converter()
 
-  update_preview = ->
-    if not preview_enabled
-      return
-    if text_changed
-      text_changed = false
-      $preview_area.html(markdown_converter.makeHtml($text.val()))
-      $preview_area.find("pre code").each((i, el)->
-        hljs.highlightBlock(el, '    ')
-      )
-    setTimeout(update_preview, 100)
-
-  enable_preview = ->
-    preview_enabled = true
-    $preview_area.fadeIn()
-    update_preview()
-
-  disable_preview = ->
-    preview_enabled = false
-    $preview_area.fadeOut()
+  $text.textareaPreview(
+    container: $preview_area,
+    enabled: false,
+    preprocess: (text)->
+      markdown_converter.makeHtml(text)
+  )
 
   $preview_checkbox = $form.find("#id_preview")
 
   $preview_checkbox.change((e)->
     $this = $(this)
     if $this.attr("checked")
-      enable_preview()
+      $text.textareaPreview("enable")
     else
-      disable_preview()
+      $text.textareaPreview("disable")
   )
 
   $comments_header = $comments.find("header:first")
