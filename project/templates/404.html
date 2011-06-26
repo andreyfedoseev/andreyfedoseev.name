@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}404 {% trans "Page not found" %}{% endblock %}
+{% block title %}404 {% trans "Page Not Found" %}{% endblock %}
+{% block bodyclass %}e404{% endblock %}
 {% block content %}
-<div class="span-10 prepend-2 last">
-  <img src="{{ MEDIA_URL }}images/fuuuuu.jpg" alt="Fuuuuu" />
-</div>
-<div class="span-10 prepend-top message">
-<h1>404</h1>
-<h2>{% trans "Oh, sh*t! <br/> We can't find this page :-(" %}</h2>
-</div>
-<div class="clear span-8 prepend-8 prepend-top">
-<h2><a href="/">{% trans "Skip to homepage" %}</a></h2>
-</div>
+  <h1>{% trans "Page Not Found" %}</h1>
+  <p>{% blocktrans %}We are very sorry but we can't show this page to you. We just don't have it.{% endblocktrans %}</p>
+  <p>
+    {% url frontpage as url %}
+    {% blocktrans %}Why don't you visit our <a href="{{ url }}">homepage</a>?{% endblocktrans %}</p>
+  <p>
+    <img src="http://placekitten.com/300/200" width="300" height="200" />
+  </p>
 {% endblock %}

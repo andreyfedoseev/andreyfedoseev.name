@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}500 {% trans "Internal application error" %}{% endblock %}
+{% block title %}500 {% trans "Internal Application Error" %}{% endblock %}
+{% block bodyclass %}e500{% endblock %}
 {% block content %}
-<div class="span-6 prepend-4 last">
-  <div class="loud">{% trans "Problems, officer?" %}</div>
-  <img src="/media/images/trollface.jpg" alt="{% trans "Problems, officer?" %}" />
-</div>
-<div class="span-14 prepend-top message">
-<h1>500 {% trans "Internal application error" %}</h1>
-<h2>{% trans "Oh, sh*t! <br/> This website is going to bang in<br/> 3 seconds!" %}</h2>
-</div>
-<div class="clear span-8 prepend-8 prepend-top">
-<h2><a href="/">{% trans "Skip to homepage" %}</a></h2>
-</div>
+  <h1>{% trans "Internal Application Error" %}</h1>
+  <p>{% blocktrans %}Something very wrong happend to our site. We are working hard to fix it.{% endblocktrans %}</p>
+  <p>
+    {% url frontpage as url %}
+    {% blocktrans %}Why don't you visit our <a href="{{ url }}">homepage</a>?{% endblocktrans %}</p>
+  <p>
+  <p>
+    <img src="http://placekitten.com/300/200" width="300" height="200" />
+  </p>
 {% endblock %}

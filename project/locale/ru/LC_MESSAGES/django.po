@@ -8,38 +8,44 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 02:16-0600\n"
+"POT-Creation-Date: 2011-06-26 10:55-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings.py:27
+#: settings.py:17
 msgid "Russian"
 msgstr "Русский"
 
-#: templates/404.html:3
-msgid "Page not found"
+#: settings.py:18
+msgid "English"
+msgstr "English"
+
+#: templates/404.html:3 templates/404.html.py:6
+msgid "Page Not Found"
 msgstr "Страница не найдена"
 
-#: templates/404.html:10
-msgid "Oh, sh*t! <br/> We can't find this page :-("
-msgstr "Б*я! <br/> Кто-то украл эту страницу!"
+#: templates/404.html:7
+msgid ""
+"We are very sorry but we can't show this page to you. We just don't have it."
+msgstr ""
+"Нам очень жаль, но мы не можем показать вам эту страницу. Потому что у нас её нет."
 
-#: templates/404.html:13 templates/500.html:13
-msgid "Skip to homepage"
-msgstr "Перейти на главную"
+#: templates/404.html:10 templates/500.html:10
+#, python-format
+msgid "Why don't you visit our <a href=\"%(url)s\">homepage</a>?"
+msgstr "Почему бы вам не перейти на <a href=\"%(url)s\">главную страницу</a>?"
 
-#: templates/500.html:3 templates/500.html.py:9
-msgid "Internal application error"
-msgstr "Ошибка на сервере"
+#: templates/500.html:3 templates/500.html.py:6
+msgid "Internal Application Error"
+msgstr "Ошибка на сайте"
 
-#: templates/500.html:6
-msgid "Problems, officer?"
-msgstr "Проблемы?"
-
-#: templates/500.html:10
-msgid "Oh, sh*t! <br/> This website is going to bang in<br/> 3 seconds!"
-msgstr "Б*я!<br/> Этот сайт взорвётся через 3 секунды!"
+#: templates/500.html:7
+msgid ""
+"Something very wrong happend to our site. We are working hard to fix it."
+msgstr ""
+"С нашим сайтом случилась беда. Мы уже его чиним."

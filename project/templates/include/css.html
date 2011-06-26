@@ -1,0 +1,5 @@
+{% load compress %}
+{% load less %}
+{% compress css %}
+  <link rel="stylesheet" href="{{ STATIC_URL }}{% less "styles/base.less" %}" />
+{% endcompress %}
