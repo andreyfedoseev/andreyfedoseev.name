@@ -12,18 +12,19 @@ sitemaps = {
     'blog': BlogSitemap,
 }
 
-urlpatterns = patterns(
+common_patterns = patterns(
     '',
-    url(r'^$', 'project.views.frontpage', name='frontpage'),
-    url(r'^login$', 'django.contrib.auth.views.login', name="auth_login"),
-    url(r'^blog/', include('blog.urls', namespace="blog", app_name="blog")),
-    url(r'^about/$', 'django.views.generic.simple.direct_to_template', {'template': 'blog/include/about.html'}, name="about"),
-    url(r'^cv/$', 'django.views.generic.simple.direct_to_template', {'template': 'cv.html'}, name="cv"),
-    url(r'^admin/', include(admin.site.urls)),
     url(r'^robots.txt$', include('robots.urls')),
     url(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
     url(r'^i18n.js$', 'django.views.i18n.javascript_catalog', {'packages': ("project")}, name="i18n.js"),
+    url(r'^admin/', include(admin.site.urls)),
 )
+
+
+urlpatterns = common_patterns + patterns("",
+    url(r"^", include("project.local_urls")),
+)
+
 
 if settings.DEBUG:
     urlpatterns += patterns('',

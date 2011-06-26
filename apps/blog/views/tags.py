@@ -1,4 +1,5 @@
 from blog.views import BlogViewMixin
+from django.http import Http404
 from django.views.generic import TemplateView
 from django.utils.translation import ugettext as _
 from tagging.models import Tag
@@ -13,6 +14,8 @@ class Tags(BlogViewMixin, TemplateView):
         tags = Tag.objects.usage_for_queryset(self.blog.published_entries(),
                                               counts=True)
         tags.sort(key=lambda x: x.count, reverse=True)
+        if not tags:
+            raise Http404()
         mean_count = float(sum([tag.count for tag in tags])) / float(len(tags))
 
         main_tags = []

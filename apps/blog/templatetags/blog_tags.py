@@ -165,3 +165,10 @@ def safe_markdown(value, arg=''):
         else:
             return mark_safe(force_unicode(markdown.markdown(smart_str(value))))
 safe_markdown.is_safe = True
+
+
+@register.inclusion_tag("blog/include/localized-flatblock.html", takes_context=True)
+def localized_flatblock(context, name):
+    request = context["request"]
+    name = "%s-%s" % (name, request.LANGUAGE_CODE)
+    return dict(name=name)

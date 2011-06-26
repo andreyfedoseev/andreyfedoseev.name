@@ -3,6 +3,7 @@ from blog.utils import render_text
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -28,9 +29,12 @@ class Blog(models.Model):
     def __unicode__(self):
         return self.title
 
-    @models.permalink
     def get_absolute_url(self):
-        return "blog:index", []
+        if self.language == settings.LANGUAGE_CODE:
+            urlconf = None
+        else:
+            urlconf = "%s_%s" % (settings.ROOT_URLCONF, self.language)
+        return reverse("blog:index", urlconf=urlconf)
 
     def published_entries(self):
         return Entry.objects.published().filter(blog=self)
@@ -87,9 +91,13 @@ class Entry(models.Model):
             return u"Update for \"%s\"" % unicode(self.update_for) 
         return u"Entry #%i" % self.id
     
-    @models.permalink
     def get_absolute_url(self):
-        return 'blog:entry', [], dict(id=self.id, slug=self.slug)
+        if self.blog.language == settings.LANGUAGE_CODE:
+            urlconf = None
+        else:
+            urlconf = "%s_%s" % (settings.ROOT_URLCONF, self.blog.language)
+        return reverse("blog:entry", urlconf=urlconf,
+                       kwargs=dict(id=self.id, slug=self.slug))
 
     def threaded_comments(self):
         return self.comments.order_by('tree_id', 'lft')
