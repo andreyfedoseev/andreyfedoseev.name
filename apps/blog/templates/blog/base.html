@@ -47,6 +47,8 @@
 
   {% include "blog/include/js.html" %}
   {% block extra-js %}{% endblock %}
-  {% flatblock "analytics" %}
+  {% if not debug %}
+    {% flatblock "analytics" %}
+  {% endif %}
 </body>
 </html>
