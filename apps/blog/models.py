@@ -31,7 +31,7 @@ class Blog(models.Model):
 
     def get_absolute_url(self):
         if self.language == settings.LANGUAGE_CODE:
-            urlconf = None
+            urlconf = settings.ROOT_URLCONF
         else:
             urlconf = "%s_%s" % (settings.ROOT_URLCONF, self.language)
         return reverse("blog:index", urlconf=urlconf)

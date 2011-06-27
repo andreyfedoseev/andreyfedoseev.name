@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   {% load i18n %}
+  {% load blog_tags %}
   {% load flatblock_tags %}
   <head>
     <meta charset="utf-8"/>
@@ -25,6 +26,7 @@
       <h1><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></h1>
     {% endif %}
     {% include "blog/include/navigation.html" %}
+    <span class="locale-switcher">{% locale_switcher %}</span>
   </header>
 
   <div class="page">

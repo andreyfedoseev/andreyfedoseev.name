@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
-from blog.models import Image
+from blog.models import Image, Blog
 from django import template
-from django.conf import settings
 from django.contrib.humanize.templatetags.humanize import naturalday
 from django.utils import translation
-from django.utils.encoding import force_unicode, smart_str
+from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 from pytils.dt import ru_strftime, distance_of_time_in_words
 import datetime
 import re
 import shlex
 import subprocess
+import markdown
 
 
 register = template.Library()
@@ -143,27 +143,8 @@ def humanized_date(date):
 
 
 @register.filter
-def safe_markdown(value, arg=''):
-    try:
-        import markdown
-    except ImportError:
-        if settings.DEBUG:
-            raise template.TemplateSyntaxError("Error in {% markdown %} filter: The Python markdown library isn't installed.")
-        return force_unicode(value)
-    else:
-        # markdown.version was first added in 1.6b. The only version of markdown
-        # to fully support extensions before 1.6b was the shortlived 1.6a.
-        if hasattr(markdown, 'version'):
-            extensions = [e for e in arg.split(",") if e]
-
-            # Unicode support only in markdown v1.7 or above. Version_info
-            # exist only in markdown v1.6.2rc-2 or above.
-            if getattr(markdown, "version_info", None) < (1,7):
-                return mark_safe(force_unicode(markdown.markdown(smart_str(value), extensions, safe_mode="escape")))
-            else:
-                return mark_safe(markdown.markdown(force_unicode(value), extensions, safe_mode="escape"))
-        else:
-            return mark_safe(force_unicode(markdown.markdown(smart_str(value))))
+def safe_markdown(value):
+    return mark_safe(force_unicode(markdown.markdown(value)))
 safe_markdown.is_safe = True
 
 
@@ -172,3 +153,12 @@ def localized_flatblock(context, name):
     request = context["request"]
     name = "%s-%s" % (name, request.LANGUAGE_CODE)
     return dict(name=name)
+
+
+@register.inclusion_tag("blog/include/locale-switcher.html", takes_context=True)
+def locale_switcher(context):
+    blog = context["blog"]
+    blogs = list(Blog.objects.exclude(id=blog.id))
+    for blog in blogs:
+        blog.message = translation.trans_real.translation(blog.language).gettext("lang-switcher-message-%s" % blog.language)
+    return dict(blogs=blogs)

@@ -327,3 +327,9 @@ msgstr "Архив за %(year)i год"
 #, python-format
 msgid "Page %(number)i"
 msgstr "Страница %(number)i"
+
+msgid "lang-switcher-message-en"
+msgstr "На айнглийском"
+
+msgid "lang-switcher-message-ru"
+msgstr "На русском"
