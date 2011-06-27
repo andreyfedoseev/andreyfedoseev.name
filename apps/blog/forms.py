@@ -2,7 +2,7 @@ from blog.models import Image, Comment
 from django import forms
 from django.forms import ModelForm
 from django.forms.fields import EMPTY_VALUES
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.forms.widgets import TextInput
 from tagging.forms import TagField
 from tagging.utils import edit_string_for_tags

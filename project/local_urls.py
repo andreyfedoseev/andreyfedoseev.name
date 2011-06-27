@@ -8,5 +8,6 @@ urlpatterns = patterns(
     url(r'^blog/', include('blog.urls', namespace="blog", app_name="blog")),
     url(r'^about/$', 'django.views.generic.simple.direct_to_template', {'template': 'blog/include/about.html'}, name="about"),
     url(r'^cv/$', 'django.views.generic.simple.direct_to_template', {'template': 'cv.html'}, name="cv"),
+    url(r'^i18n.js$', 'django.views.i18n.javascript_catalog', {'packages': ("project")}, name="i18n.js"),
 )
 

@@ -16,7 +16,6 @@ common_patterns = patterns(
     '',
     url(r'^robots.txt$', include('robots.urls')),
     url(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
-    url(r'^i18n.js$', 'django.views.i18n.javascript_catalog', {'packages': ("project")}, name="i18n.js"),
     url(r'^admin/', include(admin.site.urls)),
 )
 
