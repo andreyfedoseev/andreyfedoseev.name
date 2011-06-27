@@ -38,7 +38,7 @@ class AddComment(BlogViewMixin, View):
             comment = form.save()
             context = self.get_context_data(**kwargs)
             context["comment"] = comment
-            response = dict(status="success", message=form.success_message,
+            response = dict(status="success", message=unicode(form.success_message),
                             comment=render_to_string("blog/include/comment.html",
                                                      Context(context)))
 
@@ -68,7 +68,7 @@ class AddComment(BlogViewMixin, View):
             for field_name, errors_list in form.errors.items():
                 errors[field_name] = errors_list[0]
             response = dict(status="error", errors=errors,
-                            message=form.error_message)
+                            message=unicode(form.error_message))
 
         response = JsonResponse(response)
         if cookies:

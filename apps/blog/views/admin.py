@@ -82,7 +82,7 @@ class EditEntry(BlogAdminMixin, TemplateView):
             entry = form.save()
             if request.is_ajax():
                 return JsonResponse(dict(status="success",
-                                         message=form.success_message))
+                                         message=unicode(form.success_message)))
             else:
                 messages.success(self.request, form.success_message)
                 if new_entry:
@@ -96,7 +96,7 @@ class EditEntry(BlogAdminMixin, TemplateView):
                 for field_name, errors_list in form.errors.items():
                     errors[field_name] = errors_list[0]
                 return JsonResponse(dict(status="error", errors=errors,
-                                         message=form.error_message))
+                                         message=unicode(form.error_message)))
             else:
                 messages.error(self.request, form.error_message)
                 context["form"] = EntryForm(request.POST)
