@@ -123,7 +123,7 @@ class EntryForm(forms.Form):
         self.instance.title = data.get('title')
         slug = data.get('slug')
         if slug:
-            self.instance = slug
+            self.instance.slug = slug
         self.instance.text = data.get('text')
         self.instance.markdown = data.get('markdown')
         self.instance.published = data.get('published', False)
