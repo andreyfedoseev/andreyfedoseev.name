@@ -19,7 +19,10 @@ class RecentFeed(Feed):
     
     def description(self, obj):
         return obj.description
-    
+
+    def author_name(self, obj):
+        return obj.author_name
+
     def items(self, obj):
         return obj.published_entries().filter(include_in_rss=True)[:10]
 
@@ -34,6 +37,9 @@ class RecentFeed(Feed):
     
     def item_pubdate(self, item):
         return item.publication_timestamp
+
+    def item_categories(self, item):
+        return item.tags.values_list("name", flat=True)
 
 
 class TagFeed(RecentFeed):
