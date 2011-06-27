@@ -7,7 +7,7 @@
     <li><a href="{% url blog:archive %}">{% trans "Archive" %}</a></li>
     <li><a href="{% url blog:tags %}">{% trans "Tags" %}</a></li>
     {% if blog.feed_url %}
-      <li class="rss"><a href="{{ feed_url }}">{% trans "RSS" %}</a></li>
+      <li class="rss"><a href="{{ blog.feed_url }}">{% trans "RSS" %}</a></li>
     {% endif %}
   </ul>
 </nav>
