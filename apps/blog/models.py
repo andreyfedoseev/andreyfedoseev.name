@@ -62,6 +62,7 @@ class Entry(models.Model):
     
     title = models.CharField(max_length=300, null=True, blank=True, verbose_name=_(u"Title"))
     text = models.TextField(null=True, blank=True, verbose_name=_(u"Text"))
+    markdown = models.BooleanField(default=True)
 
     slug = AutoSlugField(populate_from="title", unique=True, verbose_name=_(u"Slug"))
     published = models.BooleanField(default=False, verbose_name=_(u"Published"))
@@ -114,13 +115,13 @@ class Entry(models.Model):
             site = Site.objects.get_current()
             full_url = "http://%s%s" % (site.domain, self.get_absolute_url())
             text += """<p class="read-more"><a href="%s#cut">%s</a></p>""" % (full_url, _(u"Read more"))
-        return mark_safe(render_text(text))
+        return mark_safe(render_text(text, self.markdown))
 
     @property
     def full_text(self):
         #noinspection PyUnresolvedReferences
         text = self.text.replace(self.MORE_MARKER, "<a name=\"cut\"></a>")
-        return mark_safe(render_text(text))
+        return mark_safe(render_text(text, self.markdown))
 
 
 tagging.register(Entry)

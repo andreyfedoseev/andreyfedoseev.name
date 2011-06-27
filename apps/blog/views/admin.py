@@ -42,9 +42,10 @@ class EntryPreview(BlogAdminMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         data = super(EntryPreview, self).get_context_data(**kwargs)
-        text = self.request.POST.get("data", u"")
+        text = self.request.POST.get("text", u"")
         text = text.replace(Entry.MORE_MARKER, u"")
-        data["text"] = mark_safe(render_text(text))
+        markdown = "markdown" in self.request.POST
+        data["text"] = mark_safe(render_text(text, markdown))
         return data
 
     def post(self, request, *args, **kwargs):

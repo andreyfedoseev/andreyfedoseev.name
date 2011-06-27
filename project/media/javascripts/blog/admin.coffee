@@ -2,28 +2,7 @@
 
 class BlogAdmin
 
-  constructor:(preview_url, @list_entry_images_url=null, @delete_image_url=null) ->
-  
-    settings = htmlSettings
-
-    settings.previewParserPath = preview_url
-    settings.previewInWindow = "width=800, height=600, resizable=yes, scrollbars=yes"
-        
-    oembed =
-      name: "oembed"
-      className: "oembed"
-      openWith: "{% oembed %}"
-      closeWith:"{% endoembed %}"
-
-    highlight =
-      name: "highlight"
-      className: "codeButton"
-      openWith: "{% highlight [![Syntax]!] %}"
-      closeWith: "{% endhighlight %}"
-
-    settings.markupSet.splice(18, 0, oembed, highlight)
-
-    $("#id_text").markItUp(settings)
+  constructor:(@list_entry_images_url=null, @delete_image_url=null) ->
 
     datepicker_options =
       dateFormat: "dd.mm.yy"
@@ -34,6 +13,44 @@ class BlogAdmin
     $("input.date").datepicker(datepicker_options)
 
     @form = $("#entry-form")
+    $text = $("#id_text")
+    $markdown_checkbox = $("#id_markdown")
+
+    $preview_btn = $("#preview-button")
+    
+    $preview_form = $("<form>",
+      action: $preview_btn.data("url"),
+      target: "preview",
+      method: "post"
+    )
+
+    $preview_text_input = $("<input>",
+      type: "hidden",
+      name: "text"
+    ).appendTo($preview_form)
+
+    $preview_markdown_input = $("<input>",
+      type: "hidden",
+      name: "markdown"
+      value: "yes"
+    ).appendTo($preview_form)
+
+    $preview_form.appendTo($("body"))
+
+    $preview_form.submit((e)->
+      window.open("", "preview", "width=800,height=600,toolbar=no,location=no,status=no,menubar=no")
+    )
+
+    $preview_btn.click((e)->
+      e.preventDefault()
+      $preview_text_input.val($text.val())
+
+      if $markdown_checkbox.attr("checked")
+        $preview_markdown_input.removeAttr("disabled")
+      else
+        $preview_markdown_input.attr("disabled", "disabled")
+      $preview_form.submit()
+    )
 
     @IMAGE_WIDGET_TEMPLATE = $.template(null,
      '''<li class="image" id="image-${id}" data-id="${id}" data-filename="${filename}">
@@ -54,35 +71,7 @@ class BlogAdmin
 
     image_field =$("#id_images")
 
-    @delete_image_confirmation = $("<div><img /></div>").appendTo($("body")).dialog(
-      title: gettext("Delete this image?"),
-      resizable: false,
-      modal: true,
-      autoOpen: false,
-      buttons: [
-        {
-          text: gettext("Cancel"),
-          click: ->
-            $(@).dialog("close")
-        },
-        {
-          text: gettext("Delete"),
-          click: =>
-            $dialog = @delete_image_confirmation
-            $dialog.dialog("close");
-            id = "" + $dialog.data("id")
-            if not id
-              return
-            ids = image_field.val().split(",")
-            image_field.val((_id for _id in ids when _id != id).join(","))
-            $("#image-#{id}").fadeOut(300, ->
-              $(@).remove()
-            )
-            $.post(@delete_image_url, {id: id}, ->)
-        }
-      ]
-    )
-    @delete_image_confirmation_img = @delete_image_confirmation.dialog("widget").find("img")
+    delete_image_message = gettext("Delete this image?")
 
     @images_widget_container.delegate("a", "click", (e)=>
       e.preventDefault()
@@ -93,15 +82,25 @@ class BlogAdmin
       button_cls = $button.attr("class")
 
       if button_cls == "delete"
-        @delete_image_confirmation_img.attr("src", $image.find("img").attr("src"))
-        @delete_image_confirmation.data("id", id)
-        @delete_image_confirmation.dialog("open")
-      else
-        insert_text = "{% image #{id} #{button_cls} \"[![Alt:!:#{filename}]!]\" %}"
-        $.markItUp(
-          target: "#id_text",
-          replaceWith: insert_text
+        image_src = $image.find("img").attr("src")
+        body = "<div>#{delete_image_message}</div><p class=\"align-center\"><img src=\"#{image_src}\" /></p>"
+        apprise(body,
+          verify: true,
+          textYes: gettext("Yes"),
+          textNo: gettext("No")
+        (r)->
+          if r
+            id = "" + id
+            ids = image_field.val().split(",")
+            image_field.val((_id for _id in ids when _id != id).join(","))
+            $("#image-#{id}").fadeOut(300, ->
+              $(this).remove()
+            )
+            $.post(@delete_image_url, {id: id}, ->)
         )
+      else
+        insert_text = "{% image #{id} #{button_cls} \"#{filename}\" %}"
+        $text.val($text.val() + insert_text)
     )
 
     @upload_btn = $("#upload-image-button")

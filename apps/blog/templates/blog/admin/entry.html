@@ -10,6 +10,7 @@
 
 {% block content %}
   {% with form.title as field %}{% include "blog/admin/include/field.html" %}{% endwith %}
+  {% with form.slug as field %}{% include "blog/admin/include/field.html" %}{% endwith %}
   {% with form.text as field %}{% include "blog/admin/include/field.html" %}{% endwith %}
   {% with form.tags as field %}{% include "blog/admin/include/field.html" %}{% endwith %}
   <div class="buttons">
@@ -17,12 +18,17 @@
       <a target="_blank" href="{{ entry.get_absolute_url }}">{% trans "View on site" %}</a>
     {% endif %}
     <input type="submit" name="cancel" value="{% trans "Cancel" %}" />
+    <input type="submit" id="preview-button" data-url="{% url blog:admin_preview_entry %}" value="{% trans "Preview" %}" />
     <input type="submit" name="save" value="{% trans "Save" %}" />
   </div>
 {% endblock %}
 
 {% block sidebar %}
 
+  <div class="field">
+    {{ form.markdown }}
+    {{ form.markdown.label_tag }}
+  </div>
   <div class="field">
     {{ form.published }}
     {{ form.published.label_tag }}
@@ -83,7 +89,7 @@
       load_entry_images_url = null
       {% endif %}
       $ ->
-        window.BlogAdmin("{% url blog:admin_preview_entry %}", load_entry_images_url, "{% url blog:admin_delete_image %}")
+        window.BlogAdmin(load_entry_images_url, "{% url blog:admin_delete_image %}")
 
         $messages = $("div.message.success")
         setTimeout(->

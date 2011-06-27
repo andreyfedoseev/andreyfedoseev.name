@@ -45,11 +45,22 @@ class EntryForm(forms.Form):
                             label=_(u"Title"),
                             )
 
+    slug = forms.CharField(max_length=300,
+                           required=False,
+                           widget=forms.TextInput({"class": "slug",
+                                                 "placeholder": _(u"Slug")}),
+                           label=_(u"Slug"))
+
     text = forms.CharField(required=True,
                            widget=forms.Textarea({"class": "text markitup",
                                                   "placeholder": _(u"Text")}),
                            label=_(u"Text"),
                            )
+
+    markdown = forms.BooleanField(required=False, initial=True,
+                                   widget=forms.CheckboxInput({"class": "checkbox"}),
+                                   label=_(u"Markdown"),
+                                   )
 
     images = ImagesField(required=False,
                          label=_(u"Images"),
@@ -91,7 +102,9 @@ class EntryForm(forms.Form):
         if self.instance:
             initial = kwargs.pop("initial", {})
             initial['title'] = self.instance.title
+            initial['slug'] = self.instance.slug
             initial['text'] = self.instance.text
+            initial['markdown'] = self.instance.markdown
             initial['published'] = self.instance.published
             initial['publication_date'] = self.instance.publication_timestamp and self.instance.publication_timestamp.date() 
             initial['publication_time'] = self.instance.publication_timestamp and self.instance.publication_timestamp.time()
@@ -108,7 +121,11 @@ class EntryForm(forms.Form):
             return None
         data = self.cleaned_data
         self.instance.title = data.get('title')
+        slug = data.get('slug')
+        if slug:
+            self.instance = slug
         self.instance.text = data.get('text')
+        self.instance.markdown = data.get('markdown')
         self.instance.published = data.get('published', False)
         publication_date = data.get('publication_date')
         publication_time = data.get('publication_time')

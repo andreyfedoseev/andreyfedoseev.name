@@ -3,7 +3,9 @@ from django.template.base import BLOCK_TAG_START, BLOCK_TAG_END, \
     VARIABLE_TAG_START, VARIABLE_TAG_END, COMMENT_TAG_START, COMMENT_TAG_END
 from django.template.context import Context
 from django.template.loader import get_template_from_string
+from django.utils.encoding import force_unicode, smart_str
 from django.utils.html import escape
+import markdown
 import re
 
 
@@ -66,7 +68,10 @@ TEMPLATE_TAG_MAPPING = {
 TEMPLATE_TAGS_BITS_RE = re.compile("(%s)" % "|".join(TEMPLATE_TAG_MAPPING.keys()), re.S)
 
 
-def render_text(text):
+def render_text(text, is_markdown=False):
+
+    if is_markdown:
+        text = force_unicode(markdown.markdown(text))
 
     for block, html, content in ESCAPE_RE.findall(text):
         escaped = u""
@@ -76,10 +81,7 @@ def render_text(text):
             escaped = escape(escaped)
         text = text.replace(block, escaped)
 
-    prefix = """
-             {% load blog_tags %}
-             {% load oembed_tags %}
-             """
-    text = prefix + text
+    text = u"{%% load blog_tags oembed_tags %%}\n%s" % text
+
     return fix_embeds(get_template_from_string(text).render(Context()))
 
