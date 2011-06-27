@@ -64,7 +64,7 @@ class Entry(models.Model):
     text = models.TextField(null=True, blank=True, verbose_name=_(u"Text"))
     markdown = models.BooleanField(default=True)
 
-    slug = AutoSlugField(populate_from="title", unique=True, verbose_name=_(u"Slug"))
+    slug = AutoSlugField(populate_from="title", verbose_name=_(u"Slug"))
     published = models.BooleanField(default=False, verbose_name=_(u"Published"))
     publication_timestamp = models.DateTimeField(null=True, blank=True, verbose_name=_(u"Publication timestamp"))
     modified_on = models.DateTimeField(verbose_name=_("Modified on"), auto_now=True)
