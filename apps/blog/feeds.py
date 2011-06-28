@@ -54,6 +54,9 @@ class TagFeed(RecentFeed):
     def description(self, obj):
         return self.blog.description
 
+    def author_name(self, obj):
+        return self.blog.author_name
+
     def link(self, obj):
         return reverse("blog:index", kwargs=dict(tag=obj.name))
 
