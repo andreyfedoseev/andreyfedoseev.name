@@ -5,7 +5,7 @@
   {% load flatblock_tags %}
   <head>
     <meta charset="utf-8"/>
-    <meta name="google-site-verification" content="x2ZAuUS4Bc581RdBqcKRWDdjYvKe6-wJ7PhqglEKE6k" />
+    {% flatblock "verification" %}
     <title>{% block title %}{% if page_title %}{{ page_title }} | {% endif %}{{ blog.title }}{% endblock %}</title>
     <link rel="icon" href="{{ STATIC_URL }}images/favicon.png"/>
     <link rel="openid.server" href="http://www.myopenid.com/server" />
