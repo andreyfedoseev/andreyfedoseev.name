@@ -32,6 +32,7 @@
         {% endfor %}
       </ul>
       {% endif %}
+      <span class="plusone"><g:plusone size="small" count="true" href="{{ entry.get_absolute_url }}"></g:plusone></span>
     </footer>
   </article>
   <section id="comments">
@@ -52,6 +53,7 @@
 {% endblock %}
 
 {% block extra-js %}
+  {% include "blog/include/plusone-script.html" %}
   <script>
     {% inlinecoffeescript %}
       window.init_highlight()
