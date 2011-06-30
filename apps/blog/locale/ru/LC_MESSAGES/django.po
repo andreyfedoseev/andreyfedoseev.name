@@ -345,5 +345,5 @@ msgstr "Архив за %(year)i год"
 msgid "Page %(number)i"
 msgstr "Страница %(number)i"
 
-#~ msgid "lang-switcher-message-ru"
-#~ msgstr "На русском"
+msgid "lang-switcher-message-ru"
+msgstr "На русском"
