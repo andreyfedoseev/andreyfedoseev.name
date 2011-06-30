@@ -16,6 +16,8 @@ class Entry(BlogViewMixin, TemplateView):
         filters = dict(id=id, blog=self.blog)
         if slug:
             filters["slug"] = slug
+        if not self.is_author:
+            filters["published"] = True
         entry = get_object_or_404(EntryModel, **filters)
         if entry.slug and slug != entry.slug:
             return redirect(entry, permanent=True)
@@ -28,6 +30,8 @@ class Entry(BlogViewMixin, TemplateView):
         filters = dict(id=id, blog=self.blog)
         if slug:
             filters["slug"] = slug
+        if not self.is_author:
+            filters["published"] = True
         entry = get_object_or_404(EntryModel, **filters)
         page_title = entry.title
 
