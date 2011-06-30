@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-26 12:00-0500\n"
+"POT-Creation-Date: 2011-06-30 11:20-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: feeds.py:46 templates/blog/index.html:12 templates/blog/index.html.py:26
+#: feeds.py:52 templates/blog/index.html:12 templates/blog/index.html.py:26
 #: views/index.py:81
 #, python-format
 msgid "Tag: %(tag)s"
@@ -29,7 +29,7 @@ msgstr "Тег: %(tag)s"
 msgid "Your changes were saved."
 msgstr "Изменения сохранены."
 
-#: forms.py:39 forms.py:141
+#: forms.py:39 forms.py:158
 msgid "Please correct the indicated errors."
 msgstr "Исправьте указанные ошибки."
 
@@ -37,71 +37,79 @@ msgstr "Исправьте указанные ошибки."
 msgid "Title"
 msgstr "Заголовок"
 
-#: forms.py:50 forms.py:51 forms.py:148 models.py:64
+#: forms.py:51 forms.py:52 models.py:67
+msgid "Slug"
+msgstr "Слаг"
+
+#: forms.py:56 forms.py:57 forms.py:165 models.py:64
 msgid "Text"
 msgstr "Текст"
 
-#: forms.py:55 models.py:144
+#: forms.py:62
+msgid "Markdown"
+msgstr ""
+
+#: forms.py:66 models.py:145
 msgid "Images"
 msgstr "Изображения"
 
-#: forms.py:60 models.py:67
+#: forms.py:71 models.py:68
 msgid "Published"
 msgstr "Опубликовано"
 
-#: forms.py:63
+#: forms.py:74
 msgid "Publish on"
 msgstr "Дата публикации"
 
-#: forms.py:69
+#: forms.py:80
 msgid "Publication time"
 msgstr "Время публикации"
 
-#: forms.py:75 models.py:75
+#: forms.py:86 models.py:76
 msgid "Disable comments"
 msgstr "Отключить комментарии"
 
-#: forms.py:78 models.py:76
+#: forms.py:89 models.py:77
 msgid "Hide comments"
 msgstr "Скрыть комментарии"
 
-#: forms.py:81 models.py:73
+#: forms.py:92 models.py:74
 msgid "Include in RSS"
 msgstr "Добавить в RSS-поток"
 
-#: forms.py:84 forms.py:86 templates/blog/entry.html:28
-#: templates/blog/include/entries-list.html:14
+#: forms.py:95 forms.py:97 templates/blog/entry.html:28
+#: templates/blog/include/entries-list.html:17
 #: templates/blog/include/navigation.html:8 views/tags.py:30
 msgid "Tags"
 msgstr "Теги"
 
-#: forms.py:140
+#: forms.py:157
 msgid "Your comment was added."
 msgstr "Комментарий добавлен."
 
-#: forms.py:149
+#: forms.py:166
 msgid "You can use <a class=\"dashed markdown\" href=\"#\">Markdown</a> here."
 msgstr ""
 "Можно использовать разметку <a class=\"dashed markdown\" href=\"#"
 "\">Markdown</a>."
 
-#: forms.py:158
+#: forms.py:175
 msgid "Your name"
 msgstr "Ваше имя"
 
-#: forms.py:160
+#: forms.py:177
 msgid "Your email"
 msgstr "Ваша электронная почта"
 
-#: forms.py:162
+#: forms.py:179
 msgid "Optional. Used to get your Gravatar."
 msgstr "Необязательно. Нужно для автарки."
 
-#: forms.py:163
+#: forms.py:180
 msgid "Your site URL"
 msgstr "Адрес вашего сайта"
 
-#: forms.py:165
+#: forms.py:182
 msgid "Optional."
 msgstr "Необязательно."
 
@@ -117,43 +125,39 @@ msgstr "Блог"
 msgid "Blogs"
 msgstr "Блоги"
 
-#: models.py:66
-msgid "Slug"
-msgstr "Слаг"
-
-#: models.py:68
+#: models.py:69
 msgid "Publication timestamp"
 msgstr "Дата и время публикации"
 
-#: models.py:69
+#: models.py:70
 msgid "Modified on"
 msgstr "Изменено"
 
-#: models.py:71
+#: models.py:72
 msgid "Meta description"
 msgstr "META-описание"
 
-#: models.py:78
+#: models.py:79
 msgid "Update for"
 msgstr "Обновление для"
 
-#: models.py:84 models.py:131
+#: models.py:85 models.py:132
 msgid "Entry"
 msgstr "Запись"
 
-#: models.py:85
+#: models.py:86
 msgid "Entries"
 msgstr "Записи"
 
-#: models.py:116
+#: models.py:117
 msgid "Read more"
 msgstr "Читать дальше"
 
-#: models.py:138 models.py:143
+#: models.py:139 models.py:144
 msgid "Image"
 msgstr "Изображение"
 
-#: models.py:139
+#: models.py:140
 msgid "Order"
 msgstr "Порядок"
 
@@ -161,19 +165,19 @@ msgstr "Порядок"
 msgid "Archive"
 msgstr "Архив"
 
-#: templates/blog/entry.html:19
+#: templates/blog/entry.html:19 templates/blog/include/entries-list.html:8
 msgid "Edit"
 msgstr "Редактировать"
 
-#: templates/blog/entry.html:22 templates/blog/include/entries-list.html:8
+#: templates/blog/entry.html:22 templates/blog/include/entries-list.html:11
 msgid "Published on"
 msgstr "Опубликовано"
 
-#: templates/blog/entry.html:39
+#: templates/blog/entry.html:40
 msgid "Comments"
 msgstr "Комментарии"
 
-#: templates/blog/entry.html:40 templates/blog/entry.html.py:49
+#: templates/blog/entry.html:41 templates/blog/entry.html.py:50
 msgid "Add comment"
 msgstr "Написать комментарий"
 
@@ -209,26 +213,34 @@ msgstr "Админка блога"
 msgid "Django admin"
 msgstr "Админка Django"
 
-#: templates/blog/admin/entry.html:17
+#: templates/blog/admin/entry.html:18
 msgid "View on site"
 msgstr "Посмотреть на сайте"
 
-#: templates/blog/admin/entry.html:19
+#: templates/blog/admin/entry.html:20
 msgid "Cancel"
 msgstr "Отмена"
 
-#: templates/blog/admin/entry.html:20
-msgid "Save"
-msgstr "Сохранить"
-
-#: templates/blog/admin/entry.html:68
-msgid "Upload an image"
-msgstr "Загрузить изображение"
-
-#: templates/blog/admin/preview.html:6
+#: templates/blog/admin/entry.html:21 templates/blog/admin/preview.html:6
 #: templates/blog/include/comment-form.html:66
 msgid "Preview"
 msgstr "Предварительный просмотр"
+
+#: templates/blog/admin/entry.html:22
+msgid "Save"
+msgstr "Сохранить"
+
+#: templates/blog/admin/entry.html:74
+msgid "Upload an image"
+msgstr "Загрузить изображение"
+
+#: templates/blog/admin/index.html:9
+msgid "Drafts"
+msgstr "Черновики"
+
+#: templates/blog/admin/index.html:22
+msgid "Published Entries"
+msgstr "Опубликованные записи"
 
 #: templates/blog/email/author-notification.html:8 views/comments.py:59
 #, python-format
@@ -294,7 +306,7 @@ msgstr "Удалить"
 msgid "Reply"
 msgstr "Ответить"
 
-#: templates/blog/include/entries-list.html:23
+#: templates/blog/include/entries-list.html:26
 #, python-format
 msgid "%(count)s comment"
 msgid_plural "%(count)s comments"
@@ -302,7 +314,7 @@ msgstr[0] "%(count)s комментарий"
 msgstr[1] "%(count)s комментария"
 msgstr[2] "%(count)s комментариев"
 
-#: templates/blog/include/entries-list.html:25
+#: templates/blog/include/entries-list.html:28
 msgid "No comments"
 msgstr "Нет комментариев"
 
@@ -314,7 +326,12 @@ msgstr "Об авторе"
 msgid "RSS"
 msgstr "RSS"
 
-#: views/admin.py:118
+#: templatetags/blog_tags.py:163
+#, fuzzy, python-format
+msgid "lang-switcher-message-%s"
+msgstr "На айнглийском"
+
+#: views/admin.py:125
 msgid "New image was uploaded."
 msgstr "Изображение загружено."
 
@@ -328,8 +345,5 @@ msgstr "Архив за %(year)i год"
 msgid "Page %(number)i"
 msgstr "Страница %(number)i"
 
-msgid "lang-switcher-message-en"
-msgstr "На айнглийском"
-
-msgid "lang-switcher-message-ru"
-msgstr "На русском"
+#~ msgid "lang-switcher-message-ru"
+#~ msgstr "На русском"

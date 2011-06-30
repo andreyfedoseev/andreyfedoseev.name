@@ -1,12 +1,33 @@
 {% extends "blog/admin/base.html" %}
 {% load i18n %}
-{% block content %}
 
-<ul>
-  {% for entry in blog.entry_set.all %}
-    <li>
-      <a href="{% url blog:admin_edit_entry entry.id %}">{{ entry.title }}</a>
-    </li>
-  {% endfor %}
-</ul>
+{% block bodyclass %}index{% endblock %}
+
+{% block content %}
+{% if drafts %}
+  <section class="drafts">
+    <h1>{% trans "Drafts" %}</h1>
+    <ul>
+      {% for entry in drafts %}
+        <li>
+          <a href="{% url blog:admin_edit_entry entry.id %}">{{ entry.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+
+{% if published %}
+  <section class="published">
+    <h1>{% trans "Published Entries" %}</h1>
+    <ul>
+      {% for entry in published %}
+        <li>
+          <a href="{% url blog:admin_edit_entry entry.id %}">{{ entry.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+
 {% endblock %}

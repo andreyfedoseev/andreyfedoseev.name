@@ -35,6 +35,12 @@ class Index(BlogAdminMixin, TemplateView):
 
     template_name = "blog/admin/index.html"
 
+    def get_context_data(self, **kwargs):
+        data = super(Index, self).get_context_data(**kwargs)
+        data["published"] = self.blog.published_entries()
+        data["drafts"] = self.blog.entry_set.filter(published=False)
+        return data
+
 
 class EntryPreview(BlogAdminMixin, TemplateView):
 

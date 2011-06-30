@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load i18n %}
-<html lang="ru">
+<html lang="{{ request.LANGUAGE_CODE }}">
   <head> 
     <meta charset="utf-8"/>
     <title>{% block title %}{% trans "Manage Blog" %}{% endblock %}</title> 
@@ -8,7 +8,7 @@
     {% include "blog/admin/include/css.html" %}
     {% block extra-css %}{% endblock %}
   </head>
-  <body class="admin">
+  <body class="admin {% block bodyclass %}{% endblock %}">
     <nav class="global">
       <ul class="navigation">
         <li><a href="{% url blog:admin_add_entry %}">{% trans "New entry" %}</a></li>
