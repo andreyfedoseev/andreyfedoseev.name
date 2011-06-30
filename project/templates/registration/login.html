@@ -1,22 +1,24 @@
 {% extends "base.html" %}
+{% load i18n %}
+
 {% block content %}
-<div class="prepend-5 span-14 last">
-<h2>Sign in</h2>
-  <form class="signin span-8 append-bottom" method="post" action="{% url auth_login %}">
-  {% csrf_token %}
-  {% for field in form %}
-  {% if request.GET.next %}
-    <input type="hidden" name="next" value="{{ request.GET.next }}" />
-  {% endif %}
-  <div class="field">
-    {{ field.label_tag }}
-    {% for error in field.errors %}
-    <div class="error small">{{ error }}</div>
+  <form class="login" method="post" action="{% url auth_login %}">
+    {% csrf_token %}
+    {% for field in form %}
+    {% if request.GET.next %}
+      <input type="hidden" name="next" value="{{ request.GET.next }}" />
+    {% endif %}
+    <div class="field">
+      {{ field.label_tag }}
+      {% for error in field.errors %}
+      <div class="error small">{{ error }}</div>
+      {% endfor %}
+      {{ field }}
+    </div>
     {% endfor %}
-    {{ field }}
-  </div>
-  {% endfor %}
-  <div class="buttons"><input type="submit" value="Sign in" /></div>
+    <div class="buttons">
+      <input type="submit" value="{% trans "Log in" %}" />
+    </div>
   </form>
 </div>
 {% endblock%}

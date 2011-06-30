@@ -13,3 +13,35 @@ body {
   margin: 0 auto;
   margin-bottom: 2em;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: @header-font-family;
+}
+
+code {
+  font-family: @monospace-font-family;
+}
+
+a.dashed {
+  text-decoration: none;
+  border-bottom-width: 1px;
+  border-bottom-style: dashed;
+}
+
+blockquote {
+  margin-left: 0.5em;
+  padding-left: 0.5em;
+  border-left: 4px solid @mid-gray;
+}
+
+.ui-widget {
+  font-size: 14px;
+}
+
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}

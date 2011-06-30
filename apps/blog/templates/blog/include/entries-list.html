@@ -4,6 +4,9 @@
   <article class="entry">
     <header>
       <h1><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h1>
+      {% if is_author %}
+        <a class="edit" href="{% url blog:admin_edit_entry entry.id %}">{% trans "Edit" %}</a>
+      {% endif %}
       <p>
         {% trans "Published on" %} <time datetime="{{ entry.publication_timestamp|date:"c" }}" pubdate>{{ entry.publication_timestamp|humanized_date }}</time>
       </p>
