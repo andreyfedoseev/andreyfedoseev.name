@@ -3,19 +3,25 @@
 
 {% if debug %}
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.min.js"></script>
-{% else %}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-{% endif %}
-
-<script src="{% url i18n.js %}"></script>
-
-{% compress js %}
   <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.ui.core.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.ui.datepicker.js"></script>
   {% if request.LANGUAGE_CODE != "en" %}
     <script src="{{ STATIC_URL }}javascripts/jquery/ui/i18n/jquery.ui.datepicker-{{ request.LANGUAGE_CODE }}.js"></script>
   {% endif %}
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.tmpl.js"></script>
+{% else %}
+  <script src="http://yandex.st/jquery/1.6.2/jquery.min.js"></script>
+  <script src="http://yandex.st/jquery-ui/1.8.11/jquery.ui.core.js"></script>
+  <script src="http://yandex.st/jquery-ui/1.8.11/jquery.ui.datepicker.js"></script>
+  {% if request.LANGUAGE_CODE != "en" %}
+    <script src="http://yandex.st/jquery-ui/1.8.11//i18n/jquery.ui.datepicker-{{ request.LANGUAGE_CODE }}.js"></script>
+  {% endif %}
+  <script src="http://yandex.st/jquery/tmpl/1.0.0pre/jquery.tmpl.min.js"></script>
+{% endif %}
+
+<script src="{% url i18n.js %}"></script>
+
+{% compress js %}
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.ocupload.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.validate.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/apprise.js"></script>

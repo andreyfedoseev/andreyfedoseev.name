@@ -1,10 +1,11 @@
 {% load compress %}
 {% load less %}
+
 {% compress css %}
-  <link rel="stylesheet" href="{{ STATIC_URL }}javascripts/highlight/github.css" />
   <link rel="stylesheet" href="{{ STATIC_URL }}javascripts/jquery/jquery.qtip.css" />
   <link rel="stylesheet" href="{{ STATIC_URL }}javascripts/jquery/apprise.css" />
   <link rel="stylesheet" href="{{ STATIC_URL }}{% less "styles/blog/blog.less" %}" />
+  <link rel="stylesheet" href="{{ STATIC_URL }}styles/codehilite.css" />
 {% endcompress %}
 
 {% include "include/fonts.html" %}

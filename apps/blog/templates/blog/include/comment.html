@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load blog_tags %}
 {% load simplegravatar %}
+{% load markup %}
 <article class="comment lvl{{ comment.level }} {% if comment.by_blog_author %}by-author{% endif %}"
          data-id="{{ comment.id }}" data-lvl="{{ comment.level }}"
          id="comment{{ comment.id }}">
@@ -22,7 +23,7 @@
     {% endif %}
     <time class="clearfix" datetime="{{ comment.timestamp|date:"c" }}">{{ comment.timestamp|humanized_date }}</time>
   </header>
-  {{ comment.text|safe_markdown }}
+  {{ comment.text|markdown:"codehilite" }}
   <footer>
     <ul>
       {% if is_author %}

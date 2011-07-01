@@ -1,10 +1,3 @@
-
-window.init_highlight = ->
-  $ ->
-    $("pre code").each((i, el)->
-      hljs.highlightBlock(el, '    ')
-    )
-
 window.init_blog_index = ->
   $ ->
     if not History.enabled

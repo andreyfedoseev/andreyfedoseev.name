@@ -71,7 +71,7 @@ TEMPLATE_TAGS_BITS_RE = re.compile("(%s)" % "|".join(TEMPLATE_TAG_MAPPING.keys()
 def render_text(text, is_markdown=False):
 
     if is_markdown:
-        text = force_unicode(markdown.markdown(text))
+        text = force_unicode(markdown.markdown(text, extensions=["codehilite"]))
 
     for block, html, content in ESCAPE_RE.findall(text):
         escaped = u""

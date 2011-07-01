@@ -143,12 +143,6 @@ def humanized_date(date):
     return naturalday(date)
 
 
-@register.filter
-def safe_markdown(value):
-    return mark_safe(force_unicode(markdown.markdown(value)))
-safe_markdown.is_safe = True
-
-
 @register.inclusion_tag("blog/include/localized-flatblock.html", takes_context=True)
 def localized_flatblock(context, name):
     request = context["request"]

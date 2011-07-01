@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load blog_tags %}
 {% load simplegravatar %}
+{% load markup %}
 <html>
 <body>
   <p>
@@ -13,7 +14,7 @@
   </p>
 
   <blockquote>
-    {{ parent.text|safe_markdown }}
+    {{ parent.text|markdown:"codehilite" }}
   </blockquote>
 
 
@@ -32,7 +33,7 @@
   </p>
 
   <blockquote>
-    {{ comment.text|safe_markdown }}
+    {{ comment.text|markdown:"codehilite" }}
   </blockquote>
 
   <p>

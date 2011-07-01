@@ -3,27 +3,28 @@
 
 {% if debug %}
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.min.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.effects.core.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.effects.drop.js"></script>
 {% else %}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+  <script src="http://yandex.st/jquery/1.6.2/jquery.min.js"></script>
+  <script src="http://yandex.st/jquery-ui/1.8.11/jquery.effects.core.js"></script>
+  <script src="http://yandex.st/jquery-ui/1.8.11/jquery.effects.drop.js"></script>
 {% endif %}
 
 <script src="{% url i18n.js %}"></script>
 
 <!--[if lt IE 9]>
+{% if debug %}
   <script src="{{ STATIC_URL }}javascripts/jquery/json2.js"></script>
+{% else %}
+  <script src="http://yandex.st/json2/2011-01-18/json2.min.js"></script>
+{% endif %}
 <![endif]-->
 
 {% compress js %}
-  <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.effects.core.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.effects.drop.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/amplify.store.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/history.adapter.jquery.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/history.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/highlight/highlight.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/highlight/languages/python.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/highlight/languages/css.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/highlight/languages/xml.js"></script>
-  <script src="{{ STATIC_URL }}javascripts/highlight/languages/django.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.validate.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.qtip.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.textareaPreview.js"></script>
