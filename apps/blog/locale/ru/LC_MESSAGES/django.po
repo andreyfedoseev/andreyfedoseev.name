@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-30 11:20-0500\n"
+"POT-Creation-Date: 2011-07-01 03:39-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -326,10 +326,18 @@ msgstr "Об авторе"
 msgid "RSS"
 msgstr "RSS"
 
-#: templatetags/blog_tags.py:163
+#: templatetags/blog_tags.py:164
 #, fuzzy, python-format
 msgid "lang-switcher-message-%s"
 msgstr "На айнглийском"
+
+#: templatetags/blog_tags.py:168
+msgid "lang-switcher-message-ru"
+msgstr "На русском"
+
+#: templatetags/blog_tags.py:169
+msgid "lang-switcher-message-en"
+msgstr "На английском"
 
 #: views/admin.py:125
 msgid "New image was uploaded."
@@ -344,6 +352,3 @@ msgstr "Архив за %(year)i год"
 #, python-format
 msgid "Page %(number)i"
 msgstr "Страница %(number)i"
-
-msgid "lang-switcher-message-ru"
-msgstr "На русском"

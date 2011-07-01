@@ -5,6 +5,7 @@ from django.contrib.humanize.templatetags.humanize import naturalday
 from django.utils import translation
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext as _
 from pytils.dt import ru_strftime, distance_of_time_in_words
 import datetime
 import re
@@ -162,3 +163,7 @@ def locale_switcher(context):
     for blog in blogs:
         blog.message = translation.trans_real.translation(blog.language).gettext("lang-switcher-message-%s" % blog.language)
     return dict(blogs=blogs)
+
+# Mark these strings as translatable so they are added to django.po
+_("lang-switcher-message-ru")
+_("lang-switcher-message-en")

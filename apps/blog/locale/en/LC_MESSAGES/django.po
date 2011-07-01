@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-26 12:00-0500\n"
+"POT-Creation-Date: 2011-07-01 03:40-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,8 +19,318 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
+#: feeds.py:52 templates/blog/index.html:12 templates/blog/index.html.py:26
+#: views/index.py:81
+#, python-format
+msgid "Tag: %(tag)s"
+msgstr ""
+
+#: forms.py:38
+msgid "Your changes were saved."
+msgstr ""
+
+#: forms.py:39 forms.py:158
+msgid "Please correct the indicated errors."
+msgstr ""
+
+#: forms.py:44 forms.py:45 models.py:21 models.py:63
+msgid "Title"
+msgstr ""
+
+#: forms.py:51 forms.py:52 models.py:67
+msgid "Slug"
+msgstr ""
+
+#: forms.py:56 forms.py:57 forms.py:165 models.py:64
+msgid "Text"
+msgstr ""
+
+#: forms.py:62
+msgid "Markdown"
+msgstr ""
+
+#: forms.py:66 models.py:145
+msgid "Images"
+msgstr ""
+
+#: forms.py:71 models.py:68
+msgid "Published"
+msgstr ""
+
+#: forms.py:74
+msgid "Publish on"
+msgstr ""
+
+#: forms.py:80
+msgid "Publication time"
+msgstr ""
+
+#: forms.py:86 models.py:76
+msgid "Disable comments"
+msgstr ""
+
+#: forms.py:89 models.py:77
+msgid "Hide comments"
+msgstr ""
+
+#: forms.py:92 models.py:74
+msgid "Include in RSS"
+msgstr ""
+
+#: forms.py:95 forms.py:97 templates/blog/entry.html:28
+#: templates/blog/include/entries-list.html:17
+#: templates/blog/include/navigation.html:8 views/tags.py:30
+msgid "Tags"
+msgstr ""
+
+#: forms.py:157
+msgid "Your comment was added."
+msgstr ""
+
+#: forms.py:166
+msgid "You can use <a class=\"dashed markdown\" href=\"#\">Markdown</a> here."
+msgstr ""
+
+#: forms.py:175
+msgid "Your name"
+msgstr ""
+
+#: forms.py:177
+msgid "Your email"
+msgstr ""
+
+#: forms.py:179
+msgid "Optional. Used to get your Gravatar."
+msgstr ""
+
+#: forms.py:180
+msgid "Your site URL"
+msgstr ""
+
+#: forms.py:182
+msgid "Optional."
+msgstr ""
+
+#: models.py:22
+msgid "Description"
+msgstr ""
+
+#: models.py:43 models.py:61
+msgid "Blog"
+msgstr ""
+
+#: models.py:44
+msgid "Blogs"
+msgstr ""
+
+#: models.py:69
+msgid "Publication timestamp"
+msgstr ""
+
+#: models.py:70
+msgid "Modified on"
+msgstr ""
+
+#: models.py:72
+msgid "Meta description"
+msgstr ""
+
+#: models.py:79
+msgid "Update for"
+msgstr ""
+
+#: models.py:85 models.py:132
+msgid "Entry"
+msgstr ""
+
+#: models.py:86
+msgid "Entries"
+msgstr ""
+
+#: models.py:117
+msgid "Read more"
+msgstr ""
+
+#: models.py:139 models.py:144
+msgid "Image"
+msgstr ""
+
+#: models.py:140
+msgid "Order"
+msgstr ""
+
+#: templates/blog/archive.html:8 templates/blog/include/navigation.html:7
+msgid "Archive"
+msgstr ""
+
+#: templates/blog/entry.html:19 templates/blog/include/entries-list.html:8
+msgid "Edit"
+msgstr ""
+
+#: templates/blog/entry.html:22 templates/blog/include/entries-list.html:11
+msgid "Published on"
+msgstr ""
+
+#: templates/blog/entry.html:40
+msgid "Comments"
+msgstr ""
+
+#: templates/blog/entry.html:41 templates/blog/entry.html.py:50
+msgid "Add comment"
+msgstr ""
+
+#: templates/blog/index.html:34
+msgid "Previous page"
+msgstr ""
+
+#: templates/blog/index.html:35
+msgid "Next page"
+msgstr ""
+
+#: templates/blog/tags.html:8
+msgid "Main tags"
+msgstr ""
+
+#: templates/blog/tags.html:19
+msgid "Other tags"
+msgstr ""
+
+#: templates/blog/admin/base.html:6
+msgid "Manage Blog"
+msgstr ""
+
+#: templates/blog/admin/base.html:14 templates/blog/admin/entry.html:5
+msgid "New entry"
+msgstr ""
+
+#: templates/blog/admin/base.html:15
+msgid "Blog admin"
+msgstr ""
+
+#: templates/blog/admin/base.html:16
+msgid "Django admin"
+msgstr ""
+
+#: templates/blog/admin/entry.html:18
+msgid "View on site"
+msgstr ""
+
+#: templates/blog/admin/entry.html:20
+msgid "Cancel"
+msgstr ""
+
+#: templates/blog/admin/entry.html:21 templates/blog/admin/preview.html:6
+#: templates/blog/include/comment-form.html:66
+msgid "Preview"
+msgstr ""
+
+#: templates/blog/admin/entry.html:22
+msgid "Save"
+msgstr ""
+
+#: templates/blog/admin/entry.html:74
+msgid "Upload an image"
+msgstr ""
+
+#: templates/blog/admin/index.html:9
+msgid "Drafts"
+msgstr ""
+
+#: templates/blog/admin/index.html:22
+msgid "Published Entries"
+msgstr ""
+
+#: templates/blog/email/author-notification.html:8 views/comments.py:59
+#, python-format
+msgid "New comment to «%(title)s»"
+msgstr ""
+
+#: templates/blog/email/author-notification.html:26
+msgid "View and reply"
+msgstr ""
+
+#: templates/blog/include/about.html:4
+msgid "About me"
+msgstr ""
+
+#: templates/blog/include/comment-form.html:15
+msgid ""
+"This is a paragraph, which is text surrounded by whitespace. Paragraphs can "
+"be on one\n"
+"line (or many), and can drone on for hours.\n"
+"\n"
+"Here is a Markdown link to [Google](http://google.com), and a literal.\n"
+"\n"
+"Now some inline markup like _italics_,  **bold**, and `code()`.\n"
+"\n"
+"> Blockquotes are like quoted text in email replies\n"
+">> And, they can be nested\n"
+"\n"
+"* Bullet lists are easy too\n"
+"\n"
+"1. A numbered list\n"
+"\n"
+"And now some code:\n"
+"\n"
+"&nbsp;&nbsp;&nbsp;&nbsp;// Code is just text indented a bit\n"
+"&nbsp;&nbsp;&nbsp;&nbsp;which(is_easy) to_remember();\n"
+msgstr ""
+
+#: templates/blog/include/comment-form.html:68
+msgid "Submit"
+msgstr ""
+
+#: templates/blog/include/comment.html:29
+msgid "Delete"
+msgstr ""
+
+#: templates/blog/include/comment.html:31
+msgid "Reply"
+msgstr ""
+
+#: templates/blog/include/entries-list.html:26
+#, python-format
+msgid "%(count)s comment"
+msgid_plural "%(count)s comments"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: templates/blog/include/entries-list.html:28
+msgid "No comments"
+msgstr ""
+
+#: templates/blog/include/navigation.html:5
+msgid "About"
+msgstr ""
+
+#: templates/blog/include/navigation.html:10
+msgid "RSS"
+msgstr ""
+
+#: templatetags/blog_tags.py:164
+#, fuzzy, python-format
+msgid "lang-switcher-message-%s"
+msgstr "In English"
+
+#: templatetags/blog_tags.py:168
+msgid "lang-switcher-message-ru"
+msgstr "In Russian"
+
+#: templatetags/blog_tags.py:169
 msgid "lang-switcher-message-en"
 msgstr "In English"
 
-msgid "lang-switcher-message-ru"
-msgstr "In Russian"
+#: views/admin.py:125
+msgid "New image was uploaded."
+msgstr ""
+
+#: views/archive.py:36
+#, python-format
+msgid "Archive for %(year)i"
+msgstr ""
+
+#: views/index.py:83
+#, python-format
+msgid "Page %(number)i"
+msgstr ""
