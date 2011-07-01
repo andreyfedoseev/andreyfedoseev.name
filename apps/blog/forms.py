@@ -3,7 +3,6 @@ from django import forms
 from django.forms import ModelForm
 from django.forms.fields import EMPTY_VALUES
 from django.utils.translation import ugettext_lazy as _
-from django.forms.widgets import TextInput
 from tagging.forms import TagField
 from tagging.utils import edit_string_for_tags
 from tagging.models import Tag
@@ -173,15 +172,18 @@ class BlogAuthorCommentForm(ModelForm):
 class CommentForm(BlogAuthorCommentForm):
 
     author_name = forms.CharField(required=True, label=_(u"Your name"),
-                                  widget=TextInput())
+                                  widget=forms.TextInput())
     author_email = forms.EmailField(required=False, label=_(u"Your email"),
-                                    widget=TextInput(),
+                                    widget=forms.TextInput(),
                                     help_text=_("Optional. Used to get your Gravatar."))
     author_url = forms.URLField(required=False, label=_(u"Your site URL"),
-                                widget=TextInput(),
+                                widget=forms.TextInput(),
                                 help_text=_("Optional."))
+
+    notify = forms.BooleanField(required=False, label=_(u"Notify on replies by email"),
+                                widget=forms.CheckboxInput())
 
     class Meta:
         model = Comment
         fields = ["parent", "text", "author_name", "author_email",
-                  "author_url"]
+                  "author_url", "notify"]

@@ -394,10 +394,13 @@ form {
     font-size: 0.8em;
     color: #666;
   }
-  .text textarea {
-    width: 594px;
-    height: 200px;
-    resize: vertical;
+  .text {
+    margin-bottom: 1.5em;
+    textarea {
+      width: 594px;
+      height: 200px;
+      resize: vertical;
+    }
   }
   input[type='text'], textarea {
     padding: 2px;
@@ -438,6 +441,9 @@ form {
     .indicator {
       background: url(../../images/ajax-loader-small.gif) no-repeat;
     }
+  }
+  label[for='id_preview'] {
+    float: right;
   }
 }
 

@@ -6,6 +6,7 @@
     {{ form.text.label_tag }}
     <div class="errors"></div>
     {{ form.text }}
+    <label for="id_preview"><input type="checkbox" id="id_preview" /> {% trans "Preview" %}</label>
     <div class="help">
       {{ form.text.help_text|safe }}
     </div>
@@ -60,10 +61,11 @@ And now some code:
         {{ form.author_url.help_text }}
       </div>
     </div>
+
   {% endif %}
   
   <div class="buttons">
-    <label for="id_preview"><input type="checkbox" id="id_preview" /> {% trans "Preview" %}</label>
+    <label for="id_notify">{{ form.notify }} {{ form.notify.label }}</label>
     <span class="indicator"></span>
     <input type="submit" value="{% trans "Submit" %}" />
   </div>

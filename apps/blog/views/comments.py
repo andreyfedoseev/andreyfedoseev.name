@@ -3,10 +3,12 @@ from blog.forms import CommentForm, BlogAuthorCommentForm
 from blog.models import Entry, Comment
 from blog.views import BlogViewMixin
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.sites.models import Site
 from django.core.mail import EmailMessage
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseForbidden
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.template import Context
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
@@ -17,6 +19,7 @@ from django.views.generic import View
 AUTHOR_NAME_COOKIE = "comment_author_name"
 AUTHOR_EMAIL_COOKIE = "comment_author_email"
 AUTHOR_URL_COOKIE = "comment_author_url"
+NOTIFY_COOKIE = "comment_notify"
 COOKIE_MAX_AGE = 60 * 60 * 24 * 30
 
 
@@ -36,6 +39,7 @@ class AddComment(BlogViewMixin, View):
 
         if form.is_valid():
             comment = form.save()
+            parent = comment.parent
             context = self.get_context_data(**kwargs)
             context["comment"] = comment
             response = dict(status="success", message=unicode(form.success_message),
@@ -46,6 +50,7 @@ class AddComment(BlogViewMixin, View):
                 cookies[AUTHOR_NAME_COOKIE] = form.cleaned_data['author_name']
                 cookies[AUTHOR_EMAIL_COOKIE] = form.cleaned_data['author_email']
                 cookies[AUTHOR_URL_COOKIE] = form.cleaned_data['author_url']
+                cookies[NOTIFY_COOKIE] = form.cleaned_data['notify'] and u"1" or u""
 
                 # Send notification to author
                 link = "http://%s%s#comment%i" % (Site.objects.get_current().domain,
@@ -62,6 +67,30 @@ class AddComment(BlogViewMixin, View):
                                        from_email=settings.DEFAULT_FROM_EMAIL)
                 message.content_subtype = "html"
                 message.send(fail_silently=True)
+
+            if parent and parent.notify and parent.author_email and parent.author_email != comment.author_email:
+                send_reply_notification = True
+                link = "http://%s%s#comment%i" % (Site.objects.get_current().domain,
+                                                  entry.get_absolute_url(),
+                                                  comment.id)
+                unsubscribe_link = "http://%s%s" % (Site.objects.get_current().domain,
+                                                  reverse("blog:unsubscribe_from_notifications",
+                                                          kwargs=dict(comment_id=parent.id,
+                                                                      secret=parent.secret)))
+                message_text = render_to_string("blog/email/reply-notification.html",
+                                                Context(dict(parent=parent,
+                                                             comment=comment,
+                                                             link=link,
+                                                             unsubscribe_link=unsubscribe_link,
+                                                             entry=entry,
+                                                             blog=self.blog)))
+                message = EmailMessage(subject=_(u'New reply to your comment for \xab%(title)s\xbb') % dict(title=entry.title),
+                                       body=message_text,
+                                       to=[parent.author_email],
+                                       from_email=settings.DEFAULT_FROM_EMAIL)
+                message.content_subtype = "html"
+                message.send(fail_silently=True)
+
 
         else:
             errors = {}
@@ -88,3 +117,15 @@ class DeleteComment(BlogViewMixin, View):
         comment = get_object_or_404(Comment, id=int(comment_id))
         comment.delete()
         return dict(status="success")
+
+
+class Unsubscribe(BlogViewMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        comment = get_object_or_404(Comment, id=int(kwargs["comment_id"]),
+                                    secret=kwargs["secret"])
+        comment.notify = False
+        comment.save()
+        messages.success(request, _(u"You were unsubscribed from reply notifications for this comment."))
+        return redirect(comment.entry)
+    

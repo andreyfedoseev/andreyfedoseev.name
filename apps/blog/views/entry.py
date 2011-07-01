@@ -1,7 +1,7 @@
 from blog.forms import CommentForm, BlogAuthorCommentForm
 from blog.models import Entry as EntryModel
 from blog.views import BlogViewMixin
-from blog.views.comments import AUTHOR_NAME_COOKIE, AUTHOR_EMAIL_COOKIE, AUTHOR_URL_COOKIE
+from blog.views.comments import AUTHOR_NAME_COOKIE, AUTHOR_EMAIL_COOKIE, AUTHOR_URL_COOKIE, NOTIFY_COOKIE
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import TemplateView
 
@@ -43,6 +43,7 @@ class Entry(BlogViewMixin, TemplateView):
                 initial['author_name'] = self.request.COOKIES.get(AUTHOR_NAME_COOKIE, "").decode('utf-8')
                 initial['author_email'] = self.request.COOKIES.get(AUTHOR_EMAIL_COOKIE, "").decode('utf-8')
                 initial['author_url'] = self.request.COOKIES.get(AUTHOR_URL_COOKIE, "").decode('utf-8')
+                initial['notify'] = bool(self.request.COOKIES.get(NOTIFY_COOKIE, "").decode('utf-8'))
             comment_form = CommentForm(initial=initial)
 
         data.update(dict(entry=entry, page_title=page_title,

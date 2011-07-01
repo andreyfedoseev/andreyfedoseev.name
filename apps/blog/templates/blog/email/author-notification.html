@@ -8,6 +8,33 @@
     {% blocktrans with entry.title as title %}New comment to «{{ title }}»{% endblocktrans %}
   </p>
 
+  {% if comment.parent %}
+    {% with comment.parent as comment %}
+      <p>
+        <strong>{% trans "Reply for:" %}</strong>
+      </p>
+
+      <p>
+        {% if comment.by_blog_author %}
+          {% show_gravatar blog.author.email 20 %}
+          <strong>{{ blog.author_name }}</strong>
+        {% else %}
+          {% show_gravatar comment.author_email 20 %}
+          <strong>{{ comment.author_name }}</strong>
+        {% endif %}
+      </p>
+
+      <blockquote>
+        {{ comment.text|safe_markdown }}
+      </blockquote>
+
+
+      <p>
+        <strong>{% trans "Reply:" %}</strong>
+      </p>
+    {% endwith %}
+  {% endif %}
+
   <p>
     {% if comment.by_blog_author %}
       {% show_gravatar blog.author.email 20 %}

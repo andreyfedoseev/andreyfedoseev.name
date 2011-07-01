@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-01 03:39-0500\n"
+"POT-Creation-Date: 2011-07-01 05:21-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,139 +25,143 @@ msgstr ""
 msgid "Tag: %(tag)s"
 msgstr "Тег: %(tag)s"
 
-#: forms.py:38
+#: forms.py:37
 msgid "Your changes were saved."
 msgstr "Изменения сохранены."
 
-#: forms.py:39 forms.py:158
+#: forms.py:38 forms.py:157
 msgid "Please correct the indicated errors."
 msgstr "Исправьте указанные ошибки."
 
-#: forms.py:44 forms.py:45 models.py:21 models.py:63
+#: forms.py:43 forms.py:44 models.py:23 models.py:65
 msgid "Title"
 msgstr "Заголовок"
 
-#: forms.py:51 forms.py:52 models.py:67
+#: forms.py:50 forms.py:51 models.py:69
 msgid "Slug"
 msgstr "Слаг"
 
-#: forms.py:56 forms.py:57 forms.py:165 models.py:64
+#: forms.py:55 forms.py:56 forms.py:164 models.py:66
 msgid "Text"
 msgstr "Текст"
 
-#: forms.py:62
+#: forms.py:61
 msgid "Markdown"
 msgstr ""
 
-#: forms.py:66 models.py:145
+#: forms.py:65 models.py:147
 msgid "Images"
 msgstr "Изображения"
 
-#: forms.py:71 models.py:68
+#: forms.py:70 models.py:70
 msgid "Published"
 msgstr "Опубликовано"
 
-#: forms.py:74
+#: forms.py:73
 msgid "Publish on"
 msgstr "Дата публикации"
 
-#: forms.py:80
+#: forms.py:79
 msgid "Publication time"
 msgstr "Время публикации"
 
-#: forms.py:86 models.py:76
+#: forms.py:85 models.py:78
 msgid "Disable comments"
 msgstr "Отключить комментарии"
 
-#: forms.py:89 models.py:77
+#: forms.py:88 models.py:79
 msgid "Hide comments"
 msgstr "Скрыть комментарии"
 
-#: forms.py:92 models.py:74
+#: forms.py:91 models.py:76
 msgid "Include in RSS"
 msgstr "Добавить в RSS-поток"
 
-#: forms.py:95 forms.py:97 templates/blog/entry.html:28
+#: forms.py:94 forms.py:96 templates/blog/entry.html:28
 #: templates/blog/include/entries-list.html:17
 #: templates/blog/include/navigation.html:8 views/tags.py:30
 msgid "Tags"
 msgstr "Теги"
 
-#: forms.py:157
+#: forms.py:156
 msgid "Your comment was added."
 msgstr "Комментарий добавлен."
 
-#: forms.py:166
+#: forms.py:165
 msgid "You can use <a class=\"dashed markdown\" href=\"#\">Markdown</a> here."
 msgstr ""
 "Можно использовать разметку <a class=\"dashed markdown\" href=\"#"
 "\">Markdown</a>."
 
-#: forms.py:175
+#: forms.py:174
 msgid "Your name"
 msgstr "Ваше имя"
 
-#: forms.py:177
+#: forms.py:176
 msgid "Your email"
 msgstr "Ваша электронная почта"
 
-#: forms.py:179
+#: forms.py:178
 msgid "Optional. Used to get your Gravatar."
 msgstr "Необязательно. Нужно для автарки."
 
-#: forms.py:180
+#: forms.py:179
 msgid "Your site URL"
 msgstr "Адрес вашего сайта"
 
-#: forms.py:182
+#: forms.py:181
 msgid "Optional."
 msgstr "Необязательно."
 
-#: models.py:22
+#: forms.py:183
+msgid "Notify on replies by email"
+msgstr "Уведомлять об ответах по почте"
+
+#: models.py:24
 msgid "Description"
 msgstr "Описание"
 
-#: models.py:43 models.py:61
+#: models.py:45 models.py:63
 msgid "Blog"
 msgstr "Блог"
 
-#: models.py:44
+#: models.py:46
 msgid "Blogs"
 msgstr "Блоги"
 
-#: models.py:69
+#: models.py:71
 msgid "Publication timestamp"
 msgstr "Дата и время публикации"
 
-#: models.py:70
+#: models.py:72
 msgid "Modified on"
 msgstr "Изменено"
 
-#: models.py:72
+#: models.py:74
 msgid "Meta description"
 msgstr "META-описание"
 
-#: models.py:79
+#: models.py:81
 msgid "Update for"
 msgstr "Обновление для"
 
-#: models.py:85 models.py:132
+#: models.py:87 models.py:134
 msgid "Entry"
 msgstr "Запись"
 
-#: models.py:86
+#: models.py:88
 msgid "Entries"
 msgstr "Записи"
 
-#: models.py:117
+#: models.py:119
 msgid "Read more"
 msgstr "Читать дальше"
 
-#: models.py:139 models.py:144
+#: models.py:141 models.py:146
 msgid "Image"
 msgstr "Изображение"
 
-#: models.py:140
+#: models.py:142
 msgid "Order"
 msgstr "Порядок"
 
@@ -222,7 +226,7 @@ msgid "Cancel"
 msgstr "Отмена"
 
 #: templates/blog/admin/entry.html:21 templates/blog/admin/preview.html:6
-#: templates/blog/include/comment-form.html:66
+#: templates/blog/include/comment-form.html:9
 msgid "Preview"
 msgstr "Предварительный просмотр"
 
@@ -242,20 +246,43 @@ msgstr "Черновики"
 msgid "Published Entries"
 msgstr "Опубликованные записи"
 
-#: templates/blog/email/author-notification.html:8 views/comments.py:59
+#: templates/blog/email/author-notification.html:8 views/comments.py:64
 #, python-format
 msgid "New comment to «%(title)s»"
 msgstr "Новый комментарий к записи «%(title)s»"
 
-#: templates/blog/email/author-notification.html:26
+#: templates/blog/email/author-notification.html:14
+msgid "Reply for:"
+msgstr "Ответ на:"
+
+#: templates/blog/email/author-notification.html:33
+#: templates/blog/email/reply-notification.html:21
+msgid "Reply:"
+msgstr "Ответ:"
+
+#: templates/blog/email/author-notification.html:53
+#: templates/blog/email/reply-notification.html:39
 msgid "View and reply"
 msgstr "Посмотреть и ответить"
+
+#: templates/blog/email/reply-notification.html:8 views/comments.py:87
+#, python-format
+msgid "New reply to your comment for «%(title)s»"
+msgstr "Новый ответ на комментарий к записи «%(title)s»"
+
+#: templates/blog/email/reply-notification.html:12
+msgid "Your comment:"
+msgstr "Ваш комментарий"
+
+#: templates/blog/email/reply-notification.html:40
+msgid "Unsubscribe from notifications"
+msgstr "Отписаться от уведомлений"
 
 #: templates/blog/include/about.html:4
 msgid "About me"
 msgstr "Об авторе"
 
-#: templates/blog/include/comment-form.html:15
+#: templates/blog/include/comment-form.html:16
 msgid ""
 "This is a paragraph, which is text surrounded by whitespace. Paragraphs can "
 "be on one\n"
@@ -294,7 +321,7 @@ msgstr ""
 "&nbsp;&nbsp;&nbsp;&nbsp;// Исходный код это текст с отступами\n"
 "&nbsp;&nbsp;&nbsp;&nbsp;which(is_easy) to_remember();\n"
 
-#: templates/blog/include/comment-form.html:68
+#: templates/blog/include/comment-form.html:70
 msgid "Submit"
 msgstr "Отправить"
 
@@ -347,6 +374,10 @@ msgstr "Изображение загружено."
 #, python-format
 msgid "Archive for %(year)i"
 msgstr "Архив за %(year)i год"
+
+#: views/comments.py:129
+msgid "You were unsubscribed from reply notifications for this comment."
+msgstr "Вы больше не будете получать уведомления об ответах на этот комментарий."
 
 #: views/index.py:83
 #, python-format

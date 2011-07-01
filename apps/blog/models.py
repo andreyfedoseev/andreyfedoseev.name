@@ -1,3 +1,5 @@
+import random
+import string
 from autoslug.fields import AutoSlugField
 from blog.utils import render_text
 from django.conf import settings
@@ -147,7 +149,15 @@ class Image(models.Model):
     def __unicode__(self):
         return u"Image-%i" % self.id
     
-    
+
+def gen_secret(length=5):
+    secret = ""
+    seq = string.letters+string.digits
+    for i in xrange(length):
+        secret += random.choice(seq)
+    return secret
+
+
 class Comment(models.Model):
     
     entry = models.ForeignKey(Entry, related_name="comments")
@@ -160,9 +170,12 @@ class Comment(models.Model):
     author_name = models.CharField(max_length=100, null=True, blank=True)
     author_email = models.EmailField(max_length=100, null=True, blank=True)
     author_url = models.URLField(max_length=200, null=True, blank=True)
-    
+
+    secret = models.CharField(max_length=5, null=True, blank=True,
+                              default=gen_secret)
     notify = models.BooleanField(default=False)
 
     text = models.TextField()
-        
+
+    
 mptt.register(Comment, order_insertion_by=['timestamp'])
