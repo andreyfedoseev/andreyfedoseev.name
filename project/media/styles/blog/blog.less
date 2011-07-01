@@ -54,7 +54,7 @@ header.global {
       }
       li.rss {
         padding-left: 20px;
-        background: url(../../images/blog/rss.png) no-repeat 0 0.2em;
+        background: url(../../images/blog/rss.png) no-repeat 0 50%;
       }
     }
   }
@@ -199,21 +199,27 @@ footer.global {
       height: 30px;
       line-height: 30px;
     }
-    .show-comment-form {
-      font-size: 1.1em;
-      line-height: 30px;
-    }
   }
   footer {
     .align-right;
     .show-comment-form {
       display: none;
-      font-size: 1.1em;
     }
   }
   .comment {
     header {
       margin-top: 0;
+    }
+  }
+  .show-comment-form {
+    font-size: 1.1em;
+    line-height: 30px;
+    display: inline-block;
+    padding-left: 20px;
+    text-decoration: none;
+    background: url(../../images/blog/icon-comment.png) no-repeat 0 50%;
+    span {
+      border-bottom: 1px dashed #009;
     }
   }
 }
