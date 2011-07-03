@@ -1,7 +1,14 @@
 {% load compress %}
 {% load less %}
 
+{% if debug %}
+  <link rel="stylesheet" href="{{ STATIC_URL }}javascripts/jquery/fancybox/jquery.fancybox-1.3.4.css" />
+{% else %}
+  <link rel="stylesheet" href="http://yandex.st/jquery/fancybox/1.3.4/jquery.fancybox.css" />
+{% endif %}
+
 {% compress css %}
+  <link rel="stylesheet" href="{{ STATIC_URL }}javascripts/jquery/jquery.qtip.css" />
   <link rel="stylesheet" href="{{ STATIC_URL }}javascripts/jquery/jquery.qtip.css" />
   <link rel="stylesheet" href="{{ STATIC_URL }}javascripts/jquery/apprise.css" />
   <link rel="stylesheet" href="{{ STATIC_URL }}{% less "styles/blog/blog.less" %}" />

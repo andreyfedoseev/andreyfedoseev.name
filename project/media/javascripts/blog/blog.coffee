@@ -1,3 +1,15 @@
+window.init_fancybox = ->
+  $ ->
+    $("figure a:has(img)").each((i, el)->
+      $el = $(el)
+      $el.fancybox(
+        title: $el.find("img").attr("alt"),
+        titleFormat: (title, currentArray, currentIndex, currentOpts)->
+          title
+      )
+    )
+
+
 window.init_blog_index = ->
   $ ->
     if not History.enabled
@@ -52,6 +64,7 @@ window.init_blog_index = ->
         else
           $title.text(base_window_title)
         prefetch_pages()
+        window.init_fancybox()
       )
 
     $links.click((e)=>
@@ -75,6 +88,8 @@ window.init_blog_index = ->
     )
 
     prefetch_pages()
+
+    window.init_fancybox()
 
 
 window.init_comment_form = ->
