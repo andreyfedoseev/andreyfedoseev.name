@@ -15,7 +15,7 @@ urlpatterns = patterns('blog.views',
     url(r'^(?:tag/(?P<tag>[^/]+)/)?(?:page/(?P<page>\d+)/)?$', Index.as_view(), name="index"),
 
     # View entry
-    url(r'^post/(?P<id>\d+)/(?:(?P<slug>[^/]+))?$', Entry.as_view(), name="entry"),
+    url(r'^post/(?P<id>\d+)/(?:(?P<slug>[^/]+)/?)?$', Entry.as_view(), name="entry"),
 
     # Archive
     url(r'^archive/(?:(?P<year>\d{4})/)?$', Archive.as_view(), name="archive"),

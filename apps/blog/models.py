@@ -1,5 +1,3 @@
-import random
-import string
 from autoslug.fields import AutoSlugField
 from blog.utils import render_text
 from django.conf import settings
@@ -13,6 +11,8 @@ from sorl.thumbnail.fields import ImageWithThumbnailsField
 import datetime
 import mptt
 import tagging
+import random
+import string
 
 
 class Blog(models.Model):
@@ -27,6 +27,10 @@ class Blog(models.Model):
     author = models.ForeignKey(User)
 
     feed_url = models.URLField(null=True, blank=True)
+
+    author_google_buzz_id = models.CharField(max_length=100,
+                                             verbose_name=(u"Author's Google Buzz ID"),
+                                             null=True, blank=True)
 
     def __unicode__(self):
         return self.title
@@ -162,14 +166,15 @@ class Comment(models.Model):
     
     entry = models.ForeignKey(Entry, related_name="comments")
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
+    google_buzz_id = models.CharField(max_length=100, null=True, blank=True)
 
     timestamp = models.DateTimeField(null=False, blank=False, default=datetime.datetime.now)
     
     by_blog_author = models.BooleanField(default=False)
 
-    author_name = models.CharField(max_length=100, null=True, blank=True)
-    author_email = models.EmailField(max_length=100, null=True, blank=True)
-    author_url = models.URLField(max_length=200, null=True, blank=True)
+    author_name = models.CharField(max_length=100, null=True, blank=True, default=u"")
+    author_email = models.EmailField(max_length=100, null=True, blank=True, default=u"")
+    author_url = models.URLField(max_length=200, null=True, blank=True, default=u"")
 
     secret = models.CharField(max_length=5, null=True, blank=True,
                               default=gen_secret)
@@ -177,5 +182,5 @@ class Comment(models.Model):
 
     text = models.TextField()
 
-    
+
 mptt.register(Comment, order_insertion_by=['timestamp'])
