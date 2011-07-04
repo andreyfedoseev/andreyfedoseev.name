@@ -13,3 +13,4 @@ GRAVATAR_DEFAULT_IMAGE = "http://andreyfedoseev.name" + STATIC_URL + "blog/image
 
 SECRET_KEY = ''
 
+AKISMET_KEY = ""

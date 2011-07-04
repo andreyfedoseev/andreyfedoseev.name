@@ -39,6 +39,7 @@ class AddComment(BlogViewMixin, View):
 
         if form.is_valid():
             comment = form.save()
+            comment.check_for_spam(request)
             parent = comment.parent
             context = self.get_context_data(**kwargs)
             context["comment"] = comment
@@ -53,23 +54,23 @@ class AddComment(BlogViewMixin, View):
                 cookies[NOTIFY_COOKIE] = form.cleaned_data['notify'] and u"1" or u""
 
                 # Send notification to author
-                link = "http://%s%s#comment%i" % (Site.objects.get_current().domain,
-                                                  entry.get_absolute_url(),
-                                                  comment.id)
-                message_text = render_to_string("blog/email/author-notification.html",
-                                                Context(dict(comment=comment,
-                                                             link=link,
-                                                             entry=entry,
-                                                             blog=self.blog)))
-                message = EmailMessage(subject=_(u'New comment to \xab%(title)s\xbb') % dict(title=entry.title),
-                                       body=message_text,
-                                       to=[self.blog.author.email],
-                                       from_email=settings.DEFAULT_FROM_EMAIL)
-                message.content_subtype = "html"
-                message.send(fail_silently=True)
+                if not comment.is_spam:
+                    link = "http://%s%s#comment%i" % (Site.objects.get_current().domain,
+                                                      entry.get_absolute_url(),
+                                                      comment.id)
+                    message_text = render_to_string("blog/email/author-notification.html",
+                                                    Context(dict(comment=comment,
+                                                                 link=link,
+                                                                 entry=entry,
+                                                                 blog=self.blog)))
+                    message = EmailMessage(subject=_(u'New comment to \xab%(title)s\xbb') % dict(title=entry.title),
+                                           body=message_text,
+                                           to=[self.blog.author.email],
+                                           from_email=settings.DEFAULT_FROM_EMAIL)
+                    message.content_subtype = "html"
+                    message.send(fail_silently=True)
 
-            if parent and parent.notify and parent.author_email and parent.author_email != comment.author_email:
-                send_reply_notification = True
+            if not comment.is_spam and parent and parent.notify and parent.author_email and parent.author_email != comment.author_email:
                 link = "http://%s%s#comment%i" % (Site.objects.get_current().domain,
                                                   entry.get_absolute_url(),
                                                   comment.id)

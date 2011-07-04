@@ -1,3 +1,4 @@
+from akismet import Akismet
 from autoslug.fields import AutoSlugField
 from blog.utils import render_text
 from django.conf import settings
@@ -107,7 +108,7 @@ class Entry(models.Model):
                        kwargs=dict(id=self.id, slug=self.slug))
 
     def threaded_comments(self):
-        return self.comments.order_by('tree_id', 'lft')
+        return self.comments.filter(is_spam=False).order_by('tree_id', 'lft')
 
     MORE_MARKER = "<!-- more -->"
 
@@ -181,6 +182,27 @@ class Comment(models.Model):
     notify = models.BooleanField(default=False)
 
     text = models.TextField()
+
+    is_spam = models.BooleanField(default=False)
+
+    def check_for_spam(self, request):
+        if self.by_blog_author:
+            return
+        if "http://" not in self.text:
+            return
+        key = getattr(settings, "AKISMET_KEY")
+        if not key:
+            return
+        checker = Akismet(key=settings.AKISMET_KEY)
+        is_spam = checker.comment_check(self.text.encode("utf-8"),
+            data=dict(comment_author=self.author_name,
+                      comment_author_email=self.author_email,
+                      comment_author_url=self.author_url,
+                      user_ip=request.META["REMOTE_ADDR"],
+                      user_agent=request.META["HTTP_USER_AGENT"]))
+        if self.is_spam != is_spam:
+            self.is_spam = is_spam
+            self.save()
 
 
 mptt.register(Comment, order_insertion_by=['timestamp'])
