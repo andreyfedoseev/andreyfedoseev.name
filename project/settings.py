@@ -131,5 +131,5 @@ COMPRESS_CSS_FILTERS = [
 
 HAYSTACK_SITECONF = "project.search_sites"
 HAYSTACK_SEARCH_ENGINE = "solr"
-HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr/andreyfedoseev_name'
+HAYSTACK_SOLR_URL = 'http://127.0.0.1:8393/solr/andreyfedoseev_name'
 HAYSTACK_INCLUDE_SPELLING = True

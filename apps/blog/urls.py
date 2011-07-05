@@ -5,7 +5,6 @@ from blog.views.archive import Archive
 from blog.views.comments import AddComment, DeleteComment, Unsubscribe
 from blog.views.entry import Entry
 from blog.views.index import Index
-from blog.views.search import Search
 from blog.views.tags import Tags
 from django.conf.urls.defaults import patterns, url
 
