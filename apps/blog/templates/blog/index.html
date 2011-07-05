@@ -21,21 +21,30 @@
     {% include "blog/include/about.html" %}
   {% endif %}
 
-  {% if tag %}
+  {% if tag or search %}
     <section>
+  {% endif %}
+  {% if tag %}
     <h1>{% blocktrans with tag.name as tag %}Tag: {{ tag }}{% endblocktrans %}</h1>
   {% endif %}
+  {% if search %}
+    <h1>{% blocktrans %}Search: {{ search_term }}{% endblocktrans %}</h1>
+  {% endif %}
 
-    <div class="entries">
-      {% include "blog/include/entries-list.html" %}
-    </div>
+    {% if search and not entries %}
+      {% trans "Nothing found." %}
+    {% else %}
+      <div class="entries">
+        {% include "blog/include/entries-list.html" %}
+      </div>
+    {% endif %}
 
     <nav class="pages">
       <a class="prev" {% if not prev_page %}style="display: none;"{% endif %} href="{{ prev_page }}">&larr; <span>{% trans "Previous page" %}</span></a>
       <a class="next" {% if not next_page %}style="display: none;"{% endif %} href="{{ next_page }}"><span>{% trans "Next page" %}</span> &rarr;</a>
     </nav>
 
-  {% if tag %}
+  {% if tag or search %}
     </section>
   {% endif %}
   

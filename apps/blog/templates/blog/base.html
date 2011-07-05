@@ -26,7 +26,10 @@
       <h1><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></h1>
     {% endif %}
     {% include "blog/include/navigation.html" %}
-    <span class="locale-switcher">{% locale_switcher %}</span>
+    <div class="right">
+      {% include "blog/include/search.html" %}
+      <span class="locale-switcher">{% locale_switcher %}</span>
+    </div>
   </header>
 
   <div class="page">

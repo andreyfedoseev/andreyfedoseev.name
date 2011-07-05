@@ -1,0 +1,4 @@
+{% load i18n %}
+<form name="search" class="search" method="get" action="{% url blog:search %}">
+  <input name="q" type="search" value="{{ search_term }}" placeholder="{% trans "Search" %}" />
+</form>

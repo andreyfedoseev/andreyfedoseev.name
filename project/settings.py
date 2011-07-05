@@ -84,6 +84,7 @@ INSTALLED_APPS = (
     'oembed',
     'robots',
     'tagging',
+    'haystack',
     'coffeescript',
     'less',
     'flatblocks',
@@ -127,3 +128,8 @@ COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',
 ]
+
+HAYSTACK_SITECONF = "project.search_sites"
+HAYSTACK_SEARCH_ENGINE = "solr"
+HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr/andreyfedoseev_name'
+HAYSTACK_INCLUDE_SPELLING = True

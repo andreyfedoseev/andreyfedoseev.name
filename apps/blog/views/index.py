@@ -7,12 +7,15 @@ from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
+from haystack.models import SearchResult
+from haystack.query import SearchQuerySet
 from tagging.models import Tag, TaggedItem
 
 
 class Index(BlogViewMixin, TemplateView):
 
     template_name = "blog/index.html"
+    search = False
     POSTS_PER_PAGE = 5
 
     def get(self, request, *args, **kwargs):
@@ -32,13 +35,24 @@ class Index(BlogViewMixin, TemplateView):
     def get_context_data(self, **kwargs):
         data = super(Index, self).get_context_data(**kwargs)
 
-        entries = self.blog.published_entries()
+        search = getattr(self, "search", False)
+        search_term = self.request.REQUEST.get("q", u"").strip()
         tag = kwargs.get("tag")
-        if tag:
-            tag = get_object_or_404(Tag, name=tag)
-            entries = TaggedItem.objects.get_by_model(entries, tag)
-        if not entries.exists():
-            raise Http404()
+
+        if search:
+            if not search_term:
+                raise Http404()
+            entries = SearchQuerySet().narrow("published:true").narrow("blog:%i" % self.blog.id)
+            entries = entries.filter(content=search_term).load_all()
+        else:
+            entries = self.blog.published_entries()
+            if tag:
+                tag = get_object_or_404(Tag, name=tag)
+                entries = TaggedItem.objects.get_by_model(entries, tag)
+
+            if not entries.exists():
+                raise Http404()
+
         paginator = Paginator(entries, self.POSTS_PER_PAGE)
         page_number = kwargs.get("page", 1) or 1
         page_number = int(page_number)
@@ -50,47 +64,64 @@ class Index(BlogViewMixin, TemplateView):
         except (EmptyPage, InvalidPage):
             raise Http404()
 
+
+        if search:
+            view_name = "blog:search"
+        else:
+            view_name = "blog:index"
+
         if current_page.has_next():
             if tag:
-                next_page = reverse("blog:index", kwargs=dict(page=page_number+1,
+                next_page = reverse(view_name, kwargs=dict(page=page_number+1,
                                                               tag=tag.name))
             else:
-                next_page = reverse("blog:index", kwargs=dict(page=page_number+1))
+                next_page = reverse(view_name, kwargs=dict(page=page_number+1))
         if page_number == 2:
             if tag:
-                prev_page = reverse("blog:index", kwargs=dict(tag=tag.name))
+                prev_page = reverse(view_name, kwargs=dict(tag=tag.name))
             else:
-                prev_page = reverse("blog:index")
+                prev_page = reverse(view_name)
         elif current_page.has_previous():
             if tag:
-                prev_page = reverse("blog:index", kwargs=dict(page=page_number-1,
+                prev_page = reverse(view_name, kwargs=dict(page=page_number-1,
                                                               tag=tag.name))
             else:
-                prev_page = reverse("blog:index", kwargs=dict(page=page_number-1))
+                prev_page = reverse(view_name, kwargs=dict(page=page_number-1))
 
         if next_page:
             next_page = self.request.build_absolute_uri(next_page)
+            if search:
+                next_page = u"%s?q=%s" % (next_page, search_term)
         if prev_page:
             prev_page = self.request.build_absolute_uri(prev_page)
+            if search:
+                prev_page = u"%s?q=%s" % (prev_page, search_term)
 
-
-        is_frontpage = page_number == 1 and not tag
+        is_frontpage = page_number == 1 and not tag and not search
 
         page_title_parts = []
-        if tag:
+        if search:
+            page_title_parts.append(_("Search: %(search_term)s") % dict(search_term=search_term))
+        elif tag:
             page_title_parts.append(_("Tag: %(tag)s") % dict(tag=tag.name))
         if page_number != 1:
             page_title_parts.append(_("Page %(number)i") % dict(number=page_number))
 
         page_title = u" | ".join(page_title_parts)
 
+        entries = map(lambda o: isinstance(o, SearchResult) and o.object or o,
+                      current_page.object_list)
+
         data.update(
             dict(page_title=page_title,
-                 entries=current_page.object_list,
+                 entries=entries,
                  prev_page=prev_page,
                  next_page=next_page,
                  is_frontpage=is_frontpage,
-                 tag=tag)
+                 tag=tag,
+                 search=search,
+                 search_term=search_term,
+            )
         )
 
         return data
