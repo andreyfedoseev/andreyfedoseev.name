@@ -46,6 +46,21 @@ class Entry(BlogViewMixin, TemplateView):
                 initial['notify'] = bool(self.request.COOKIES.get(NOTIFY_COOKIE, "").decode('utf-8'))
             comment_form = CommentForm(initial=initial)
 
+        entries = self.blog.published_entries().exclude(id=entry.id)
+        prev_entries = entries.filter(publication_timestamp__lte=entry.publication_timestamp).order_by("-publication_timestamp")
+        if prev_entries.exists():
+            prev_entry = prev_entries[0]
+        else:
+            prev_entry = None
+
+        next_entries = entries.filter(publication_timestamp__gte=entry.publication_timestamp).order_by("publication_timestamp")
+        if next_entries.exists():
+            next_entry = next_entries[0]
+        else:
+            next_entry = None
+
         data.update(dict(entry=entry, page_title=page_title,
-                         comment_form=comment_form))
+                         comment_form=comment_form,
+                         prev_entry=prev_entry, next_entry=next_entry,
+                         ))
         return data

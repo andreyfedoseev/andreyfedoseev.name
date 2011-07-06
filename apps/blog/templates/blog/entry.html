@@ -24,15 +24,22 @@
     </header>
     {{ entry.full_text }}
     <footer>
-      {% if entry.tags.exists %}
-      {% trans "Tags" %}:
-      <ul>
-        {% for tag in entry.tags %}
-          <li><a href="{% url blog:index tag=tag.name %}">{{ tag }}</a></li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-      <span class="plusone"><g:plusone size="small" count="true" href="{{ entry.get_absolute_url }}"></g:plusone></span>
+      <div>
+        {% if entry.tags.exists %}
+        {% trans "Tags" %}:
+        <ul>
+          {% for tag in entry.tags %}
+            <li><a href="{% url blog:index tag=tag.name %}">{{ tag }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        <span class="plusone"><g:plusone size="small" count="true" href="{{ entry.get_absolute_url }}"></g:plusone></span>
+      </div>
+      <nav>
+        <a class="prev" {% if not prev_entry %}style="display: none;"{% endif %} href="{{ prev_entry.get_absolute_url }}">&larr; <span>{{ prev_entry.title }}</span></a>
+        <a class="next" {% if not next_entry %}style="display: none;"{% endif %} href="{{ next_entry.get_absolute_url }}"><span>{{ next_entry.title }}</span> &rarr;</a>
+      </nav>
+
     </footer>
   </article>
   <section id="comments">

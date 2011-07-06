@@ -12,24 +12,39 @@ window.init_fancybox = ->
 
 window.init_blog_index = ->
   $ ->
-    if not History.enabled
-      return
     $links = $("nav.pages a");
     $next = $links.filter(".next")
     $prev = $links.filter(".prev")
+
+    $(document).keypress((e)->
+      if e.which == 63234 and e.ctrlKey and $prev.css("display") != "none"
+        $prev.click()
+      if e.which == 63235 and e.ctrlKey and $next.css("display") != "none"
+        $next.click()
+    )
+
+    if not !!(window.history && history.pushState)
+      return
     $entries_ct = $("#content div.entries")
     $title = $("title")
     base_window_title = $.trim($title.text().split("|").pop())
 
     pages = {}
 
-    fetch_page = (url, callback=null, foreground=true)->
+    fetch_page = (url, callback=null, animated=true)->
       if url not of pages
-        if foreground
+        if animated
           $entries_ct.addClass("loading")
-        $.getJSON(url, (data)->
+
+        suffix = "_=" + new Date().getTime();
+        if url.indexOf("?") == -1
+          _url = url + "?" + suffix
+        else
+          _url = url + "&" + suffix
+
+        $.getJSON(_url, null, (data)->
           pages[url] = data
-          if foreground
+          if animated
             $entries_ct.removeClass("loading")
           if callback
             callback(data)
@@ -47,6 +62,7 @@ window.init_blog_index = ->
     show_page = (url, next=false)->
       fetch_page(url, (data)->
         $entries_ct.hide()
+        window.scrollTo(0, 0)
         $entries_ct.html(data.entries)
         $entries_ct.effect("drop", {mode: "show", direction: if next then "right" else "left"})
         if data.next_page
@@ -64,8 +80,7 @@ window.init_blog_index = ->
         else
           $title.text(base_window_title)
         prefetch_pages()
-        window.init_fancybox()
-      )
+        window.init_fancybox())
 
     $links.click((e)=>
       e.preventDefault()
@@ -73,20 +88,28 @@ window.init_blog_index = ->
       if $target.is("span")
         $target = $target.parent()
       next = $target.hasClass("next")
+      url = $target.attr("href")
       $entries_ct.effect("drop", {direction: if next then "left" else "right"}, ->
         $entries_ct.show()
         $entries_ct.empty()
-        History.pushState({next: next}, null, $target.attr("href"))
+        url = $target.attr("href")
+        history.pushState({next: next, url: url}, "", url)
+        show_page(url, next)
+        return
       )
     )
 
-    History.Adapter.bind(window, "statechange", =>
-      state = History.getState()
-      url = state.url
-      next = state.data.next
-      show_page(url, next)
+    $(window).bind("popstate", (e)->
+      state = e.originalEvent.state
+      if state
+        next = state.next
+        $entries_ct.effect("drop", {direction: if next then "left" else "right"}, ->
+          $entries_ct.show()
+          $entries_ct.empty()
+          show_page(state.url, next)
+        )
     )
-
+    history.replaceState({next: false, url: window.location.href}, "", window.location.href)
     prefetch_pages()
 
     window.init_fancybox()

@@ -13,21 +13,23 @@
     </header>
     {{ entry.short_text }}
     <footer>
-      {% if entry.tags.exists %}
-      {% trans "Tags" %}:
-      <ul>
-        {% for tag in entry.tags %}
-          <li><a href="{% url blog:index tag=tag.name %}">{{ tag }}</a></li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-      <a href="{{ entry.get_absolute_url }}#comments" class="comments">
-        {% if entry.comments.exists %}
-          {% blocktrans count count=entry.comments.count %}{{ count }} comment{% plural %}{{ count }} comments{% endblocktrans %}
-        {% else %}
-          {% trans "No comments" %}
+      <div>
+        {% if entry.tags.exists %}
+        {% trans "Tags" %}:
+        <ul>
+          {% for tag in entry.tags %}
+            <li><a href="{% url blog:index tag=tag.name %}">{{ tag }}</a></li>
+          {% endfor %}
+        </ul>
         {% endif %}
-      </a>
+        <a href="{{ entry.get_absolute_url }}#comments" class="comments">
+          {% if entry.comments.exists %}
+            {% blocktrans count count=entry.comments.count %}{{ count }} comment{% plural %}{{ count }} comments{% endblocktrans %}
+          {% else %}
+            {% trans "No comments" %}
+          {% endif %}
+        </a>
+      </div>
     </footer>
   </article>
 {% endfor %}

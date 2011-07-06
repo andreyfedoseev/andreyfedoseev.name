@@ -158,9 +158,11 @@ footer.global {
   }
   footer {
     font-size: 0.9em;
-    height: 3em;
     color: #666;
-    position: relative;
+    > div {
+      position: relative;
+      height: 2em;
+    }
     ul {
       .list-no-style;
       margin: 0;
@@ -174,6 +176,7 @@ footer.global {
     a.comments {
       position: absolute;
       right: 0;
+      top: 0;
       display: inline-block;
       padding-left: 18px;
       background: url(../../images/blog/icon-comment.png) no-repeat 0 4px;
@@ -182,6 +185,21 @@ footer.global {
       position: absolute;
       right: 0;
       display: inline-block;
+    }
+    nav {
+      margin-top: 1em;
+      height: 1.5em;
+      position: relative;
+      a {
+        text-decoration: none;
+        span {
+          text-decoration: underline;
+        }
+      }
+      a.next {
+        position: absolute;
+        right: 0;
+      }
     }
   }
   figure {

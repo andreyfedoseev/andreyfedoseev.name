@@ -23,12 +23,14 @@ class Index(BlogViewMixin, TemplateView):
             data = self.get_context_data(**kwargs)
             entries = render_to_string("blog/include/entries-list.html",
                                        dict(entries=data["entries"]))
-            return JsonResponse(dict(
+            response = JsonResponse(dict(
                 entries=entries,
                 page_title=data["page_title"],
                 next_page=data["next_page"],
                 prev_page=data["prev_page"]
             ))
+            response["Cache-Control"] = "no-cache"
+            return response
         
         return super(Index, self).get(request, *args, **kwargs)
 
@@ -88,14 +90,10 @@ class Index(BlogViewMixin, TemplateView):
             else:
                 prev_page = reverse(view_name, kwargs=dict(page=page_number-1))
 
-        if next_page:
-            next_page = self.request.build_absolute_uri(next_page)
-            if search:
-                next_page = u"%s?q=%s" % (next_page, search_term)
-        if prev_page:
-            prev_page = self.request.build_absolute_uri(prev_page)
-            if search:
-                prev_page = u"%s?q=%s" % (prev_page, search_term)
+        if next_page and search:
+            next_page = u"%s?q=%s" % (next_page, search_term)
+        if prev_page and search:
+            prev_page = u"%s?q=%s" % (prev_page, search_term)
 
         is_frontpage = page_number == 1 and not tag and not search
 
