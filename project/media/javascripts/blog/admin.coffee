@@ -53,9 +53,7 @@ class BlogAdmin
     )
 
     IMAGE_WIDGET_TEMPLATE = $.template(null,
-     '''<li class="image" id="image-${id}" data-id="${id}" data-name="${name}">
-          <span><img src="${src}" /></span>
-          <a class="figure" href="#"></a>
+     '''<li class="image" id="image-${id}" data-id="${id}" data-name="${name}"><span><img src="${src}" /></span><a class="figure" href="#"></a>
           <a class="original" href="#"></a>
           <a class="scaled" href="#"></a>
           <a class="thumb" href="#"></a>

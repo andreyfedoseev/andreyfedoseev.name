@@ -8,7 +8,6 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-from sorl.thumbnail.fields import ImageWithThumbnailsField
 import datetime
 import mptt
 import tagging
@@ -136,14 +135,12 @@ tagging.register(Entry)
 
 class Image(models.Model):
 
+    THUMBNAIL_GEOMETRY = "180x180"
+    SCALED_GEOMETRY = "500x500"
+
     entry = models.ForeignKey(Entry, null=True, verbose_name = _(u"Entry"))
-    image = ImageWithThumbnailsField(upload_to="upload/images",
-                                     thumbnail={'size': (180, 180)},
-                                     extra_thumbnails={
-                                        'scaled': {'size': (500, 500)},
-                                        'grid': {'size': (250, 250)},
-                                     },
-                                     verbose_name = _(u"Image"))
+    image = models.ImageField(upload_to="upload/images",
+                             verbose_name = _(u"Image"))
     order = models.IntegerField(null=True, blank=True, verbose_name = _(u"Order"))
 
     class Meta:

@@ -3,15 +3,13 @@ from blog.models import Image, Blog
 from django import template
 from django.contrib.humanize.templatetags.humanize import naturalday
 from django.utils import translation
-from django.utils.encoding import force_unicode
-from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from pytils.dt import ru_strftime, distance_of_time_in_words
+from sorl.thumbnail import get_thumbnail
 import datetime
 import re
 import shlex
 import subprocess
-import markdown
 
 
 register = template.Library()
@@ -24,29 +22,25 @@ class ImageNode(template.Node):
         self.format = format
         self.title = title
 
-    def build_absolute_uri(self, request, url):
-        if request:
-            return request.build_absolute_uri(url)
-        return url
-        
     def render(self, context):
         try:
             image = Image.objects.get(pk=self.id)
         except Image.DoesNotExist:
             return u""
-        request = context.get('request')
         title = self.title or image.image.name.split('/')[-1]
+        thumbnail = get_thumbnail(image.image, Image.THUMBNAIL_GEOMETRY)
+        scaled = get_thumbnail(image.image, Image.SCALED_GEOMETRY)
         data = {
             'title': title,
-            'original_url': self.build_absolute_uri(request, image.image.url),
+            'original_url': image.image.url,
             'original_width': image.image.width,
             'original_height': image.image.height,
-            'thumb_url': self.build_absolute_uri(request, image.image.thumbnail.absolute_url),
-            'thumb_width': image.image.thumbnail.width(),
-            'thumb_height': image.image.thumbnail.height(),
-            'scaled_url': self.build_absolute_uri(request, image.image.extra_thumbnails['scaled'].absolute_url),
-            'scaled_width': image.image.extra_thumbnails['scaled'].width(),
-            'scaled_height': image.image.extra_thumbnails['scaled'].height(),
+            'thumb_url': thumbnail.url,
+            'thumb_width': thumbnail.width,
+            'thumb_height': thumbnail.height,
+            'scaled_url': scaled.url,
+            'scaled_width': scaled.width,
+            'scaled_height': scaled.height,
         }            
         return IMAGE_FORMATS[self.format] % data
         

@@ -11,11 +11,11 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from django.views.generic import View
 from django.views.generic.base import TemplateView
+from sorl.thumbnail import get_thumbnail
 import json
 import re
 
 
-#noinspection PyUnresolvedReferences
 class BlogAdminMixin(object):
 
     @method_decorator(login_required)
@@ -134,7 +134,7 @@ class UploadImage(BlogAdminMixin, View):
             images.append({
                 'id': image.id,
                 'name': name,
-                'src': image.image.thumbnail.absolute_url,
+                'src': get_thumbnail(image.image, Image.THUMBNAIL_GEOMETRY).url,
             })
         response = dict(status="success", message=_(u'Images were uploaded.'),
                         images=images)
@@ -154,7 +154,7 @@ class ListEntryImages(BlogAdminMixin, View):
             images.append({
                 'id': image.id,
                 'name': IMAGE_NAME_RE.search(image.image.name.split('/')[-1]).groupdict()["name"],
-                'src': image.image.thumbnail.absolute_url,
+                'src': get_thumbnail(image.image, Image.THUMBNAIL_GEOMETRY).url,
             })
         return dict(images=images)
 
