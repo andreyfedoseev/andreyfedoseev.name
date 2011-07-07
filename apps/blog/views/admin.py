@@ -29,6 +29,7 @@ class BlogAdminMixin(object):
     def get_context_data(self, **kwargs):
         data = super(BlogAdminMixin, self).get_context_data(**kwargs)
         data["blog"] = self.blog
+        data["is_author"] = True
         return data
 
 

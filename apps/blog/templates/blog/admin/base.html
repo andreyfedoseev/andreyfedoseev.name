@@ -9,22 +9,16 @@
     {% block extra-css %}{% endblock %}
   </head>
   <body class="admin {% block bodyclass %}{% endblock %}">
-    <nav class="global">
-      <ul class="navigation">
-        <li><a href="{% url blog:admin_add_entry %}">{% trans "New entry" %}</a></li>
-        <li><a href="{% url blog:admin_index %}">{% trans "Blog admin" %}</a></li>
-        <li><a href="{% url admin:index %}">{% trans "Django admin" %}</a></li>
-      </ul>
-    </nav>
+    {% include "blog/include/author-panel.html" %}
     <div class="columns">
       {% block pre_content %}{% endblock %}
+      <div id="sidebar">
+        {% block sidebar %}{% endblock %}
+      </div>
       <div id="content">
         {% include "blog/include/status-messages.html" %}
         {% block content %}
         {% endblock %}
-      </div>
-      <div id="sidebar">
-        {% block sidebar %}{% endblock %}
       </div>
       {% block post_content %}{% endblock %}
     </div>

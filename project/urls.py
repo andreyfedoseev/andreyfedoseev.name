@@ -16,6 +16,7 @@ common_patterns = patterns(
     '',
     url(r'^robots.txt$', include('robots.urls')),
     url(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+    url(r'^logout/?', "django.contrib.auth.views.logout", name="logout"),
     url(r'^admin/', include(admin.site.urls)),
 )
 

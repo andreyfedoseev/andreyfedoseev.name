@@ -1,10 +1,11 @@
-@import "../definitions.less";
 @import "../base.less";
 
 body {
   font-size: @base-font-size;
   font-family: @font-family;
   line-height: 1.5;
+  padding: 0;
+  margin: 0;
 }
 
 #status-messages {
@@ -12,5 +13,28 @@ body {
     margin-bottom: 1em;
     padding: 0.5em 1em;
     .message-mixin;
+  }
+}
+
+nav.author-panel {
+  background-color: @light-gray;
+  border-bottom: 2px solid @mid-gray;
+  margin-bottom: 1em;
+  ul {
+    .list-no-style;
+    .align-right;
+    .full-width-column;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0.5em 1em;
+    li {
+      display: inline-block;
+      float: left;
+      margin-left: 1em;
+    }
+    li.right {
+      float: none;
+      margin-left: 1em;
+    }
   }
 }

@@ -1,0 +1,13 @@
+{% load i18n %}
+{% if is_author %}
+<nav class="author-panel">
+  <ul>
+    <li><a href="{% url blog:admin_add_entry %}">{% trans "New entry" %}</a></li>
+    <li><a href="{% url blog:admin_index %}">{% trans "Blog admin" %}</a></li>
+    {% if request.user.is_staff %}
+    <li><a href="{% url admin:index %}">{% trans "Django admin" %}</a></li>
+    {% endif %}
+    <li class="right"><a href="{% url logout %}?next={{ blog.get_absolute_url }}">{% trans "Log out" %}</a></li>
+  </ul>
+</nav>
+{% endif %}

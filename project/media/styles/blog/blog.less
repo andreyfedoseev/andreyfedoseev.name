@@ -15,8 +15,7 @@ a:hover {
 
 .page {
   padding: 0 1em;
-  max-width: 1000px;
-  margin: 0 auto;
+  .full-width-column;
   margin-bottom: 2em;
 }
 
@@ -29,7 +28,7 @@ a:hover {
 }
 
 header.global {
-  max-width: 1000px;
+  max-width: @max-width;
   margin: 1em auto;
   margin-bottom: 2em;
   position: relative;
@@ -71,7 +70,7 @@ header.global {
 
 footer.global {
   background-color: @light-gray;
-  max-width: 1000px;
+  max-width: @max-width;
   margin: 2em auto;
   padding: 1em;
   nav {

@@ -2,12 +2,7 @@
 
 @sidebar-width: 220px;
 @content-margin-right: 40px;
-@content-width: @page-width - @sidebar-width - @content-margin-right;
-
-body {
-  padding: 0;
-  margin: 0;
-}
+@content-width: @max-width - @sidebar-width - @content-margin-right;
 
 a,a:visited {
   color: @base-link-color;
@@ -17,36 +12,17 @@ a:hover {
   color: @base-text-color;
 }
 
-nav.global {
-  background-color: @light-gray;
-  border-bottom: 3px solid @mid-gray;
-  margin-bottom: 1em;
-  ul {
-    .list-no-style;
-    .align-right;
-    .full-width-column;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 0.5em 0;
-    li {
-      display: inline-block;
-      margin-left: 1em;
-    }
-  }
-}
-
 .columns {
   .full-width-column;
 }
 
 #content {
-  float: left;
-  width: @content-width;
-  margin-right: @content-margin-right;
+  max-width: @content-width;
+  margin-right: @content-margin-right + @sidebar-width;
 }
 
 #sidebar {
-  float: left;
+  float: right;
   width: @sidebar-width;
 }
 
@@ -57,7 +33,7 @@ form.entry {
     }
     input[type='text'], textarea {
       padding: 2px;
-      width: @content-width - 4;
+      width: 100%;
       margin: 0;
       .solid-border;
     }

@@ -45,3 +45,36 @@ blockquote {
   clear: both;
   visibility: hidden;
 }
+
+#login-box {
+  position: fixed;
+  width: 300px;
+  padding: 1em;
+  top: 0;
+  display: none;
+  background-color: #fff;
+  border: 1px solid @mid-gray;
+  border-top: 0;
+  -moz-box-shadow: 0 0 20px #888;
+  -webkit-box-shadow: 0 0 20px #888;
+  box-shadow: 0 0 20px #888;
+  .field {
+    margin: 0.5em 0;
+  }
+  label {
+    display: block;
+  }
+  input[type='text'], input[type='password'] {
+    font-size: 120%;
+    border: 1px solid @mid-gray;
+    padding: 3px 5px;
+    width: 288px;
+  }
+  .buttons {
+    .align-right;
+  }
+}
+
+#login-box.loading {
+  background: #fff url(../../images/ajax-loader.gif) no-repeat 50% 50%;
+}

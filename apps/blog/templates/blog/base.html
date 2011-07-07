@@ -19,6 +19,7 @@
     <![endif]-->
   </head>
   <body class="{% block bodyclass %}{% endblock %}">
+  {% include "blog/include/author-panel.html" %}
   <header class="global">
     {% if is_frontpage %}
       <h1>{{ blog.title }}</h1>
@@ -52,6 +53,10 @@
     </p>
     {% endif %}
   </footer>
+
+  {% if user.is_anonymous %}
+    <div id="login-box" data-load-from="{% url login_box %}"></div>
+  {% endif %}
 
   {% include "blog/include/js.html" %}
   {% block extra-js %}{% endblock %}

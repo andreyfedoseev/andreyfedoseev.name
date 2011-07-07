@@ -253,5 +253,5 @@ window.init_comment_form = ->
       )
     errorPlacement: (error, element)->
       error.appendTo(element.parents(".field").find(".errors"))
-  )
 
+  )
