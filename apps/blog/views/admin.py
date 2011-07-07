@@ -12,6 +12,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import View
 from django.views.generic.base import TemplateView
 import json
+import re
 
 
 #noinspection PyUnresolvedReferences
@@ -109,22 +110,35 @@ class EditEntry(BlogAdminMixin, TemplateView):
                 return self.render_to_response(context)
 
 
+
+IMAGE_NAME_RE  = re.compile("^(?P<name>.+?)(?:\.(?P<extension>png|gif|jpg|jpeg))?$", re.I)
+
+
 class UploadImage(BlogAdminMixin, View):
 
+    @method_decorator(ajax_request)
     def post(self, request, *args, **kwargs):
         files = request.FILES
-        file = files.get('file')
-        if not file:
+        files = files.getlist('files[]')
+        if not files:
             return HttpResponse(json.dumps(dict(status="error")))
-        image = Image.objects.create(image=file)
-        image_data = {
-            'id': image.id,
-            'filename': image.image.name.split('/')[-1],
-            'src': image.image.thumbnail.absolute_url,
-        }
-        response = dict(status="success", message=_(u'New image was uploaded.'),
-                        image=image_data)
-        return HttpResponse(json.dumps(response))
+
+        images = []
+        for file in files:
+            if not file.content_type.startswith("image/"):
+                continue
+            image = Image.objects.create(image=file)
+
+            name = IMAGE_NAME_RE.search(file.name).groupdict()["name"]
+
+            images.append({
+                'id': image.id,
+                'name': name,
+                'src': image.image.thumbnail.absolute_url,
+            })
+        response = dict(status="success", message=_(u'Images were uploaded.'),
+                        images=images)
+        return response
 
 
 class ListEntryImages(BlogAdminMixin, View):
@@ -139,7 +153,7 @@ class ListEntryImages(BlogAdminMixin, View):
         for image in entry.image_set.all():
             images.append({
                 'id': image.id,
-                'filename': image.image.name.split('/')[-1],
+                'name': IMAGE_NAME_RE.search(image.image.name.split('/')[-1]).groupdict()["name"],
                 'src': image.image.thumbnail.absolute_url,
             })
         return dict(images=images)

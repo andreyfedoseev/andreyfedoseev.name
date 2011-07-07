@@ -71,7 +71,10 @@
     </ul>
     {{ form.images }}
     <ul class="images"></ul>
-    <a id="upload-image-button" class="dashed" href="{% url blog:admin_add_image %}">{% trans "Upload an image" %}</a>
+    <div id="upload-image">
+      <input type="file" name="files[]" />
+    </div>
+    <div id="upload-image-progressbar"></div>
   </div>
 
 {% endblock %}
@@ -89,7 +92,7 @@
       load_entry_images_url = null
       {% endif %}
       $ ->
-        window.BlogAdmin(load_entry_images_url, "{% url blog:admin_delete_image %}")
+        window.BlogAdmin(load_entry_images_url, "{% url blog:admin_add_image %}", "{% url blog:admin_delete_image %}")
 
         $messages = $("div.message.success")
         setTimeout(->

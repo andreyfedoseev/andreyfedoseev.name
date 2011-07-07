@@ -2,7 +2,7 @@
 
 class BlogAdmin
 
-  constructor:(@list_entry_images_url=null, @delete_image_url=null) ->
+  constructor:(list_entry_images_url=null, upload_image_url=null, delete_image_url=null) ->
 
     datepicker_options =
       dateFormat: "dd.mm.yy"
@@ -12,7 +12,7 @@ class BlogAdmin
 
     $("input.date").datepicker(datepicker_options)
 
-    @form = $("#entry-form")
+    $form = $("#entry-form")
     $text = $("#id_text")
     $markdown_checkbox = $("#id_markdown")
 
@@ -52,20 +52,21 @@ class BlogAdmin
       $preview_form.submit()
     )
 
-    @IMAGE_WIDGET_TEMPLATE = $.template(null,
-     '''<li class="image" id="image-${id}" data-id="${id}" data-filename="${filename}">
+    IMAGE_WIDGET_TEMPLATE = $.template(null,
+     '''<li class="image" id="image-${id}" data-id="${id}" data-name="${name}">
           <span><img src="${src}" /></span>
+          <a class="figure" href="#"></a>
           <a class="original" href="#"></a>
           <a class="scaled" href="#"></a>
           <a class="thumb" href="#"></a>
           <a class="delete" href="#"></a></li>''')
 
-    @images_widget = $("#images-widget")
-    @images_widget_container = @images_widget.find("ul.images");
-    if @list_entry_images_url?
-      $.getJSON(@list_entry_images_url, (data)=>
+    $images_widget = $("#images-widget")
+    $images_widget_container = $images_widget.find("ul.images");
+    if list_entry_images_url?
+      $.getJSON(list_entry_images_url, (data)=>
         for image in data.images
-          $.tmpl(@IMAGE_WIDGET_TEMPLATE, image).appendTo(@images_widget_container)
+          $.tmpl(IMAGE_WIDGET_TEMPLATE, image).appendTo($images_widget_container)
         return
       )
 
@@ -73,12 +74,12 @@ class BlogAdmin
 
     delete_image_message = gettext("Delete this image?")
 
-    @images_widget_container.delegate("a", "click", (e)=>
+    $images_widget_container.delegate("a", "click", (e)=>
       e.preventDefault()
       $button = $(e.target)
       $image = $button.closest("li");
       id = $image.data("id")
-      filename = $image.data("filename")
+      name = $image.data("name")
       button_cls = $button.attr("class")
 
       if button_cls == "delete"
@@ -96,20 +97,38 @@ class BlogAdmin
             $("#image-#{id}").fadeOut(300, ->
               $(this).remove()
             )
-            $.post(@delete_image_url, {id: id}, ->)
+            $.post(delete_image_url, {id: id}, ->)
         )
       else
-        insert_text = "{% image #{id} #{button_cls} \"#{filename}\" %}"
+        insert_text = "{% image #{id} #{button_cls} \"#{name}\" %}"
         $text.val($text.val() + insert_text)
     )
 
-    @upload_btn = $("#upload-image-button")
-    @upload_btn.upload(
-      action: @upload_btn.attr("href"),
-      onComplete: (response)=>
-        image = $.parseJSON(response).image
-        $.tmpl(@IMAGE_WIDGET_TEMPLATE, image).appendTo(@images_widget_container)
-        image_field.val(image_field.val() + ",#{image.id}")
+    $upload = $("#upload-image")
+    $progressbar = $("#upload-image-progressbar").hide().progressbar()
+    $upload.fileupload(
+      url: upload_image_url,
+      singleFileUploads: false,
+#      fileInput: $form.find("input:file"),
+      start: (e)->
+        $progressbar.progressbar(
+          value: 0
+        )
+        $progressbar.show()
+      ,
+      always: (e, data)->
+        $progressbar.hide()
+        response = data.result
+        if response.status == "success"
+          for image in response.images
+            $.tmpl(IMAGE_WIDGET_TEMPLATE, image).appendTo($images_widget_container)
+            image_field.val(image_field.val() + ",#{image.id}")
+            console.log(image)
+      ,
+      progressall: (e, data)->
+        $progressbar.progressbar(
+          value: parseInt(data.loaded / data.total * 100, 10)
+        )
     )
 
 window.BlogAdmin = BlogAdmin

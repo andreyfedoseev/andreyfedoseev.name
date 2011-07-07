@@ -5,6 +5,9 @@
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.min.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.ui.core.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.ui.datepicker.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.ui.widget.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.ui.progressbar.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/ui/jquery.ui.button.js"></script>
   {% if request.LANGUAGE_CODE != "en" %}
     <script src="{{ STATIC_URL }}javascripts/jquery/ui/i18n/jquery.ui.datepicker-{{ request.LANGUAGE_CODE }}.js"></script>
   {% endif %}
@@ -13,6 +16,9 @@
   <script src="http://yandex.st/jquery/1.6.2/jquery.min.js"></script>
   <script src="http://yandex.st/jquery-ui/1.8.11/jquery.ui.core.js"></script>
   <script src="http://yandex.st/jquery-ui/1.8.11/jquery.ui.datepicker.js"></script>
+  <script src="http://yandex.st/jquery-ui/1.8.11/jquery.ui.widget.js"></script>
+  <script src="http://yandex.st/jquery-ui/1.8.11/jquery.ui.progressbar.js"></script>
+  <script src="http://yandex.st/jquery-ui/1.8.11/jquery.ui.button.js"></script>
   {% if request.LANGUAGE_CODE != "en" %}
     <script src="http://yandex.st/jquery-ui/1.8.11//i18n/jquery.ui.datepicker-{{ request.LANGUAGE_CODE }}.js"></script>
   {% endif %}
@@ -22,7 +28,8 @@
 <script src="{% url i18n.js %}"></script>
 
 {% compress js %}
-  <script src="{{ STATIC_URL }}javascripts/jquery/jquery.ocupload.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/fileupload/jquery.iframe-transport.js"></script>
+  <script src="{{ STATIC_URL }}javascripts/jquery/fileupload/jquery.fileupload.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/jquery.validate.js"></script>
   <script src="{{ STATIC_URL }}javascripts/jquery/apprise.js"></script>
   <script src="{{ STATIC_URL }}{% coffeescript "javascripts/blog/admin.coffee" %}"></script>
