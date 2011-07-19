@@ -1,11 +1,13 @@
 {% load i18n %}
-{% load blog_tags %}
-<section id="about" class="about clearfix">
+{% load utils %}
+<section id="about" class="about clearfix" itemscope itemtype="http://schema.org/Person">
   <h1>{% trans "About me" %}</h1>
-  <img src="{{ STATIC_URL }}images/author.jpg" alt="{{ blog.author_name }}" width="140" height="93" />
+  <img src="{{ STATIC_URL }}images/author.jpg" itemprop="photo" alt="{{ blog.author_name }}" width="140" height="93" />
   <p>
-    {% localized_flatblock "about-short" %}
+    {% localized_flatblock "about-short" %} <br/>
+    <a href="{% url about %}">{% trans "More..." %}</a>
   </p>
+
 </section>
 
 

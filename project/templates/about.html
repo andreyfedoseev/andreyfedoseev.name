@@ -1,0 +1,19 @@
+{% extends "blog/base.html" %}
+{% load utils %}
+{% load i18n %}
+{% load less %}
+
+{% block extra-css %}
+  <link rel="stylesheet" href="{{ STATIC_URL }}{% less "styles/about.less" %}" />
+{% endblock %}
+
+{% block content %}
+  <section class="about" itemscope itemtype="http://schema.org/Person">
+    <h1>{% trans "About me" %}</h1>
+    <img src="{{ STATIC_URL }}images/author.jpg" itemprop="photo" alt="{{ blog.author_name }}" width="140" height="93" />
+    <p>
+      {% localized_flatblock "about-short" %}
+    </p>
+    {{ content|safe }}
+  </section>
+{% endblock %}

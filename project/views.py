@@ -1,10 +1,14 @@
 from annoying.decorators import JsonResponse
+from annoying.functions import get_object_or_None
 from blog.models import Blog
+from blog.views import BlogViewMixin
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import login
 from django.shortcuts import get_object_or_404, redirect
+from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView, View
+from flatblocks.models import FlatBlock
 
 
 def frontpage(request):
@@ -36,3 +40,17 @@ class Login(View):
 
     def get(self, request, *args, **kwargs):
         return login(request, *args, **kwargs)
+
+
+class About(BlogViewMixin, TemplateView):
+
+    template_name = "about.html"
+
+    def get_context_data(self, **kwargs):
+        data = super(About, self).get_context_data(**kwargs)
+        flatblock = get_object_or_None(FlatBlock,
+                                       slug="about-%s" % self.request.LANGUAGE_CODE)
+        data["content"] = flatblock and flatblock.content or u""
+        data["page_title"] = _("About me")
+        data["is_about_page"] = True
+        return data

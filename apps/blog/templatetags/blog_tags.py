@@ -138,13 +138,6 @@ def humanized_date(date):
     return naturalday(date)
 
 
-@register.inclusion_tag("blog/include/localized-flatblock.html", takes_context=True)
-def localized_flatblock(context, name):
-    request = context["request"]
-    name = "%s-%s" % (name, request.LANGUAGE_CODE)
-    return dict(name=name)
-
-
 @register.inclusion_tag("blog/include/locale-switcher.html", takes_context=True)
 def locale_switcher(context):
     blog = context["blog"]
