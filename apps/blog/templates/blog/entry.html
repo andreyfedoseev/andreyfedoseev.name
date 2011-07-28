@@ -33,7 +33,11 @@
           {% endfor %}
         </ul>
         {% endif %}
-        <span class="plusone"><g:plusone size="small" count="true" href="{{ entry.get_absolute_url }}"></g:plusone></span>
+        {% spaceless %}
+        <span class="share-buttons">
+          <g:plusone size="standard" count="true" href="{{ entry.get_absolute_url }}"></g:plusone>
+        </span>
+        {% endspaceless %}
       </div>
       <nav>
         <a class="prev" {% if not prev_entry %}style="display: none;"{% endif %} href="{{ prev_entry.get_absolute_url }}">&larr; <span>{{ prev_entry.title }}</span></a>
@@ -60,7 +64,6 @@
 {% endblock %}
 
 {% block extra-js %}
-  {% include "blog/include/plusone-script.html" %}
   <script>
     {% inlinecoffeescript %}
       window.init_fancybox()
