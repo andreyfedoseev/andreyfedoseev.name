@@ -42,6 +42,10 @@ class Blog(models.Model):
             urlconf = "%s_%s" % (settings.ROOT_URLCONF, self.language)
         return reverse("blog:index", urlconf=urlconf)
 
+    def get_full_url(self):
+        return "http://%s%s" % (Site.objects.get_current().domain,
+                                self.get_absolute_url())
+
     def published_entries(self):
         return Entry.objects.published().filter(blog=self)
 

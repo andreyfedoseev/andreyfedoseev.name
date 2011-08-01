@@ -35,7 +35,8 @@
         {% endif %}
         {% spaceless %}
         <span class="share-buttons">
-          <g:plusone size="standard" count="true" href="{{ entry.get_absolute_url }}"></g:plusone>
+          <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a>
+          <g:plusone size="medium" count="true" href="{{ entry.get_absolute_url }}"></g:plusone>
         </span>
         {% endspaceless %}
       </div>
@@ -70,4 +71,5 @@
       window.init_comment_form()
     {% endinlinecoffeescript %}
   </script>
+  <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 {% endblock %}
