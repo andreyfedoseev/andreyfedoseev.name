@@ -73,6 +73,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.sitemaps',
     'django.contrib.markup',
+    'django_extensions',
     'pytils',
     'debug_toolbar',
     'staticfiles',
