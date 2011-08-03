@@ -76,14 +76,27 @@ header.global {
   }
 }
 
-@media all and (max-width: 900px) {
+@media all and (max-width: 1200px) {
   header.global {
-    h1 {
-      display: block;
-      margin-bottom: 0.5em;
-    }
     .right {
-      right: 1em;
+      right: 10px;
+    }
+  }
+}
+
+@media all and (max-width: 1150px) {
+  header.global {
+    .right {
+      right: 40px;
+    }
+  }
+}
+
+
+@media all and (max-width: 1100px) {
+  header.global {
+    .right {
+      right: 80px;
     }
     form.search {
       margin-right: 1em;
@@ -91,11 +104,20 @@ header.global {
   }
 }
 
-@media all and (max-width: 640px) {
+
+@media all and (max-width: 930px) {
+  header.global {
+    h1 {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+  }
+}
+
+@media all and (max-width: 720px) {
   header.global {
     margin-bottom: 1em;
     .right {
-      right: 1em;
       bottom: 0;
       top: auto;
     }
@@ -110,8 +132,11 @@ header.global {
   }
 }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 630px) {
   header.global {
+    h1 {
+      margin-right: 70px;
+    }
     nav {
       margin-bottom: 1em;
     }
@@ -575,4 +600,36 @@ form {
   text-shadow: 1px 1px 1px #333;
   .align-right;
   padding-right: 10px;
+}
+
+#share-box {
+  @box-height: 26px;
+  @box-outer-height: @box-height + 40px;
+  @ribbon-height: 52px;
+  @shadow-width: 7px;
+  position: fixed;
+  right: 1em;
+  top: -@box-outer-height - @shadow-width;
+  height: @box-outer-height + @ribbon-height;
+  z-index: 2;
+  div.box {
+    padding: 22px 22px 18px 22px;
+    height: @box-height;
+    box-shadow: 0px 0px @shadow-width rgba(0,0,0,0.8);
+    -moz-box-shadow: 0px 0px @shadow-width rgba(0,0,0,0.8);
+    -webkit-box-shadow: 0px 0px @shadow-width rgba(0,0,0,0.8);
+    background-color: #fff;
+    z-index: 100;
+  }
+  a.ribbon {
+    z-index: -999;
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    display: block;
+    width: 49px;
+    height: @ribbon-height;
+    background: url(../../images/blog/ribbon.png) no-repeat;
+    text-indent: -9999px;
+  }
 }

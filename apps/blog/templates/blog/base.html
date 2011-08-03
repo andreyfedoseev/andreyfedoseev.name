@@ -58,8 +58,25 @@
     <div id="login-box" data-load-from="{% url login_box %}"></div>
   {% endif %}
 
+  <div id="share-box">
+    <a href="#" class="ribbon">Share</a>
+    <div class="box">
+      <div class="addthis_toolbox addthis_default_style ">
+        <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+        <a class="addthis_button_tweet"></a>
+        <a class="addthis_counter addthis_pill_style"></a>
+      </div>
+    </div>
+  </div>
+
   {% include "blog/include/js.html" %}
-  {% include "blog/include/plusone-script.html" %}
+
+  <script>
+    var addthis_config = {
+      ui_click: true
+    };
+  </script>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=andreyfedoseev"></script>
   {% block extra-js %}{% endblock %}
   {% if not debug %}
     {% flatblock "analytics" %}

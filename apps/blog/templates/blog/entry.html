@@ -33,12 +33,6 @@
           {% endfor %}
         </ul>
         {% endif %}
-        {% spaceless %}
-        <span class="share-buttons">
-          <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a>
-          <g:plusone size="medium" count="true" href="{{ entry.get_absolute_url }}"></g:plusone>
-        </span>
-        {% endspaceless %}
       </div>
       <nav>
         <a class="prev" {% if not prev_entry %}style="display: none;"{% endif %} href="{{ prev_entry.get_absolute_url }}">&larr; <span>{{ prev_entry.title }}</span></a>
@@ -71,5 +65,4 @@
       window.init_comment_form()
     {% endinlinecoffeescript %}
   </script>
-  <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 {% endblock %}
