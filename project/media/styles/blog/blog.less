@@ -2,7 +2,6 @@
 
 body {
   font-size: 16px;
-  line-height: 24px;
 }
 
 a {
@@ -23,6 +22,10 @@ a:hover {
   header.global {
     h1 {
       font-size: 30px;
+      font-family: @header-font-family;
+    }
+    .right {
+      top: 14px;
     }
   }
 }
@@ -30,9 +33,11 @@ a:hover {
 header.global {
   max-width: @max-width;
   margin: 1em auto;
+  padding: 0 1em;
   margin-bottom: 2em;
   position: relative;
   h1 {
+    font-family: @font-family;
     font-size: 1em;
     display: inline-block;
     margin: 0;
@@ -62,12 +67,57 @@ header.global {
   }
   .right {
     position: absolute;
+    top: 0;
     right: 0;
-    bottom: 0;
   }
   form.search {
     display: inline-block;
     margin-right: 2em;
+  }
+}
+
+@media all and (max-width: 900px) {
+  header.global {
+    h1 {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+    .right {
+      right: 1em;
+    }
+    form.search {
+      margin-right: 1em;
+    }
+  }
+}
+
+@media all and (max-width: 640px) {
+  header.global {
+    margin-bottom: 1em;
+    .right {
+      right: 1em;
+      bottom: 0;
+      top: auto;
+    }
+  }
+  .frontpage {
+    header.global {
+      .right {
+        bottom: 0;
+        top: auto;
+      }
+    }
+  }
+}
+
+@media all and (max-width: 500px) {
+  header.global {
+    nav {
+      margin-bottom: 1em;
+    }
+    .right {
+      position: static;
+    }
   }
 }
 
@@ -478,6 +528,27 @@ form {
   }
   label[for='id_preview'] {
     float: right;
+  }
+}
+
+@media all and (max-width: 640px) {
+  #comment-form {
+    width: 400px;
+    .text {
+      textarea {
+        width: 394px;
+      }
+    }
+    .name, .email {
+      input {
+        width: 185px;
+      }
+    }
+    .url {
+      input {
+        width: 394px;
+      }
+    }
   }
 }
 
