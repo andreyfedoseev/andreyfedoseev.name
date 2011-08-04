@@ -68,7 +68,7 @@ header.global {
   .right {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 1em;
   }
   form.search {
     display: inline-block;
@@ -233,6 +233,9 @@ footer.global {
       text-indent: -9999px;
       margin-left: 1em;
     }
+  }
+  .read-more {
+    font-size: 1.2em;
   }
   footer {
     font-size: 0.9em;
@@ -411,40 +414,42 @@ footer.global {
 }
 
 .archive {
-  nav {
-    ul {
-      .list-no-style;
-      margin: 0;
-      padding: 0;
-      margin-left: 1em;
-      li {
-        display: inline-block;
-        margin-right: 1em;
-        span {
-          font-size: 2em;
-          font-weight: bold;
+  #content {
+    nav {
+      ul {
+        .list-no-style;
+        margin: 0;
+        padding: 0;
+        margin-left: 1em;
+        li {
+          display: inline-block;
+          margin-right: 1em;
+          span {
+            font-size: 2em;
+            font-weight: bold;
+          }
         }
       }
     }
-  }
-  section {
     section {
-      display: inline-block;
-      width: 45%;
-      vertical-align: top;
-      ul {
-        .list-no-style;
-        margin: 1em;
-        padding: 0;
-        li {
-          margin-bottom: 0.5em;
-          span {
-            font-size: 0.8em;
-            color: #666;
-            margin-right: 0.5em;
-            display: inline-block;
-            text-align: right;
-            width: 2em;
+      section {
+        display: inline-block;
+        width: 45%;
+        vertical-align: top;
+        ul {
+          .list-no-style;
+          margin: 1em;
+          padding: 0;
+          li {
+            margin-bottom: 0.5em;
+            span {
+              font-size: 0.8em;
+              color: #666;
+              margin-right: 0.5em;
+              display: inline-block;
+              text-align: right;
+              width: 2em;
+            }
           }
         }
       }
