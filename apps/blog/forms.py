@@ -4,7 +4,6 @@ from django.forms import ModelForm
 from django.forms.fields import EMPTY_VALUES
 from django.utils.translation import ugettext_lazy as _
 from tagging.forms import TagField
-from tagging.utils import edit_string_for_tags
 from tagging.models import Tag
 import datetime
 
@@ -31,6 +30,17 @@ class ImagesField(forms.Field):
             raise forms.ValidationError(u"Values must be integers.")
         return values
             
+
+def edit_string_for_tags(tags):
+    names = []
+    for tag in tags:
+        name = tag.name
+        if u',' in name or u' ' in name:
+            names.append(u'"%s"' % name)
+        else:
+            names.append(name)
+    return u','.join(names)
+
 
 class EntryForm(forms.Form):
 
