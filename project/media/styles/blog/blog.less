@@ -610,7 +610,7 @@ form {
   position: fixed;
   right: 1em;
   top: -@box-outer-height - @shadow-width;
-  height: @box-outer-height + @ribbon-height;
+  height: @box-outer-height;
   z-index: 2;
   div.box {
     padding: 22px 22px 18px 22px;
@@ -624,7 +624,7 @@ form {
   a.ribbon {
     z-index: -999;
     position: absolute;
-    bottom: 0;
+    bottom: -@ribbon-height;
     right: 5px;
     display: block;
     width: 49px;
