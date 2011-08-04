@@ -17,16 +17,22 @@ body {
 }
 
 nav.author-panel {
+  font-size: 16px;
   background-color: @light-gray;
-  border-bottom: 2px solid @mid-gray;
+  border: 2px solid @mid-gray;
+  margin-top: 1em;
   margin-bottom: 1em;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  .full-width-column;
   ul {
     .list-no-style;
     .align-right;
-    .full-width-column;
     margin-top: 0;
     margin-bottom: 0;
-    padding: 0.5em 1em;
+    padding: 0.5em 0;
     li {
       display: inline-block;
       float: left;
@@ -35,6 +41,7 @@ nav.author-panel {
     li.right {
       float: none;
       margin-left: 1em;
+      margin-right: 0;
     }
   }
 }
