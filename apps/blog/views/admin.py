@@ -16,6 +16,7 @@ import json
 import re
 
 
+#noinspection PyUnresolvedReferences
 class BlogAdminMixin(object):
 
     @method_decorator(login_required)

@@ -3,6 +3,7 @@ from django.contrib.sites.models import Site
 from django.shortcuts import get_object_or_404
 
 
+#noinspection PyUnresolvedReferences
 class BlogViewMixin(object):
 
     def dispatch(self, request, *args, **kwargs):
