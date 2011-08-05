@@ -62,5 +62,7 @@ class Entry(BlogViewMixin, TemplateView):
         data.update(dict(entry=entry, page_title=page_title,
                          comment_form=comment_form,
                          prev_entry=prev_entry, next_entry=next_entry,
+                         addthis_title=entry.title,
+                         addthis_url=self.request.build_absolute_uri(entry.get_absolute_url()),
                          ))
         return data
