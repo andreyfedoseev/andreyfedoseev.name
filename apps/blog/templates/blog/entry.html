@@ -33,6 +33,17 @@
           {% endfor %}
         </ul>
         {% endif %}
+        {% spaceless %}
+        <span class="share-buttons">
+          <div class="addthis_toolbox addthis_default_style"
+               {% if addthis_url %} addthis:url="{{ addthis_url }}"{% endif %}
+               {% if addthis_title %} addthis:title="{{ addthis_title }}"{% endif %}>
+            <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+            <a class="addthis_button_tweet"></a>
+            <a class="addthis_counter addthis_pill_style"></a>
+          </div>
+        </span>
+        {% endspaceless %}
       </div>
       <nav>
         <a class="prev" {% if not prev_entry %}style="display: none;"{% endif %} href="{{ prev_entry.get_absolute_url }}">&larr; <span>{{ prev_entry.title }}</span></a>
