@@ -8,7 +8,7 @@
         <a class="edit" href="{% url blog:admin_edit_entry entry.id %}">{% trans "Edit" %}</a>
       {% endif %}
       <div class="timestamp">
-        {% trans "Published on" %} <time datetime="{{ entry.publication_timestamp|date:"c" }}" pubdate>{{ entry.publication_timestamp|humanized_date }}</time>
+        {% trans "Published on" %} <time datetime="{{ entry.publication_timestamp|date:"c" }}Z" pubdate>{{ entry.publication_timestamp|humanized_date }}</time>
       </div>
     </header>
     {{ entry.short_text }}
