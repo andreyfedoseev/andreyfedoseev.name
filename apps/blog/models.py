@@ -55,7 +55,7 @@ class Blog(models.Model):
 
 
 class EntryManager(models.Manager):
-    
+
     def published(self, include_updates=False):
         if include_updates:
             return super(EntryManager, self).get_query_set().filter(published=True,
@@ -67,9 +67,9 @@ class EntryManager(models.Manager):
 
 
 class Entry(models.Model):
-    
+
     blog = models.ForeignKey(Blog, verbose_name=_(u"Blog"))
-    
+
     title = models.CharField(max_length=300, null=True, blank=True, verbose_name=_(u"Title"))
     text = models.TextField(null=True, blank=True, verbose_name=_(u"Text"))
     markdown = models.BooleanField(default=True)
@@ -78,30 +78,30 @@ class Entry(models.Model):
     published = models.BooleanField(default=False, verbose_name=_(u"Published"))
     publication_timestamp = models.DateTimeField(null=True, blank=True, verbose_name=_(u"Publication timestamp"))
     modified_on = models.DateTimeField(verbose_name=_("Modified on"), auto_now=True)
-    
+
     meta_description = models.TextField(null=True, blank=True, verbose_name=_(u"Meta description"))
-    
+
     include_in_rss = models.BooleanField(default=True, verbose_name=_(u"Include in RSS"))
-    
+
     disable_comments = models.BooleanField(default=False, verbose_name=_(u"Disable comments"))
     hide_comments = models.BooleanField(default=False, verbose_name=_(u"Hide comments"))
-    
+
     update_for = models.ForeignKey('self', null=True, blank=True, verbose_name=_(u"Update for"))
-    
-    objects = EntryManager()    
+
+    objects = EntryManager()
 
     class Meta:
         ordering = ['-publication_timestamp']
         verbose_name = _(u"Entry")
         verbose_name_plural = _(u"Entries")
-        
+
     def __unicode__(self):
         if self.title:
             return self.title
         if self.update_for is not None:
-            return u"Update for \"%s\"" % unicode(self.update_for) 
+            return u"Update for \"%s\"" % unicode(self.update_for)
         return u"Entry #%i" % self.id
-    
+
     def get_absolute_url(self):
         if self.blog.language == settings.LANGUAGE_CODE:
             urlconf = None
@@ -133,6 +133,10 @@ class Entry(models.Model):
         text = self.text.replace(self.MORE_MARKER, "<a name=\"cut\"></a>")
         return mark_safe(render_text(text, self.markdown))
 
+    @property
+    def comments_count(self):
+        return self.comments.filter(is_spam=False).count()
+
 
 tagging.register(Entry)
 
@@ -154,7 +158,7 @@ class Image(models.Model):
 
     def __unicode__(self):
         return u"Image-%i" % self.id
-    
+
 
 def gen_secret(length=5):
     secret = ""
@@ -165,13 +169,13 @@ def gen_secret(length=5):
 
 
 class Comment(models.Model):
-    
+
     entry = models.ForeignKey(Entry, related_name="comments")
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
     google_buzz_id = models.CharField(max_length=100, null=True, blank=True)
 
     timestamp = models.DateTimeField(null=False, blank=False, default=datetime.datetime.now)
-    
+
     by_blog_author = models.BooleanField(default=False)
 
     author_name = models.CharField(max_length=100, null=True, blank=True, default=u"")
