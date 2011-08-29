@@ -23,11 +23,13 @@
         </ul>
         {% endif %}
         <a href="{{ entry.get_absolute_url }}#comments" class="comments">
-          {% if entry.comments.exists %}
-            {% blocktrans count count=entry.comments_count %}{{ count }} comment{% plural %}{{ count }} comments{% endblocktrans %}
-          {% else %}
-            {% trans "No comments" %}
-          {% endif %}
+          {% with entry.comments_count as comments_count %}
+            {% if comments_count %}
+              {% blocktrans count count=comments_count %}{{ count }} comment{% plural %}{{ count }} comments{% endblocktrans %}
+            {% else %}
+              {% trans "No comments" %}
+            {% endif %}
+          {% endwith %}
         </a>
       </div>
     </footer>
