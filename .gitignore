@@ -31,3 +31,5 @@ project/manage.py
 /project/media/LESS_CACHE/
 /apps/less
 /ribbon.psd
+/fabfile.py
+/.fabricrc
