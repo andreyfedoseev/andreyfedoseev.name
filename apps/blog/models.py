@@ -198,7 +198,10 @@ class Comment(models.Model):
             author_name = self.entry.blog.author_name
         else:
             author_name = self.author_name
-        return _("Comment for \"%s\" by %s") % (self.entry.title, author_name)
+        return _("Comment for \"%(entry_title)s\" by %(author_name)s") % dict(
+            entry_title=self.entry.title,
+            author_name=author_name,
+        )
 
     def check_for_spam(self, request):
         if self.by_blog_author:

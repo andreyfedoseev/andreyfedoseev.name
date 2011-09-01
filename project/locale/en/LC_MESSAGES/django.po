@@ -19,11 +19,11 @@ msgstr ""
 
 #: settings.py:17
 msgid "Russian"
-msgstr "Русский"
+msgstr ""
 
 #: settings.py:18
 msgid "English"
-msgstr "English"
+msgstr ""
 
 #: views.py:54 templates/about.html:12
 msgid "About me"
@@ -31,28 +31,26 @@ msgstr ""
 
 #: templates/404.html:3 templates/404.html.py:6
 msgid "Page Not Found"
-msgstr "Страница не найдена"
+msgstr ""
 
 #: templates/404.html:7
 msgid ""
 "We are very sorry but we can't show this page to you. We just don't have it."
 msgstr ""
-"Нам очень жаль, но мы не можем показать вам эту страницу. Потому что у нас "
-"её нет."
 
 #: templates/404.html:10 templates/500.html:10
 #, python-format
 msgid "Why don't you visit our <a href=\"%(url)s\">homepage</a>?"
-msgstr "Почему бы вам не перейти на <a href=\"%(url)s\">главную страницу</a>?"
+msgstr ""
 
 #: templates/500.html:3 templates/500.html.py:6
 msgid "Internal Application Error"
-msgstr "Ошибка на сайте"
+msgstr ""
 
 #: templates/500.html:7
 msgid ""
 "Something very wrong happend to our site. We are working hard to fix it."
-msgstr "С нашим сайтом случилась беда. Мы уже его чиним."
+msgstr ""
 
 #: templates/include/login-box.html:11 templates/registration/login.html:20
 msgid "Log in"
