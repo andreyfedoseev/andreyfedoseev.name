@@ -49,6 +49,9 @@ class Blog(models.Model):
     def published_entries(self):
         return Entry.objects.published().filter(blog=self)
 
+    def spam_comments(self):
+        return Comment.objects.filter(is_spam=True, entry__blog=self)
+
     class Meta:
         verbose_name = _(u"Blog")
         verbose_name_plural = _(u"Blogs")
@@ -190,6 +193,13 @@ class Comment(models.Model):
 
     is_spam = models.BooleanField(default=False)
 
+    def __unicode__(self):
+        if self.by_blog_author:
+            author_name = self.entry.blog.author_name
+        else:
+            author_name = self.author_name
+        return _("Comment for \"%s\" by %s") % (self.entry.title, author_name)
+
     def check_for_spam(self, request):
         if self.by_blog_author:
             return
@@ -208,6 +218,5 @@ class Comment(models.Model):
         if self.is_spam != is_spam:
             self.is_spam = is_spam
             self.save()
-
 
 mptt.register(Comment, order_insertion_by=['timestamp'])

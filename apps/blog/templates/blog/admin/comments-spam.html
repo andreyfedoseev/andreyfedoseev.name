@@ -1,0 +1,47 @@
+{% extends "blog/admin/base.html" %}
+{% load i18n %}
+{% load coffeescript %}
+
+{% block bodyclass %}spam{% endblock %}
+
+{% block content %}
+{% with blog.spam_comments as comments %}
+  {% if comments %}
+    <div id="comments">
+      {% for comment in comments %}
+        <article class="comment" data-comment-id="{{ comment.id }}">
+          <p>{{ comment.text|striptags|truncatewords:"25" }}</p>
+          <footer>
+            <span class="by">
+              {% if comment.author_url %}
+                <a href="{{ comment.author_url }}">{{ comment.author_name }}</a>
+              {% else %}
+                {{ author_name }}
+              {% endif %}
+            </span>
+            <a href="#" class="dashed not-spam">{% trans "Not spam" %}</a>
+            <a href="{% url blog:delete_comment comment_id=comment.id %}" class="dashed delete">{% trans "Delete" %}</a>
+          </footer>
+        </article>
+      {% endfor %}
+      <form action="{% url blog:admin_spam %}" method="post">
+        <input type="hidden" name="clear" value="yes">
+        <div class="buttons">
+          <input type="submit" class="button" value="{% trans "Delete all" %}">
+        </div>
+      </form>
+    </div>
+  {% endif %}
+  <p id="no-spam"{% if comments %} style="display: none;"{% endif %}>{% trans "There is no spam comments. Yay!" %}</p>
+{% endwith %}
+{% endblock %}
+
+{% block extra-js %}
+  <script>
+    {% inlinecoffeescript %}
+      $ ->
+        init_spam_comments()
+        return
+    {% endinlinecoffeescript %}
+  </script>
+{% endblock %}

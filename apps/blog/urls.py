@@ -1,6 +1,6 @@
 from blog.feeds import RecentFeed, TagFeed
 from blog.views.admin import EntryPreview, Index as AdminIndex, EditEntry, \
-    UploadImage, ListEntryImages, DeleteImage
+    UploadImage, ListEntryImages, DeleteImage, SpamComments
 from blog.views.archive import Archive
 from blog.views.comments import AddComment, DeleteComment, Unsubscribe
 from blog.views.entry import Entry
@@ -39,6 +39,7 @@ urlpatterns = patterns('blog.views',
     url(r'^admin/ajax/image/add$', UploadImage.as_view(), name="admin_add_image"),
     url(r'^admin/ajax/image/list/(?P<entry_id>\d+)$', ListEntryImages.as_view(), name="admin_list_images"),
     url(r'^admin/ajax/image/delete$', DeleteImage.as_view(), name="admin_delete_image"),
+    url(r'^admin/spam$', SpamComments.as_view(), name="admin_spam"),
 
 ) + patterns('',
     url(r'^feeds/recent/$', RecentFeed()),

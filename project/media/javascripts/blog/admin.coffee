@@ -17,7 +17,7 @@ class BlogAdmin
     $markdown_checkbox = $("#id_markdown")
 
     $preview_btn = $("#preview-button")
-    
+
     $preview_form = $("<form>",
       action: $preview_btn.data("url"),
       target: "preview",
@@ -130,3 +130,55 @@ class BlogAdmin
     )
 
 window.BlogAdmin = BlogAdmin
+
+window.init_spam_comments = ->
+  $comments = $("#comments")
+  $no_spam_message = $("#no-spam")
+
+  if not $comments.length
+    return
+
+  $spam_counter = $("#spam-counter")
+
+  $comments.delegate("a.delete", "click", (e)->
+    e.preventDefault()
+    $target = $(this)
+    $comment = $(this).closest("article.comment")
+    $comment.fadeOut()
+    $.post($target.attr("href"), {}, (response)->
+      if response.status == "success"
+        if $spam_counter.length
+          $spam_counter.text(response.spam_count)
+        if response.spam_count == 0
+          $comments.hide()
+          $no_spam_message.show()
+    )
+  )
+
+  $comments.delegate("a.not-spam", "click", (e)->
+    e.preventDefault()
+    $target = $(this)
+    $comment = $(this).closest("article.comment")
+    $comment.fadeOut()
+    $.post(window.location.href, {not_spam: "yes", comment_id: $comment.data("comment-id")}, (response)->
+      if response.status == "success"
+        if $spam_counter.length
+          $spam_counter.text(response.spam_count)
+        if response.spam_count == 0
+          $comments.hide()
+          $no_spam_message.show()
+    )
+  )
+
+  $form = $comments.find("form")
+  $form.find(":submit").click((e) ->
+    e.preventDefault()
+    apprise(gettext("Delete all spam comments?"),
+      verify: true,
+      textYes: gettext("Yes"),
+      textNo: gettext("No")
+    (r)->
+      if r
+        $form.submit()
+    )
+  )

@@ -3,7 +3,12 @@
 <nav class="author-panel">
   <ul>
     <li><a href="{% url blog:admin_add_entry %}">{% trans "New entry" %}</a></li>
-    <li><a href="{% url blog:admin_index %}">{% trans "Blog admin" %}</a></li>
+    {% with blog.spam_comments.count as count %}
+      {% if count %}
+        <li><a href="{% url blog:admin_spam %}">{% trans "Spam" %} (<span id="spam-counter">{{ count }}</span>)</a></li>
+      {% endif %}
+    {% endwith %}
+    <li><a href="{% url blog:admin_index %}">{% trans "Entries list" %}</a></li>
     {% if request.user.is_staff %}
     <li><a href="{% url admin:index %}">{% trans "Django admin" %}</a></li>
     {% endif %}

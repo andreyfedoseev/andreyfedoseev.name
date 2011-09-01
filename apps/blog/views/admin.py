@@ -1,10 +1,11 @@
 from annoying.decorators import ajax_request, JsonResponse
+from annoying.functions import get_object_or_None
 from blog.forms import EntryForm
-from blog.models import Blog, Entry, Image
+from blog.models import Blog, Entry, Image, Comment
 from blog.utils import render_text
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpResponse, HttpResponseForbidden
+from django.http import Http404, HttpResponse, HttpResponseForbidden, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.utils.safestring import mark_safe
@@ -168,3 +169,36 @@ class DeleteImage(BlogAdminMixin, View):
         id = int(request.POST.get("id"))
         Image.objects.get(pk=id).delete()
         return dict(status="success")
+
+
+class SpamComments(BlogAdminMixin, TemplateView):
+
+    template_name = "blog/admin/comments-spam.html"
+
+    def post(self, request, *args, **kwargs):
+
+        if request.is_ajax() and "not_spam" in request.POST:
+            comment_id = request.POST.get("comment_id")
+            if not comment_id:
+                return JsonResponse(dict(status="error",
+                                         message="Missing comment ID."))
+            try:
+                comment_id = int(comment_id)
+            except (TypeError, ValueError):
+                return JsonResponse(dict(status="error",
+                                         message="Invalid comment ID."))
+            comment = get_object_or_None(Comment, id=comment_id)
+            if comment and comment.is_spam:
+                comment.is_spam = False
+                comment.save()
+            return JsonResponse(dict(
+                status="success",
+                spam_count=self.blog.spam_comments().count()
+            ))
+
+        elif "clear" in request.POST:
+            Comment.objects.filter(is_spam=True).delete()
+            messages.success(request, u"All spam comments are removed.")
+            return redirect("blog:admin_index")
+        else:
+            return HttpResponseBadRequest()

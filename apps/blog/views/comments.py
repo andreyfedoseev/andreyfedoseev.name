@@ -119,7 +119,8 @@ class DeleteComment(BlogViewMixin, View):
         comment_id = kwargs["comment_id"]
         comment = get_object_or_404(Comment, id=int(comment_id))
         comment.delete()
-        return dict(status="success")
+        return dict(status="success",
+                    spam_count=self.blog.spam_comments().count())
 
 
 class Unsubscribe(BlogViewMixin, View):
