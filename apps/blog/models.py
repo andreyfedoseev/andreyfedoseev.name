@@ -193,16 +193,16 @@ class Comment(models.Model):
     def check_for_spam(self, request):
         if self.by_blog_author:
             return
-        if "http://" not in self.text:
+        if not self.author_url and "http://" not in self.text:
             return
         key = getattr(settings, "AKISMET_KEY")
         if not key:
             return
         checker = Akismet(key=settings.AKISMET_KEY)
         is_spam = checker.comment_check(self.text.encode("utf-8"),
-            data=dict(comment_author=self.author_name,
-                      comment_author_email=self.author_email,
-                      comment_author_url=self.author_url,
+            data=dict(comment_author=self.author_name.encode("utf-8"),
+                      comment_author_email=self.author_email.encode("utf-8"),
+                      comment_author_url=self.author_url.encode("utf-8"),
                       user_ip=request.META["REMOTE_ADDR"],
                       user_agent=request.META["HTTP_USER_AGENT"]))
         if self.is_spam != is_spam:

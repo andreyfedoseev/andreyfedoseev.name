@@ -25,6 +25,7 @@ COOKIE_MAX_AGE = 60 * 60 * 24 * 30
 
 class AddComment(BlogViewMixin, View):
 
+    #noinspection PyUnusedLocal
     def post(self, request, *args, **kwargs):
         entry_id = kwargs["entry_id"]
         entry = get_object_or_404(Entry, id=entry_id, published=True)
@@ -35,7 +36,6 @@ class AddComment(BlogViewMixin, View):
         else:
             form = CommentForm(request.POST, instance=Comment(entry=entry))
         cookies = {}
-        response = {}
 
         if form.is_valid():
             comment = form.save()
@@ -95,6 +95,7 @@ class AddComment(BlogViewMixin, View):
 
         else:
             errors = {}
+            #noinspection PyUnresolvedReferences
             for field_name, errors_list in form.errors.items():
                 errors[field_name] = errors_list[0]
             response = dict(status="error", errors=errors,
@@ -110,6 +111,7 @@ class AddComment(BlogViewMixin, View):
 
 class DeleteComment(BlogViewMixin, View):
 
+    #noinspection PyUnusedLocal
     @method_decorator(ajax_request)
     def post(self, request, *args, **kwargs):
         if not self.is_author:
@@ -122,6 +124,7 @@ class DeleteComment(BlogViewMixin, View):
 
 class Unsubscribe(BlogViewMixin, View):
 
+    #noinspection PyUnusedLocal
     def get(self, request, *args, **kwargs):
         comment = get_object_or_404(Comment, id=int(kwargs["comment_id"]),
                                     secret=kwargs["secret"])
@@ -129,4 +132,3 @@ class Unsubscribe(BlogViewMixin, View):
         comment.save()
         messages.success(request, _(u"You were unsubscribed from reply notifications for this comment."))
         return redirect(comment.entry)
-    
