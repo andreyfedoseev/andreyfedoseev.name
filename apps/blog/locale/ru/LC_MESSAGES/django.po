@@ -103,7 +103,7 @@ msgstr "Ваша электронная почта"
 
 #: forms.py:188
 msgid "Optional. Used to get your Gravatar."
-msgstr "Необязательно. Нужно для автарки."
+msgstr "Необязательно. Нужно для аватарки."
 
 #: forms.py:189
 msgid "Your site URL"
