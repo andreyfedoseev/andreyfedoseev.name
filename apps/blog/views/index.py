@@ -1,38 +1,22 @@
-from annoying.decorators import JsonResponse
 from blog.views import BlogViewMixin
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.shortcuts import get_object_or_404
-from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
+from djpjax import PJAXResponseMixin
 from haystack.models import SearchResult
 from haystack.query import SearchQuerySet
 from tagging.models import Tag, TaggedItem
 
 
-class Index(BlogViewMixin, TemplateView):
+class Index(BlogViewMixin, PJAXResponseMixin, TemplateView):
 
     template_name = "blog/index.html"
+    pjax_template_name = "blog/include/entries-list.html"
     search = False
     POSTS_PER_PAGE = 5
-
-    def get(self, request, *args, **kwargs):
-        if request.is_ajax():
-            data = self.get_context_data(**kwargs)
-            entries = render_to_string("blog/include/entries-list.html",
-                                       dict(entries=data["entries"]))
-            response = JsonResponse(dict(
-                entries=entries,
-                page_title=data["page_title"],
-                next_page=data["next_page"],
-                prev_page=data["prev_page"]
-            ))
-            response["Cache-Control"] = "no-cache"
-            return response
-        
-        return super(Index, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         data = super(Index, self).get_context_data(**kwargs)
@@ -58,7 +42,6 @@ class Index(BlogViewMixin, TemplateView):
         paginator = Paginator(entries, self.POSTS_PER_PAGE)
         page_number = kwargs.get("page", 1) or 1
         page_number = int(page_number)
-        current_page = None
         next_page = ""
         prev_page = ""
         try:

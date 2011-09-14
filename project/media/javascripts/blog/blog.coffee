@@ -12,9 +12,9 @@ window.init_fancybox = ->
 
 window.init_blog_index = ->
   $ ->
-    $links = $("nav.pages a");
-    $next = $links.filter(".next")
+    $links = $("nav.pages a")
     $prev = $links.filter(".prev")
+    $next = $links.filter(".next")
 
     $(document).keypress((e)->
       if e.which == 63234 and e.ctrlKey and $prev.css("display") != "none"
@@ -23,96 +23,33 @@ window.init_blog_index = ->
         $next.click()
     )
 
-    if not !!(window.history && history.pushState)
-      return
-    $entries_ct = $("#content div.entries")
-    $title = $("title")
-    base_window_title = $.trim($title.text().split("|").pop())
-
-    pages = {}
-
-    fetch_page = (url, callback=null, animated=true)->
-      if url not of pages
-        if animated
-          $entries_ct.addClass("loading")
-
-        suffix = "_=" + new Date().getTime();
-        if url.indexOf("?") == -1
-          _url = url + "?" + suffix
-        else
-          _url = url + "&" + suffix
-
-        $.getJSON(_url, null, (data)->
-          pages[url] = data
-          if animated
-            $entries_ct.removeClass("loading")
-          if callback
-            callback(data)
-        )
-      else
-        if callback
-          callback(pages[url])
-
-    prefetch_pages = ->
-      if $next.attr("href")
-        fetch_page($next.attr("href"), null, false)
-      if $prev.attr("href")
-        fetch_page($prev.attr("href"), null, false)
-
-    show_page = (url, next=false)->
-      fetch_page(url, (data)->
-        $entries_ct.hide()
-        window.scrollTo(0, 0)
-        $entries_ct.html(data.entries)
-        $entries_ct.effect("drop", {mode: "show", direction: if next then "right" else "left"})
-        if data.next_page
-          $next.attr("href", data.next_page)
-          $next.show()
-        else
-          $next.hide()
-        if data.prev_page
-          $prev.attr("href", data.prev_page)
-          $prev.show()
-        else
-          $prev.hide()
-        if data.page_title
-          $title.text("#{data.page_title} | #{base_window_title}")
-        else
-          $title.text(base_window_title)
-        prefetch_pages()
-        window.init_fancybox())
-
-    $links.click((e)=>
-      e.preventDefault()
-      $target = $(e.target)
-      if $target.is("span")
-        $target = $target.parent()
-      next = $target.hasClass("next")
-      url = $target.attr("href")
-      $entries_ct.effect("drop", {direction: if next then "left" else "right"}, ->
-        $entries_ct.show()
-        $entries_ct.empty()
-        url = $target.attr("href")
-        history.pushState({next: next, url: url}, "", url)
-        show_page(url, next)
-        return
-      )
-    )
-
-    $(window).bind("popstate", (e)->
-      state = e.originalEvent.state
-      if state
-        next = state.next
-        $entries_ct.effect("drop", {direction: if next then "left" else "right"}, ->
-          $entries_ct.show()
-          $entries_ct.empty()
-          show_page(state.url, next)
-        )
-    )
-    history.replaceState({next: false, url: window.location.href}, "", window.location.href)
-    prefetch_pages()
-
     window.init_fancybox()
+
+    $links.pjax("#content div.entries")
+
+    $entries_ct = $("#content div.entries")
+
+    spinner_ct = $("<div></div>", {id: "spinner"}).css({width: "1000px", height: "50px"}).hide().insertAfter($entries_ct)
+    spinner = new Spinner({shadow: false, width: 4}).spin(spinner_ct.get(0))
+
+    $entries_ct.bind("start.pjax", (e, xhr, options)->
+      window.scrollTo(0, $entries_ct.offset().top - 10)
+      if options.clickedElement
+        next = options.clickedElement.hasClass("next")
+      else
+        next = false
+      $entries_ct.effect("drop", {direction: if next then "left" else "right"})
+      $("#spinner").show()
+    )
+
+    $entries_ct.bind("end.pjax", (e, xhr, options)->
+      if options.clickedElement
+        next = options.clickedElement.hasClass("next")
+      else
+        next = false
+      $("#spinner").hide()
+      $entries_ct.effect("drop", {mode: "show", direction: if next then "right" else "left"})
+    )
 
 
 window.init_comment_form = ->

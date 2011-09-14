@@ -39,15 +39,10 @@
       </div>
     {% endif %}
 
-    <nav class="pages">
-      <a class="prev" {% if not prev_page %}style="display: none;"{% endif %} href="{{ prev_page }}">&larr; <span>{% trans "Previous page" %}</span></a>
-      <a class="next" {% if not next_page %}style="display: none;"{% endif %} href="{{ next_page }}"><span>{% trans "Next page" %}</span> &rarr;</a>
-    </nav>
-
   {% if tag or search %}
     </section>
   {% endif %}
-  
+
 {% endblock %}
 
 {% block extra-js %}

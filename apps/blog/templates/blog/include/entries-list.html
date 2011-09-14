@@ -1,5 +1,8 @@
 {% load i18n %}
 {% load blog_tags %}
+{% if request.is_ajax %}
+  <title>{% if page_title %}{{ page_title }} | {% endif %}{{ blog.title }}</title>
+{% endif %}
 {% for entry in entries %}
   <article class="entry">
     <header>
@@ -34,4 +37,10 @@
       </div>
     </footer>
   </article>
+
 {% endfor %}
+
+<nav class="pages">
+  <a class="prev" {% if not prev_page %}style="display: none;"{% endif %} href="{{ prev_page }}">&larr; <span>{% trans "Previous page" %}</span></a>
+  <a class="next" {% if not next_page %}style="display: none;"{% endif %} href="{{ next_page }}"><span>{% trans "Next page" %}</span> &rarr;</a>
+</nav>

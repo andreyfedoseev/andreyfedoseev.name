@@ -33,3 +33,4 @@ project/manage.py
 /ribbon.psd
 /fabfile.py
 /.fabricrc
+/project/media/cache/
