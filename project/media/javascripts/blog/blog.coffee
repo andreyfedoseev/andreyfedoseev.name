@@ -12,6 +12,19 @@ window.init_fancybox = ->
 
 window.init_blog_index = ->
   $ ->
+
+    yaCounter = null
+    for prop of window
+      if prop.match(/^yaCounter/)
+        yaCounter = window[prop]
+    ga = window._gaq
+
+    count_page_view = ->
+      if yaCounter
+        yaCounter.hit(window.location.href)
+      if ga
+        ga.push(["_trackPageview", window.location.href])
+
     $links = $("nav.pages a")
     $prev = $links.filter(".prev")
     $next = $links.filter(".next")
@@ -49,6 +62,7 @@ window.init_blog_index = ->
         next = false
       $("#spinner").hide()
       $entries_ct.effect("drop", {mode: "show", direction: if next then "right" else "left"})
+      count_page_view()
     )
 
 
