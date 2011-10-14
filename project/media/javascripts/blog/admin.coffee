@@ -1,4 +1,6 @@
 
+gettext = window.gettext
+
 
 class BlogAdmin
 
@@ -12,7 +14,7 @@ class BlogAdmin
 
     $("input.date").datepicker(datepicker_options)
 
-    $form = $("#entry-form")
+
     $text = $("#id_text")
     $markdown_checkbox = $("#id_markdown")
 
@@ -37,7 +39,7 @@ class BlogAdmin
 
     $preview_form.appendTo($("body"))
 
-    $preview_form.submit((e)->
+    $preview_form.submit(->
       window.open("", "preview", "width=800,height=600,toolbar=no,location=no,status=no,menubar=no")
     )
 
@@ -65,7 +67,6 @@ class BlogAdmin
       $.getJSON(list_entry_images_url, (data)=>
         for image in data.images
           $.tmpl(IMAGE_WIDGET_TEMPLATE, image).appendTo($images_widget_container)
-        return
       )
 
     image_field =$("#id_images")
@@ -108,7 +109,7 @@ class BlogAdmin
       url: upload_image_url,
       singleFileUploads: false,
 #      fileInput: $form.find("input:file"),
-      start: (e)->
+      start: ->
         $progressbar.progressbar(
           value: 0
         )
@@ -157,7 +158,6 @@ window.init_spam_comments = ->
 
   $comments.delegate("a.not-spam", "click", (e)->
     e.preventDefault()
-    $target = $(this)
     $comment = $(this).closest("article.comment")
     $comment.fadeOut()
     $.post(window.location.href, {not_spam: "yes", comment_id: $comment.data("comment-id")}, (response)->
