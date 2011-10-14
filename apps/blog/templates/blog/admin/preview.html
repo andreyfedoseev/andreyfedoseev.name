@@ -6,7 +6,7 @@
     <title>{% trans "Preview" %}</title>
     <meta charset="utf-8" />
     {% include "blog/include/css.html" %}
-  </head> 
+  </head>
   <body>
   <article class="entry preview">
     {{ text }}
@@ -14,7 +14,7 @@
   {% include "blog/include/js.html" %}
   <script>
     {% inlinecoffeescript %}
-      window.init_highlight()
+      window.init_fotorama()
     {% endinlinecoffeescript %}
   </script>
   </body>

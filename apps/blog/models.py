@@ -148,6 +148,8 @@ class Image(models.Model):
 
     THUMBNAIL_GEOMETRY = "180x180"
     SCALED_GEOMETRY = "500x500"
+    FOTORAMA_GEOMETRY = "800x800"
+    FOTORAMA_THUMBNAIL_GEOMETRY = "200x48"
 
     entry = models.ForeignKey(Entry, null=True, verbose_name = _(u"Entry"))
     image = models.ImageField(upload_to="upload/images",

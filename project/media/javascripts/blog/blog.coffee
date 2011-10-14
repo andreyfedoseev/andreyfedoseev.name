@@ -37,6 +37,7 @@ window.init_blog_index = ->
     )
 
     window.init_fancybox()
+    window.init_fotorama()
 
     $links.pjax("#content div.entries")
 
@@ -237,3 +238,9 @@ window.init_share_box = ->
     if $box.data("displayed")
       toggle_box()
   )
+
+window.init_fotorama = ->
+  $ ->
+    $(".fotorama").fotorama(
+      width: 800
+    )
