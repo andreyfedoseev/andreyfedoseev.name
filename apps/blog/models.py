@@ -208,8 +208,6 @@ class Comment(models.Model):
     def check_for_spam(self, request):
         if self.by_blog_author:
             return
-        if not self.author_url and "http://" not in self.text:
-            return
         key = getattr(settings, "AKISMET_KEY")
         if not key:
             return
