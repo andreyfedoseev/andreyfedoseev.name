@@ -223,7 +223,7 @@ window.init_share_buttons = ->
       </div>
       """)
       $this.replaceWith($toolbox)
-      addthis.toolbox($toolbox.get(0), {url: url, title: title})
+      addthis.toolbox($toolbox.get(0), {}, {url: url, title: title})
     )
 
 window.init_fotorama = ->
