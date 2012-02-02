@@ -26,7 +26,7 @@
       </ul>
       {% endif %}
       <div class="right">
-        <div class="share-icons" data-url="{{ entry.get_absolute_url }}" data-title="{{ entry.title }}"></div>
+        <div class="share-icons" data-url="{{ entry.absolute_uri }}" data-title="{{ entry.title }}"></div>
         <a href="{{ entry.get_absolute_url }}#comments" class="comments">
           {% with entry.comments_count as comments_count %}
             {% if comments_count %}

@@ -90,16 +90,13 @@ class Index(BlogViewMixin, PJAXResponseMixin, TemplateView):
 
         page_title = u" | ".join(page_title_parts)
 
-        if tag:
-            addthis_title = None
-            addthis_url = reverse("blog:index", kwargs=dict(tag=tag.name))
-        else:
-            addthis_title = self.blog.title
-            addthis_url = self.blog.get_absolute_url()
+        entries = map(
+            lambda o: isinstance(o, SearchResult) and o.object or o,
+            current_page.object_list
+        )
 
-
-        entries = map(lambda o: isinstance(o, SearchResult) and o.object or o,
-                      current_page.object_list)
+        for entry in entries:
+            entry.absolute_uri = self.request.build_absolute_uri(entry.get_absolute_url())
 
         data.update(
             dict(page_title=page_title,
@@ -110,8 +107,6 @@ class Index(BlogViewMixin, PJAXResponseMixin, TemplateView):
                  tag=tag,
                  search=search,
                  search_term=search_term,
-                 addthis_title=addthis_title,
-                 addthis_url=self.request.build_absolute_uri(addthis_url),
             )
         )
 

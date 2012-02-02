@@ -33,7 +33,7 @@
         </ul>
         {% endif %}
         <div class="right">
-          <div class="share-icons" data-url="{{ entry.get_absolute_url }}" data-title="{{ entry.title }}"></div>
+          <div class="share-icons" data-url="{{ entry.absolute_uri }}" data-title="{{ entry.title }}"></div>
         </div>
       <nav>
         <a class="prev" {% if not prev_entry %}style="display: none;"{% endif %} href="{{ prev_entry.get_absolute_url }}">&larr; <span>{{ prev_entry.title }}</span></a>
