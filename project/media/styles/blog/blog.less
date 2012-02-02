@@ -240,10 +240,8 @@ footer.global {
   footer {
     font-size: 0.9em;
     color: #666;
-    > div {
-      position: relative;
-      height: 2em;
-    }
+    position: relative;
+    min-height: 24px;
     ul {
       .list-no-style;
       margin: 0;
@@ -254,18 +252,30 @@ footer.global {
         margin-left: 0.5em;
       }
     }
-    a.comments {
+    .right {
       position: absolute;
       right: 0;
       top: 0;
-      display: inline-block;
-      padding-left: 18px;
-      background: url(../../images/blog/icon-comment.png) no-repeat 0 4px;
-    }
-    .share-buttons {
-      position: absolute;
-      right: 0;
-      display: inline-block;
+      .share-icons {
+        display: inline-block;
+        vertical-align: middle;
+        height: 24px;
+        width: 92px;
+        cursor: pointer;
+        background: url(../../images/blog/share-icons.png);
+        margin-right: 1em;
+      }
+      .addthis_toolbox {
+        display: inline-block;
+        vertical-align: middle;
+        height: 24px;
+      }
+      a.comments {
+        display: inline-block;
+        vertical-align: middle;
+        padding-left: 18px;
+        background: url(../../images/blog/icon-comment.png) no-repeat 0 4px;
+      }
     }
     nav {
       font-size: 1.2em;
@@ -609,36 +619,4 @@ form {
   text-shadow: 1px 1px 1px #333;
   .align-right;
   padding-right: 10px;
-}
-
-#share-box {
-  @box-height: 26px;
-  @box-outer-height: @box-height + 40px;
-  @ribbon-height: 52px;
-  @shadow-width: 7px;
-  position: fixed;
-  right: 1em;
-  top: -@box-outer-height - @shadow-width;
-  height: @box-outer-height;
-  z-index: 2;
-  div.box {
-    padding: 22px 22px 18px 22px;
-    height: @box-height;
-    box-shadow: 0px 0px @shadow-width rgba(0,0,0,0.8);
-    -moz-box-shadow: 0px 0px @shadow-width rgba(0,0,0,0.8);
-    -webkit-box-shadow: 0px 0px @shadow-width rgba(0,0,0,0.8);
-    background-color: #fff;
-    z-index: 100;
-  }
-  a.ribbon {
-    z-index: -999;
-    position: absolute;
-    bottom: -@ribbon-height;
-    right: 5px;
-    display: block;
-    width: 49px;
-    height: @ribbon-height;
-    background: url(../../images/blog/ribbon.png) no-repeat;
-    text-indent: -9999px;
-  }
 }

@@ -15,16 +15,18 @@
       </div>
     </header>
     {{ entry.short_text }}
+    {% spaceless %}
     <footer>
-      <div>
-        {% if entry.tags.exists %}
-        {% trans "Tags" %}:
-        <ul>
-          {% for tag in entry.tags %}
-            <li><a href="{% url blog:index tag=tag.name %}">{{ tag }}</a></li>
-          {% endfor %}
-        </ul>
-        {% endif %}
+      {% if entry.tags.exists %}
+      {% trans "Tags" %}:
+      <ul>
+        {% for tag in entry.tags %}
+          <li><a href="{% url blog:index tag=tag.name %}">{{ tag }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <div class="right">
+        <div class="share-icons" data-url="{{ entry.get_absolute_url }}" data-title="{{ entry.title }}"></div>
         <a href="{{ entry.get_absolute_url }}#comments" class="comments">
           {% with entry.comments_count as comments_count %}
             {% if comments_count %}
@@ -36,6 +38,7 @@
         </a>
       </div>
     </footer>
+    {% endspaceless %}
   </article>
 
 {% endfor %}

@@ -34,3 +34,6 @@ project/manage.py
 /fabfile.py
 /.fabricrc
 /project/media/cache/
+src/
+.mr.developer.cfg
+django.log

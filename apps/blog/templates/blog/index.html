@@ -46,9 +46,11 @@
 {% endblock %}
 
 {% block extra-js %}
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=andreyfedoseev"></script>
   <script>
     {% inlinecoffeescript %}
       window.init_blog_index()
+      window.init_share_buttons()
     {% endinlinecoffeescript %}
   </script>
 {% endblock %}

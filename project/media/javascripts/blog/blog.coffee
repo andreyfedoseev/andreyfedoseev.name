@@ -208,36 +208,23 @@ window.init_comment_form = ->
 
   )
 
-window.init_share_box = ->
-  $box = $("#share-box")
-  initial_offset = $box.css("top")
-  $box.data("displayed", false);
-  $ribbon = $box.find("a.ribbon")
-
-  toggle_box = ->
-    if $box.data("displayed")
-      offset = initial_offset
-      $box.data("displayed", false)
-    else
-      offset = 0
-      $box.data("displayed", true)
-    $box.animate(
-      top: offset
-    , 200)
-
-  $ribbon.click((e)->
-    e.preventDefault()
-    toggle_box()
-  )
-
-  $box.click((e)->
-    e.stopPropagation()
-  )
-
-  $(document).click((e)->
-    if $box.data("displayed")
-      toggle_box()
-  )
+window.init_share_buttons = ->
+  $ ->
+    $("article.entry div.share-icons").click(->
+      $this = $(this)
+      url = $this.data("url")
+      title = $this.data("title")
+      $toolbox = $("""
+      <div class="addthis_toolbox addthis_default_style">
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+      <a class="addthis_button_tweet"></a>
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+      <a class="addthis_counter addthis_pill_style"></a>
+      </div>
+      """)
+      $this.replaceWith($toolbox)
+      addthis.toolbox($toolbox.get(0), {url: url, title: title})
+    )
 
 window.init_fotorama = ->
   $ ->
