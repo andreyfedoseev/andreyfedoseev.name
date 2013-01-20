@@ -1,5 +1,22 @@
 import os
-import logging
+from copy import deepcopy
+from django.conf.global_settings import LOGGING
+
+
+LOGGING = deepcopy(LOGGING)
+
+
+LOGGING["handlers"]["console"] = {
+    'level': 'DEBUG',
+    'class': 'logging.StreamHandler',
+}
+
+LOGGING["loggers"]["djangourls.harvest"] = {
+    'handlers': ['mail_admins'],
+    'level': 'ERROR',
+    'propagate': True,
+}
+
 
 gettext = lambda s: s
 
