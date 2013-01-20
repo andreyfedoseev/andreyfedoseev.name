@@ -28,10 +28,6 @@ class Blog(models.Model):
 
     feed_url = models.URLField(null=True, blank=True)
 
-    author_google_buzz_id = models.CharField(max_length=100,
-                                             verbose_name=(u"Author's Google Buzz ID"),
-                                             null=True, blank=True)
-
     def __unicode__(self):
         return self.title
 
@@ -177,7 +173,6 @@ class Comment(models.Model):
 
     entry = models.ForeignKey(Entry, related_name="comments")
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
-    google_buzz_id = models.CharField(max_length=100, null=True, blank=True)
 
     timestamp = models.DateTimeField(null=False, blank=False, default=datetime.datetime.now)
 
