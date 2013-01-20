@@ -37,3 +37,4 @@ project/manage.py
 src/
 .mr.developer.cfg
 django.log
+/whoosh_index/

@@ -126,8 +126,8 @@ COMPRESS_CSS_FILTERS = [
 ]
 
 HAYSTACK_SITECONF = "project.search_sites"
-HAYSTACK_SEARCH_ENGINE = "solr"
-HAYSTACK_SOLR_URL = 'http://127.0.0.1:8393/solr/andreyfedoseev_name'
+HAYSTACK_SEARCH_ENGINE = "whoosh"
+HAYSTACK_WHOOSH_PATH = os.path.join(os.path.dirname(__file__), "..", "whoosh_index")
 HAYSTACK_INCLUDE_SPELLING = True
 
 THUMBNAIL_QUALITY = 90
