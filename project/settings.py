@@ -30,23 +30,17 @@ MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'media')
 MEDIA_URL = '/media/'
 
 # Static file configuration
-STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'media')
-STATIC_URL = MEDIA_URL
-STATICFILES_EXCLUDED_APPS = (
-    'project',
-)
-STATICFILES_MEDIA_DIRNAMES = (
-    'media',
-    'static',
-)
-STATICFILES_PREPEND_LABEL_APPS = (
-    'django.contrib.admin',
-)
-STATICFILES_STORAGE = 'staticfiles.storage.StaticFileStorage'
+STATIC_ROOT = os.path.join(os.path.dirname(__file__), "..", "static")
+STATIC_URL = "/static/"
 
-ADMIN_MEDIA_ROOT = os.path.join(STATIC_ROOT, 'admin_media')
-ADMIN_MEDIA_PREFIX = '/admin_media/'
-
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+    'less.finders.LessFinder',
+    'coffeescript.finders.CoffeescriptFinder',
+)
 
 # Don't share this with anybody.
 SECRET_KEY = ''
@@ -65,6 +59,7 @@ ROOT_URLCONF = 'project.urls'
 
 
 INSTALLED_APPS = (
+    'django.contrib.staticfiles',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -76,7 +71,6 @@ INSTALLED_APPS = (
     'django_extensions',
     'pytils',
     'debug_toolbar',
-    'staticfiles',
     'compressor',
     'south',
     'sorl.thumbnail',
@@ -104,13 +98,13 @@ TEMPLATE_DIRS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.core.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.request",
     "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.auth.context_processors.auth",
     "django.contrib.messages.context_processors.messages",
-    "staticfiles.context_processors.static_url",
 )
 
 SITE_ID = 1
