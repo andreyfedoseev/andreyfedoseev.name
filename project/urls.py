@@ -8,6 +8,9 @@ from blog.sitemap import BlogSitemap
 admin.autodiscover()
 
 
+handler500 = "project.views.server_error"
+
+
 sitemaps = {
     'blog': BlogSitemap,
 }

@@ -1,5 +1,7 @@
 from annoying.decorators import JsonResponse
 from annoying.functions import get_object_or_None
+from django.http import HttpResponseServerError
+from django.template import loader, RequestContext
 from blog.models import Blog
 from blog.views import BlogViewMixin
 from django.contrib.auth import login as auth_login
@@ -9,6 +11,11 @@ from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView, View
 from flatblocks.models import FlatBlock
+
+
+def server_error(request):
+    t = loader.get_template("500.html")
+    return HttpResponseServerError(t.render(RequestContext(request)))
 
 
 def frontpage(request):
