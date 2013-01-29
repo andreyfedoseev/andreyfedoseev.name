@@ -24,7 +24,7 @@ urlpatterns = patterns('blog.views',
     url(r'^archive/(?:(?P<year>\d{4})/)?$', Archive.as_view(), name="archive"),
 
     # Comments
-    url(r'^add-comment/(?P<entry_id>\d+)/$', AddComment.as_view(), name="add_comment"),
+    # url(r'^add-comment/(?P<entry_id>\d+)/$', AddComment.as_view(), name="add_comment"),
     url(r'^delete-comment/(?P<comment_id>\d+)/$', DeleteComment.as_view(), name="delete_comment"),
     url(r'^unsubscribe/(?P<comment_id>\d+)/(?P<secret>\w{5})/$', Unsubscribe.as_view(), name="unsubscribe_from_notifications"),
 

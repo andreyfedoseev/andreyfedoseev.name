@@ -44,17 +44,17 @@
   <section id="comments">
     <header>
       <h1>{% trans "Comments" %}</h1>
-      <a href="#comment-form" class="show-comment-form"><span>{% trans "Add comment" %}</span></a>
+{#      <a href="#comment-form" class="show-comment-form"><span>{% trans "Add comment" %}</span></a>#}
     </header>
     {% for comment in entry.threaded_comments %}
       {% include "blog/include/comment.html" %}
     {% endfor %}
-    {% with comment_form as form %}
-      {% include "blog/include/comment-form.html" %}
-    {% endwith %}
-    <footer>
-      <a href="#comment-form" class="show-comment-form"><span>{% trans "Add comment" %}</span></a>
-    </footer>
+{#    {% with comment_form as form %}#}
+{#      {% include "blog/include/comment-form.html" %}#}
+{#    {% endwith %}#}
+{#    <footer>#}
+{#      <a href="#comment-form" class="show-comment-form"><span>{% trans "Add comment" %}</span></a>#}
+{#    </footer>#}
   </section>
 {% endblock %}
 

@@ -29,7 +29,7 @@
       {% if is_author %}
         <li><a class="delete dashed" href="{% url blog:delete_comment comment_id=comment.id %}">{% trans "Delete" %}</a></li>
       {% endif %}
-      <li><a class="reply dashed" href="#comment{{ comment.id }}">{% trans "Reply" %}</a></li>
+{#      <li><a class="reply dashed" href="#comment{{ comment.id }}">{% trans "Reply" %}</a></li>#}
     </ul>
   </footer>
 </article>

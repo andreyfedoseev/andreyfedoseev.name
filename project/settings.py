@@ -11,13 +11,6 @@ LOGGING["handlers"]["console"] = {
     'class': 'logging.StreamHandler',
 }
 
-LOGGING["loggers"]["djangourls.harvest"] = {
-    'handlers': ['mail_admins'],
-    'level': 'ERROR',
-    'propagate': True,
-}
-
-
 gettext = lambda s: s
 
 ADMINS = (
