@@ -54,13 +54,13 @@ class ImageNode(template.Node):
 
 
 IMAGE_FORMATS = {
-    'figure': """<figure><a href="%(original_url)s" title="%(title)s"><img src="%(scaled_url)s" alt="%(title)s" width="%(scaled_width)i" height="%(scaled_height)i" /></a><figcaption>%(title)s</figcaption></figure>""",
-    'original': """<img src="%(original_url)s" alt="%(title)s" width="%(original_width)i" height="%(original_height)i" />""",
-    'thumb': """<img src="%(thumb_url)s" alt="%(title)s" width="%(thumb_width)i" height="%(thumb_height)i" />""",
-    'thumb-lightbox': """<a href="%(original_url)s" title="%(title)s" class="lightbox"><img src="%(thumb_url)s" alt="%(title)s" width="%(thumb_width)i" height="%(thumb_height)i" /></a>""",
-    'scaled': """<img src="%(scaled_url)s" alt="%(title)s" width="%(scaled_width)i" height="%(scaled_height)i" />""",
-    'scaled-lightbox': """<a href="%(original_url)s" title="%(title)s" class="lightbox"><img src="%(scaled_url)s" alt="%(title)s" width="%(scaled_width)i" height="%(scaled_height)i" /></a>""",
-    'fotorama': """<a href="%(fotorama_url)s" title="%(title)s"><img src="%(fotorama_thumbnail_url)s" alt="%(title)s" width="%(fotorama_thumbnail_width)i" height="%(fotorama_thumbnail_height)i" /></a>""",
+    'figure': u"""<figure><a href="%(original_url)s" title="%(title)s"><img src="%(scaled_url)s" alt="%(title)s" width="%(scaled_width)i" height="%(scaled_height)i" /></a><figcaption>%(title)s</figcaption></figure>""",
+    'original': u"""<img src="%(original_url)s" alt="%(title)s" width="%(original_width)i" height="%(original_height)i" />""",
+    'thumb': u"""<img src="%(thumb_url)s" alt="%(title)s" width="%(thumb_width)i" height="%(thumb_height)i" />""",
+    'thumb-lightbox': u"""<a href="%(original_url)s" title="%(title)s" class="lightbox"><img src="%(thumb_url)s" alt="%(title)s" width="%(thumb_width)i" height="%(thumb_height)i" /></a>""",
+    'scaled': u"""<img src="%(scaled_url)s" alt="%(title)s" width="%(scaled_width)i" height="%(scaled_height)i" />""",
+    'scaled-lightbox': u"""<a href="%(original_url)s" title="%(title)s" class="lightbox"><img src="%(scaled_url)s" alt="%(title)s" width="%(scaled_width)i" height="%(scaled_height)i" /></a>""",
+    'fotorama': u"""<a href="%(fotorama_url)s" title="%(title)s"><img src="%(fotorama_thumbnail_url)s" alt="%(title)s" width="%(fotorama_thumbnail_width)i" height="%(fotorama_thumbnail_height)i" /></a>""",
 }
 
 @register.tag(name="image")
