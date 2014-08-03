@@ -84,9 +84,9 @@ def do_image(parser, token):
             format = arg
     if not format:
         format = 'original'
-    if format not in IMAGE_FORMATS:
+    if format not in ImageNode.IMAGE_FORMATS:
         raise template.TemplateSyntaxError, "%r tag second argument must be one of %s" % \
-             (tag_name, ', '.join(['%s' % f for f in IMAGE_FORMATS]))
+             (tag_name, ', '.join(['%s' % f for f in ImageNode.IMAGE_FORMATS]))
     if title and (not title.startswith('"') or not title.endswith('"')):
         raise template.TemplateSyntaxError, "%r title must be in quotes" % tag_name
     if title:
