@@ -17,6 +17,16 @@ register = template.Library()
 
 class ImageNode(template.Node):
 
+    IMAGE_FORMATS = {
+        'figure': u"""<figure><a href="%(original_url)s" title="%(title)s"><img src="%(scaled_url)s" alt="%(title)s" width="%(scaled_width)i" height="%(scaled_height)i" /></a><figcaption>%(title)s</figcaption></figure>""",
+        'original': u"""<img src="%(original_url)s" alt="%(title)s" width="%(original_width)i" height="%(original_height)i" />""",
+        'thumb': u"""<img src="%(thumb_url)s" alt="%(title)s" width="%(thumb_width)i" height="%(thumb_height)i" />""",
+        'thumb-lightbox': u"""<a href="%(original_url)s" title="%(title)s" class="lightbox"><img src="%(thumb_url)s" alt="%(title)s" width="%(thumb_width)i" height="%(thumb_height)i" /></a>""",
+        'scaled': u"""<img src="%(scaled_url)s" alt="%(title)s" width="%(scaled_width)i" height="%(scaled_height)i" />""",
+        'scaled-lightbox': u"""<a href="%(original_url)s" title="%(title)s" class="lightbox"><img src="%(scaled_url)s" alt="%(title)s" width="%(scaled_width)i" height="%(scaled_height)i" /></a>""",
+        'fotorama': u"""<a href="%(fotorama_url)s" title="%(title)s"><img src="%(fotorama_thumbnail_url)s" alt="%(title)s" width="%(fotorama_thumbnail_width)i" height="%(fotorama_thumbnail_height)i" /></a>""",
+        }
+
     def __init__(self, id, format, title):
         self.id = id
         self.format = format
@@ -27,7 +37,7 @@ class ImageNode(template.Node):
             image = Image.objects.get(pk=self.id)
         except Image.DoesNotExist:
             return u""
-        title = self.title or image.image.name.split('/')[-1]
+        title = self.title or image.image.name.split(u'/')[-1]
         thumbnail = get_thumbnail(image.image, Image.THUMBNAIL_GEOMETRY)
         scaled = get_thumbnail(image.image, Image.SCALED_GEOMETRY)
         fotorama = get_thumbnail(image.image, Image.FOTORAMA_GEOMETRY)
@@ -50,18 +60,8 @@ class ImageNode(template.Node):
             'fotorama_thumbnail_width': fotorama_thumbnail.width,
             'fotorama_thumbnail_height': fotorama_thumbnail.height,
         }
-        return IMAGE_FORMATS[self.format] % data
+        return self.IMAGE_FORMATS[self.format] % data
 
-
-IMAGE_FORMATS = {
-    'figure': u"""<figure><a href="%(original_url)s" title="%(title)s"><img src="%(scaled_url)s" alt="%(title)s" width="%(scaled_width)i" height="%(scaled_height)i" /></a><figcaption>%(title)s</figcaption></figure>""",
-    'original': u"""<img src="%(original_url)s" alt="%(title)s" width="%(original_width)i" height="%(original_height)i" />""",
-    'thumb': u"""<img src="%(thumb_url)s" alt="%(title)s" width="%(thumb_width)i" height="%(thumb_height)i" />""",
-    'thumb-lightbox': u"""<a href="%(original_url)s" title="%(title)s" class="lightbox"><img src="%(thumb_url)s" alt="%(title)s" width="%(thumb_width)i" height="%(thumb_height)i" /></a>""",
-    'scaled': u"""<img src="%(scaled_url)s" alt="%(title)s" width="%(scaled_width)i" height="%(scaled_height)i" />""",
-    'scaled-lightbox': u"""<a href="%(original_url)s" title="%(title)s" class="lightbox"><img src="%(scaled_url)s" alt="%(title)s" width="%(scaled_width)i" height="%(scaled_height)i" /></a>""",
-    'fotorama': u"""<a href="%(fotorama_url)s" title="%(title)s"><img src="%(fotorama_thumbnail_url)s" alt="%(title)s" width="%(fotorama_thumbnail_width)i" height="%(fotorama_thumbnail_height)i" /></a>""",
-}
 
 @register.tag(name="image")
 def do_image(parser, token):
