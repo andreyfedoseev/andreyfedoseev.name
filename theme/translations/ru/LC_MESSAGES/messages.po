@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-21 15:10+0500\n"
+"POT-Creation-Date: 2014-11-21 15:26+0500\n"
 "PO-Revision-Date: 2014-11-19 23:06+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: ru <LL@li.org>\n"
@@ -18,19 +18,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: templates/include/header.html:12
-msgid "About"
-msgstr "Об авторе"
-
-#: templates/include/header.html:16
+#: templates/include/footer.html:5 templates/include/header.html:16
 msgid "Archive"
 msgstr "Архив"
 
-#: templates/include/header.html:19
+#: templates/include/footer.html:8 templates/include/header.html:19
 msgid "Tags"
 msgstr "Теги"
 
-#: templates/include/header.html:22
+#: templates/include/footer.html:11 templates/include/header.html:22
 msgid "Subscribe"
 msgstr "Подписаться"
+
+#: templates/include/footer.html:16
+msgid "&copy; Andrey Fedoseev"
+msgstr "&copy; Андрей Федосеев"
+
+#: templates/include/header.html:12
+msgid "About"
+msgstr "Об авторе"
 

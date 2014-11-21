@@ -1,0 +1,21 @@
+@import "compass";
+
+footer.global {
+  position: relative;
+  padding: 1em;
+  margin-top: 1em;
+  margin-bottom: 2em;
+  background-color: #eee;
+  ul {
+    @include no-bullets;
+    @include inline-block-list;
+  }
+  li {
+    margin-right: 1em;
+  }
+  .copyright {
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+  }
+}

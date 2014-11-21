@@ -1,5 +1,6 @@
 # coding: utf-8
 from __future__ import unicode_literals
+import datetime
 
 AUTHOR = "Andrey Fedoseev"
 SITENAME = "Andrey Fedoseev's Weblog"
@@ -72,3 +73,5 @@ DEFAULT_PAGINATION = 10
 #RELATIVE_URLS = True
 
 MD_EXTENSIONS = ["extra"]
+
+TODAY = datetime.date.today()
