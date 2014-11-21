@@ -1,32 +1,40 @@
-<header class="global container">
-  {% if output_file == "blog/index.html" %}
-    <h1>{{ SITENAME }}</h1>
-  {% endif %}
-  <nav>
-    <ul>
-      {% if output_file != "blog/index.html" %}
+<header class="global container clearfix">
+  <div class="pull-left">
+    {% if output_file == "blog/index.html" %}
+      <h1>{{ SITENAME }}</h1>
+    {% endif %}
+    <nav>
+      <ul>
+        {% if output_file != "blog/index.html" %}
+          <li>
+            <a href="{{ SITEURL }}/blog/"><strong>{{ SITENAME }}</strong></a>
+          </li>
+          <li>
+            <a href="{{ SITEURL }}/about/">{% trans %}About{% endtrans %}</a>
+          </li>
+        {% endif %}
         <li>
-          <a href="{{ SITEURL }}/blog/"><strong>{{ SITENAME }}</strong></a>
+          <a href="{{ SITEURL }}/blog/archive/">{% trans %}Archive{% endtrans %}</a>
         </li>
         <li>
-          <a href="{{ SITEURL }}/about/">{% trans %}About{% endtrans %}</a>
+          <a href="{{ SITEURL }}/blog/tags/">{% trans %}Tags{% endtrans %}</a>
         </li>
-      {% endif %}
-      <li>
-        <a href="{{ SITEURL }}/blog/archive/">{% trans %}Archive{% endtrans %}</a>
-      </li>
-      <li>
-        <a href="{{ SITEURL }}/blog/tags/">{% trans %}Tags{% endtrans %}</a>
-      </li>
-      <li>
-        <a href="{{ SITEURL }}/blog/subscribe/">{% trans %}Subscribe{% endtrans %}</a>
-      </li>
-      {% if DEFAULT_LANG != "en" %}
-        <li><a href="/blog/">EN</a></li>
-      {% endif %}
-      {% if DEFAULT_LANG != "ru" %}
-        <li><a href="/ru/blog/">RU</a></li>
-      {% endif %}
-    </ul>
-  </nav>
+        <li>
+          <a href="{{ SITEURL }}/blog/subscribe/">{% trans %}Subscribe{% endtrans %}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="pull-right">
+    <nav>
+      <ul>
+        {% if DEFAULT_LANG != "en" %}
+          <li><a href="/blog/">EN</a></li>
+        {% endif %}
+        {% if DEFAULT_LANG != "ru" %}
+          <li><a href="/ru/blog/">RU</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
 </header>

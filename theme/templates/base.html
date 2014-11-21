@@ -30,6 +30,7 @@
 {#    {% endif %}#}
   {% endblock %}
   {% block css %}
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/theme/css/style.css"/>
   {% endblock %}
   {% block js %}
@@ -42,7 +43,9 @@
       {% include "include/header.html" %}
     {% endblock %}
     {% block main %}
-    
+      <main class="container">
+        {% block content %}{% endblock %}
+      </main>
     {% endblock %}
     {% block footer %}
       {% include "include/footer.html" %}

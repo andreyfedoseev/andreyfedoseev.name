@@ -1,6 +1,7 @@
 # coding: utf-8
 from __future__ import unicode_literals
 import datetime
+import os
 
 AUTHOR = "Andrey Fedoseev"
 SITENAME = "Andrey Fedoseev's Weblog"
@@ -75,3 +76,13 @@ DEFAULT_PAGINATION = 10
 MD_EXTENSIONS = ["extra"]
 
 TODAY = datetime.date.today()
+
+
+def get_about_summary(lang):
+    with open(os.path.join(PATH, "include", "about-{0}.md".format(lang))) as about_file:
+        return about_file.read().decode("utf-8")
+
+
+JINJA_FILTERS = {
+    "get_about_summary": get_about_summary,
+}

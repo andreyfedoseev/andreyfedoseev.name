@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
-{% block main %}
+{% block content %}
+  {% if output_file == "blog/index.html" %}
+    {% include "include/about.html" %}
+  {% endif %}
 
 {##}
 {##}

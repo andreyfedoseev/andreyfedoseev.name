@@ -6,10 +6,9 @@ header.global {
   position: relative;
   h1 {
     @include inline-block;
-    font-size: 30px;
-    line-height: 30px;
     font-weight: bold;
-    vertical-align: bottom;
+    font-size: 1em;
+    margin: 0;
   }
   nav {
     @include inline-block;
@@ -24,9 +23,7 @@ header.global {
   li {
     margin-right: 1em;
     &:last-child {
-      position: absolute;
-      bottom: 0;
-      right: 0;
+      margin-right: 0;
     }
   }
 }
