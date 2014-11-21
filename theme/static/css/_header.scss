@@ -1,0 +1,32 @@
+@import "compass";
+
+header.global {
+  margin-top: 1em;
+  margin-bottom: 2em;
+  position: relative;
+  h1 {
+    @include inline-block;
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: bold;
+    vertical-align: bottom;
+  }
+  nav {
+    @include inline-block;
+  }
+  ul {
+    @include no-bullets;
+    @include inline-block-list;
+  }
+  h1 + nav {
+    margin-left: 1em;
+  }
+  li {
+    margin-right: 1em;
+    &:last-child {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+}

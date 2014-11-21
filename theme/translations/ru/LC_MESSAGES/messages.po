@@ -1,0 +1,36 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-11-21 15:10+0500\n"
+"PO-Revision-Date: 2014-11-19 23:06+0500\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+
+#: templates/include/header.html:12
+msgid "About"
+msgstr "Об авторе"
+
+#: templates/include/header.html:16
+msgid "Archive"
+msgstr "Архив"
+
+#: templates/include/header.html:19
+msgid "Tags"
+msgstr "Теги"
+
+#: templates/include/header.html:22
+msgid "Subscribe"
+msgstr "Подписаться"
+
