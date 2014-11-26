@@ -1,0 +1,15 @@
+@import "compass";
+
+.full-article {
+  .article-tags {
+    margin-top: 10px;
+    ul {
+      @include no-bullets;
+      @include inline-block;
+      @include inline-block-list;
+      li {
+        margin-left: 0.3em;
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{% trans %}About{% endtrans %}{% endblock %}
+
+{% block content %}
+  <section class="about clearfix">
+    <img class="pull-left img-thumbnail" width="140" height="140" src="{{ SITEURL }}/theme/images/photo.jpg">
+    <p>{{ ABOUT_SUMMARY }}</p>
+  </section>
+  <hr>
+  <section class="social-links">
+    <div class="row">
+      <div class="col-md-2">
+        <nav>
+          <ul>
+            <li><a href="https://github.com/andreyfedoseev"><i class="fa fa-fw fa-lg fa-github-square"></i>{% trans %}GitHub{% endtrans %}</a></li>
+            <li><a href="https://twitter.com/a_fedoseev"><i class="fa fa-fw fa-lg fa-twitter-square"></i>{% trans %}Twitter{% endtrans %}</a></li>
+            <li><a href="https://www.linkedin.com/in/andreyfedoseev/"><i class="fa fa-fw fa-lg fa-linkedin-square"></i>{% trans %}LinkedIn{% endtrans %}</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-md-2">
+        <nav>
+          <ul>
+            <li><a href="https://www.facebook.com/andrey.fedoseev"><i class="fa fa-fw fa-lg fa-facebook-square"></i>{% trans %}Facebook{% endtrans %}</a></li>
+            <li><a href="http://instagram.com/afedoseev"><i class="fa fa-fw fa-lg fa-instagram"></i>{% trans %}Instagram{% endtrans %}</a></li>
+            <li><a href="https://plus.google.com/109540020558257276564/about"><i class="fa fa-fw fa-lg fa-google-plus-square"></i>{% trans %}Google+{% endtrans %}</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-md-4">
+        <nav>
+          <ul>
+            <li><a href="skype:andrey.fedoseev"><i class="fa fa-fw fa-lg fa-skype"></i>andrey.fedoseev</a></li>
+            <li><a href="mailto:andrey.fedoseev@gmail.com"><i class="fa fa-fw fa-lg fa-envelope"></i>andrey.fedoseev@gmail.com</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </section>
+{% endblock %}

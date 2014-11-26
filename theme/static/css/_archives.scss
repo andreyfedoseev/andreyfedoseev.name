@@ -1,0 +1,43 @@
+@import "compass";
+
+.archives {
+  .year {
+    & > h1 {
+      margin-bottom: 0;
+    }
+  }
+  .month {
+    margin-top: 1.5em;
+    &:nth-child(2n+1) {
+      clear: both;
+    }
+    & > h1 {
+      font-size: 1.3em;
+      margin-bottom: 1em;
+    }
+    ol {
+      @include no-bullets;
+      margin: 0;
+      padding-left: 1em;
+    }
+    li {
+      clear: left;
+      margin-bottom: 1em;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .day {
+    float: left;
+    width: 2em;
+    text-align: right;
+    margin-right: 0.5em;
+    color: #666;
+    font-size: 0.9em;
+    line-height: 1.1;
+    & + * {
+      margin-left: 2em;
+    }
+  }
+}

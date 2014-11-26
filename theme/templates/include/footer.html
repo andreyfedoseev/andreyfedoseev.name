@@ -2,19 +2,11 @@
   <div class="pull-left">
     <nav>
       <ul>
-        <li>
-          <a href="{{ SITEURL }}/blog/archive/">{% trans %}Archive{% endtrans %}</a>
-        </li>
-        <li>
-          <a href="{{ SITEURL }}/blog/tags/">{% trans %}Tags{% endtrans %}</a>
-        </li>
-        <li>
-          <a href="{{ SITEURL }}/blog/subscribe/">{% trans %}Subscribe{% endtrans %}</a>
-        </li>
+        {% include "include/main-navigation.html" %}
       </ul>
     </nav>
   </div>
   <div class="pull-right">
-    {% trans %}&copy; Andrey Fedoseev{% endtrans %}, 2010 &mdash; {{ TODAY.year }}
+    &copy; {% trans %}Andrey Fedoseev{% endtrans %}, 2010 &mdash; {{ TODAY.year }}
   </div>
 </footer>

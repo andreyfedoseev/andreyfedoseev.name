@@ -1,0 +1,14 @@
+<section>
+  <h1 class="section-title">{% trans %}Main Topics{% endtrans %}</h1>
+  {% set sorted_tags = tags|sort_tags %}
+  <ul class="tag-list">
+    {% for tag in sorted_tags[:5] %}
+      <li>
+        <a href="{{ SITEURL }}{{ tag.url }}">{{ tag.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+  {% if sorted_tags|count > 5 %}
+    <a href="{{ SITEURL }}{{ TAGS_URL }}"><strong>{% trans %}All Topics{% endtrans %}</strong></a>
+  {% endif %}
+</section>

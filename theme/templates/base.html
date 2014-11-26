@@ -3,46 +3,33 @@
 <head>
   <meta charset="utf-8" />
   <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
+  <link rel="icon" href="/theme/images/favicon-16.png" type="image/png" sizes="16x16"/>
+  <link rel="icon" href="/theme/images/favicon-32.png" type="image/png" sizes="32x32"/>
+  <link rel="icon" href="/theme/images/favicon-48.png" type="image/png" sizes="48x48"/>
+  <link rel="icon" href="/theme/images/favicon-128.png" type="image/png" sizes="128x128"/>
+  {% block head %}{% endblock %}
   {% block feeds %}
-{#    {% if FEED_ALL_ATOM %}#}
-{#      <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Full Atom Feed" />#}
-{#    {% endif %}#}
-{#    {% if FEED_ALL_RSS %}#}
-{#      <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Full RSS Feed" />#}
-{#    {% endif %}#}
-{#    {% if FEED_ATOM %}#}
-{#      <link href="{{ FEED_DOMAIN }}/{{ FEED_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Atom Feed" />#}
-{#    {% endif %}#}
-{#    {% if FEED_RSS %}#}
-{#      <link href="{{ FEED_DOMAIN }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />#}
-{#    {% endif %}#}
-{#    {% if CATEGORY_FEED_ATOM and category %}#}
-{#      <link href="{{ FEED_DOMAIN }}/{{ CATEGORY_FEED_ATOM|format(category.slug) }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Categories Atom Feed" />#}
-{#    {% endif %}#}
-{#    {% if CATEGORY_FEED_RSS and category %}#}
-{#      <link href="{{ FEED_DOMAIN }}/{{ CATEGORY_FEED_RSS|format(category.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Categories RSS Feed" />#}
-{#    {% endif %}#}
-{#    {% if TAG_FEED_ATOM and tag %}#}
-{#      <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_ATOM|format(tag.slug) }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Tags Atom Feed" />#}
-{#    {% endif %}#}
-{#    {% if TAG_FEED_RSS and tag %}#}
-{#      <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_RSS|format(tag.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Tags RSS Feed" />#}
-{#    {% endif %}#}
+  <link href="{{ SITEURL }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }}" />
+  {% if tag %}
+  <link href="{{ SITEURL }}/{{ TAG_FEED_RSS|format(tag.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} | {{ tag.name }}" />
+  {% endif %}
   {% endblock %}
   {% block css %}
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/theme/css/style.css"/>
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/theme/css/style.css"/>
   {% endblock %}
   {% block js %}
   {% endblock %}
 </head>
 
-<body>
+<body class="{% block page_class %}{% endblock %}">
   {% block body %}
     {% block header %}
       {% include "include/header.html" %}
     {% endblock %}
     {% block main %}
+      <hr>
       <main class="container">
         {% block content %}{% endblock %}
       </main>
@@ -51,5 +38,8 @@
       {% include "include/footer.html" %}
     {% endblock %}
   {% endblock %}
+  {% if GOOGLE_ANALYTICS_ID %}
+    {% include "include/google-analytics.html" %}
+  {% endif %}
 </body>
 </html>

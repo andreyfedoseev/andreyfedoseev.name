@@ -1,10 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}{{ SITENAME }} - Tags{% endblock %}
+{% block title %}{% trans %}Topics{% endtrans %} | {{ super() }}{% endblock %}
+
+{% block page_class %}tags{% endblock %}
 
 {% block content %}
-    <h1>Tags for {{ SITENAME }}</h1>
-    {%- for tag, articles in tags|sort %}
-        <li><a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a> ({{ articles|count }})</li>
-    {% endfor %}
+  {% set sorted_tags = tags|sort_tags %}
+  <section>
+    <h1 class="section-title">{% trans %}Main Topics{% endtrans %}</h1>
+    <ul class="tag-list top-tags">
+      {% for tag in sorted_tags[:5] %}
+        <li>
+          <a href="{{ SITEURL }}/{{ TAG_FEED_RSS|format(tag.slug) }}" title="{% trans %}RSS{% endtrans %}: {{ tag.name }}"><i class="fa fa-rss-square"></i></a><a href="{{ SITEURL }}{{ tag.url }}">{{ tag.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% if sorted_tags|length > 5 %}
+    <hr>
+    <section>
+      <h1 class="section-title">{% trans %}Other Topics{% endtrans %}</h1>
+      <ul class="tag-list">
+        {% for tag in sorted_tags[5:] %}
+          <li>
+            <a href="{{ SITEURL }}{{ tag.url }}">{{ tag.name }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
 {% endblock %}
+

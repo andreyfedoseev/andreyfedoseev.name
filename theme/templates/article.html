@@ -1,48 +1,44 @@
 {% extends "base.html" %}
+
+{% block title %}{{ article.title|e }} | super(){% endblock %}
+
 {% block head %}
   {{ super() }}
   {% for keyword in article.keywords %}
-    <meta name="keywords" contents="{{keyword}}" />
+    <meta name="keywords" content="{{keyword}}" />
   {% endfor %}
 
   {% for description in article.description %}
-    <meta name="description" contents="{{description}}" />
+    <meta name="description" content="{{description}}" />
   {% endfor %}
 
   {% for tag in article.tags %}
-    <meta name="tags" contents="{{tag}}" />
+    <meta name="tags" content="{{tag}}" />
   {% endfor %}
-
 {% endblock %}
 
-{% block body %}
-<section id="content" class="body">
-  <header>
-    <h2 class="entry-title">
-      <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark"
-         title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></h2>
- {% import 'translations.html' as translations with context %}
- {{ translations.translations_for(article) }}
-  </header>
-  <footer class="post-info">
-    <abbr class="published" title="{{ article.date.isoformat() }}">
-      {{ article.locale_date }}
-    </abbr>
-	{% if article.modified %}
-    <abbr class="modified" title="{{ article.modified.isoformat() }}">
-      {{ article.locale_modified }}
-    </abbr>
-	{% endif %}
-    {% if article.authors %}
-    <address class="vcard author">
-      By {% for author in article.authors %}
-          <a class="url fn" href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>
-        {% endfor %}
-    </address>
-    {% endif %}
-  </footer><!-- /.post-info -->
-  <div class="entry-content">
+{% block content %}
+  <article class="full-article">
+    <header>
+      <h1 class="article-title">{{ article.title|e }}</h1>
+    </header>
     {{ article.content }}
-  </div><!-- /.entry-content -->
-</section>
+    <hr>
+    <footer>
+      <div class="article-publication-date">
+        {% trans %}Published on{% endtrans %} <time datetime="{{ article.date.date().isoformat() }}">{{ article.date|format_date(DEFAULT_LANG) }}</time>
+      </div>
+      <div class="article-tags">
+        {% if article.tags %}
+          {% trans %}Topics{% endtrans %}:
+          <ul>
+            {% for tag in article.tags %}<li><a href="{{ SITEURL }}{{ tag.url }}">{{ tag.name }}</a></li>{% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </footer>
+  </article>
+  {% if DISQUS_ID %}
+    {% include "include/disqus.html" %}
+  {% endif %}
 {% endblock %}

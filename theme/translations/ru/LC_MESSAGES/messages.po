@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-21 16:21+0500\n"
+"POT-Creation-Date: 2014-11-29 18:48+0500\n"
 "PO-Revision-Date: 2014-11-19 23:06+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: ru <LL@li.org>\n"
@@ -18,27 +18,81 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: templates/include/about.html:2 templates/include/header.html:13
+#: templates/about.html:3 templates/include/main-navigation.html:3
 msgid "About"
 msgstr "Об авторе"
 
-#: templates/include/about.html:5
-msgid "Learn more&hellip;"
-msgstr "Подробнее&hellip;"
+#: templates/about.html:16
+msgid "GitHub"
+msgstr ""
 
-#: templates/include/footer.html:6 templates/include/header.html:17
+#: templates/about.html:17
+msgid "Twitter"
+msgstr ""
+
+#: templates/about.html:18
+msgid "LinkedIn"
+msgstr ""
+
+#: templates/about.html:25
+msgid "Facebook"
+msgstr ""
+
+#: templates/about.html:26
+msgid "Instagram"
+msgstr ""
+
+#: templates/about.html:27
+msgid "Google+"
+msgstr ""
+
+#: templates/archives.html:3 templates/include/main-navigation.html:6
 msgid "Archive"
 msgstr "Архив"
 
-#: templates/include/footer.html:9 templates/include/header.html:20
-msgid "Tags"
-msgstr "Теги"
+#: templates/article.html:29
+msgid "Published on"
+msgstr "Опубликовано"
 
-#: templates/include/footer.html:12 templates/include/header.html:23
-msgid "Subscribe"
-msgstr "Подписаться"
+#: templates/article.html:33 templates/tags.html:3
+#: templates/include/main-navigation.html:9
+msgid "Topics"
+msgstr "Темы"
 
-#: templates/include/footer.html:18
-msgid "&copy; Andrey Fedoseev"
-msgstr "&copy; Андрей Федосеев"
+#: templates/error.html:3 templates/error.html:6
+msgid "Page not found"
+msgstr "Страница не найдена"
+
+#: templates/tag.html:7 templates/tags.html:14
+#: templates/include/main-navigation.html:12
+msgid "RSS"
+msgstr "RSS"
+
+#: templates/tag.html:19 templates/include/top-tags.html:12
+msgid "All Topics"
+msgstr "Все темы"
+
+#: templates/tags.html:10 templates/include/top-tags.html:2
+msgid "Main Topics"
+msgstr "Главные темы"
+
+#: templates/tags.html:22
+msgid "Other Topics"
+msgstr "Прочие темы"
+
+#: templates/include/about.html:4
+msgid "Learn more"
+msgstr "Подробнее"
+
+#: templates/include/footer.html:10
+msgid "Andrey Fedoseev"
+msgstr "Андрей Федосеев"
+
+#: templates/include/recent-entries.html:2
+msgid "Recent Entries"
+msgstr "Последние записи"
+
+#: templates/include/recent-entries.html:15
+msgid "All Entries"
+msgstr "Все записи"
 

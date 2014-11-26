@@ -1,8 +1,9 @@
 .idea
-output
-cache
-blog.json
-tags.json
 virtualenv
-import_old_data.py
 theme/static/css/.sass-cache
+en/.env
+en/cache
+en/output
+ru/.env
+ru/cache
+ru/output

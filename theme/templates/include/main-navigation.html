@@ -1,0 +1,13 @@
+
+<li>
+  {% if output_file == ABOUT_SAVE_AS %}<strong>{% trans %}About{% endtrans %}</strong>{% else %}<a href="{{ SITEURL }}{{ ABOUT_URL }}">{% trans %}About{% endtrans %}</a>{% endif %}
+</li>
+<li>
+  {% if output_file == ARCHIVES_SAVE_AS %}<strong>{% trans %}Archive{% endtrans %}</strong>{% else %}<a href="{{ SITEURL }}{{ ARCHIVE_URL }}">{% trans %}Archive{% endtrans %}</a>{% endif %}
+</li>
+<li>
+  {% if output_file == TAGS_SAVE_AS %}<strong>{% trans %}Topics{% endtrans %}</strong>{% else %}<a href="{{ SITEURL }}{{ TAGS_URL }}">{% trans %}Topics{% endtrans %}</a>{% endif %}
+</li>
+<li>
+  <a href="{{ SITEURL }}/{{ FEED_RSS }}"><i class="fa fa-rss-square"></i>{% trans %}RSS{% endtrans %}</a>
+</li>

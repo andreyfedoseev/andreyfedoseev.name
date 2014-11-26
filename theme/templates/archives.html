@@ -1,11 +1,31 @@
 {% extends "base.html" %}
-{% block content %}
-<h1>Archives for {{ SITENAME }}</h1>
 
-<dl>
-{% for article in dates %}
-    <dt>{{ article.locale_date }}</dt>
-    <dd><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></dd>
-{% endfor %}
-</dl>
+{% block title %}{% trans %}Archive{% endtrans %} | {{ super() }}{% endblock %}
+
+{% block page_class %}archives{% endblock %}
+
+{% block content %}
+  {% for year, months in dates|build_archive(DEFAULT_LANG) %}
+    <section class="year">
+      <h1 class="section-title" id="{{ year }}">{{ year }}</h1>
+      <div class="row">
+        {% for month, articles in months %}
+          <section class="col-md-6 month">
+            <h1>{{ month|capitalize }}</h1>
+            <nav>
+              <ol>
+                {% for day, article in articles %}
+                  <li>
+                    <span class="day">{{ day }}</span>
+                    {% include "include/article-list-item.html" %}
+                  </li>
+                {% endfor %}
+              </ol>
+            </nav>
+          </section>
+        {% endfor %}
+      </div>
+    </section>
+    {% if not loop.last %}<hr>{% endif %}
+  {% endfor %}
 {% endblock %}

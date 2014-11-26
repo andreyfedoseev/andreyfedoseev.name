@@ -1,0 +1,17 @@
+<section>
+  <h1 class="section-title">{% trans %}Recent Entries{% endtrans %}</h1>
+  <div class="row">
+    {% for column in articles[:10]|slice(2) %}
+      <ol class="col-md-6 article-list">
+        {% for article in column %}
+          <li>
+            {% include "include/article-list-item.html" %}
+          </li>
+        {% endfor %}
+      </ol>
+    {% endfor %}
+  </div>
+  {% if articles|count > 10 %}
+    <strong><a href="{{ SITEURL }}{{ ARCHIVE_URL }}">{% trans %}All Entries{% endtrans %}</a></strong>
+  {% endif %}
+</section>

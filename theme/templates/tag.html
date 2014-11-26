@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ tag.name }} | {{ super() }}{% endblock %}
+
+{% block content %}
+  <section>
+    <h1 class="section-title"><a href="{{ SITEURL }}/{{ TAG_FEED_RSS|format(tag.slug) }}" title="{% trans %}RSS{% endtrans %}: {{ tag.name }}"><i class="fa fa-rss-square"></i></a>{{ tag.name }}</h1>
+    <div class="row">
+      {% for column in articles[:10]|slice(2) %}
+        <ol class="col-md-6 article-list">
+          {% for article in column %}
+            <li>
+              {% include "include/article-list-item.html" %}
+            </li>
+          {% endfor %}
+        </ol>
+      {% endfor %}
+    </div>
+    <strong><a href="{{ SITEURL }}{{ TAGS_URL }}">{% trans %}All Topics{% endtrans %}</a></strong>
+  </section>
+{% endblock %}

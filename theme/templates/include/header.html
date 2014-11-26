@@ -7,33 +7,19 @@
       <ul>
         {% if output_file != "blog/index.html" %}
           <li>
-            <a href="{{ SITEURL }}/blog/"><strong>{{ SITENAME }}</strong></a>
-          </li>
-          <li>
-            <a href="{{ SITEURL }}/about/">{% trans %}About{% endtrans %}</a>
+            <strong><a href="{{ SITEURL }}{{ INDEX_URL }}">{{ SITENAME }}</a></strong>
           </li>
         {% endif %}
-        <li>
-          <a href="{{ SITEURL }}/blog/archive/">{% trans %}Archive{% endtrans %}</a>
-        </li>
-        <li>
-          <a href="{{ SITEURL }}/blog/tags/">{% trans %}Tags{% endtrans %}</a>
-        </li>
-        <li>
-          <a href="{{ SITEURL }}/blog/subscribe/">{% trans %}Subscribe{% endtrans %}</a>
-        </li>
+        {% include "include/main-navigation.html" %}
       </ul>
     </nav>
   </div>
   <div class="pull-right">
     <nav>
       <ul>
-        {% if DEFAULT_LANG != "en" %}
-          <li><a href="/blog/">EN</a></li>
-        {% endif %}
-        {% if DEFAULT_LANG != "ru" %}
-          <li><a href="/ru/blog/">RU</a></li>
-        {% endif %}
+        {% for lang, url in LANG_URLS.items() %}
+          <li><a href="{{ url }}">{{ lang }}</a></li>
+        {% endfor %}
       </ul>
     </nav>
   </div>

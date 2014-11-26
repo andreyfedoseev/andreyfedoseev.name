@@ -2,10 +2,11 @@
 
 header.global {
   margin-top: 1em;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
   position: relative;
   h1 {
     @include inline-block;
+    line-height: inherit;
     font-weight: bold;
     font-size: 1em;
     margin: 0;

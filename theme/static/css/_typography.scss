@@ -1,14 +1,19 @@
 body {
   font-size: 16px;
-  font-family: Helvetica,Arial,sans-serif;
+  font-family: Helvetica,Arial, sans-serif;
   line-height: 1.5;
 }
 
 a {
-  color: #009;
+  color: #039;
   text-decoration: underline;
   &:hover {
-    color: #000;
+    color: #006;
+  }
+  .fa {
+    margin-right: 0.2em;
+    text-decoration: none;
+    color: #999;
   }
 }
 
@@ -16,7 +21,8 @@ h1, .h1,
 h2, .h2,
 h3, .h3,
 h4, .h4 {
-  font-weight: bold;
+  margin-bottom: 0.8em;
+  margin-top: 1.2em;
   &:first-child {
     margin-top: 0;
   }
@@ -40,10 +46,21 @@ h4, .h4 {
 
 img.pull-left {
   margin-right: 1em;
-  margin-bottom: 1em;
 }
 
 img.pull-right {
   margin-left: 1em;
-  margin-bottom: 1em;
+}
+
+.section-title {
+  font-size: 1.5em;
+}
+
+pre {
+  border: none;
+  border-radius: 0;
+}
+
+.fa-rss-square, a .fa-rss-square {
+  color: darkorange;
 }
