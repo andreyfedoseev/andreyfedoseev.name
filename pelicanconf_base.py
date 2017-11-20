@@ -4,7 +4,6 @@ from pelican.utils import SafeDatetime
 from pyembed.markdown import PyEmbedMarkdown
 from pytils.dt import ru_strftime
 import datetime
-import os
 
 
 AUTHOR = "Andrey Fedoseev"

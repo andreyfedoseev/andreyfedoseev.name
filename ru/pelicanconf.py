@@ -1,6 +1,11 @@
 # coding: utf-8
 from __future__ import unicode_literals
+
+import os
 import sys
+
+import markdown
+
 sys.path.append("..")
 
 from pelicanconf_base import *
@@ -15,4 +20,4 @@ LANG_URLS = {
 DEFAULT_LANG = "ru"
 
 with open(os.path.join(PATH, "include", "about.md".format())) as about_file:
-    ABOUT_SUMMARY = about_file.read().decode("utf-8")
+    ABOUT_SUMMARY = markdown.markdown(about_file.read().decode("utf-8"))
