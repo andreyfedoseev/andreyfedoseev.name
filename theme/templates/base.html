@@ -9,18 +9,16 @@
   <link rel="icon" href="/theme/images/favicon-48.png" type="image/png" sizes="48x48"/>
   <link rel="icon" href="/theme/images/favicon-128.png" type="image/png" sizes="128x128"/>
   {% block head %}{% endblock %}
-  {% block feeds %}
-  <link href="{{ SITEURL }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }}" />
-  {% if tag %}
-  <link href="{{ SITEURL }}/{{ TAG_FEED_RSS|format(tag.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} | {{ tag.name }}" />
-  {% endif %}
-  {% endblock %}
   {% block css %}
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
   <link rel="stylesheet" href="/theme/css/style.css"/>
   {% endblock %}
-  {% block js %}
+  {% block feeds %}
+    <link href="{{ SITEURL }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }}" />
+    {% if tag %}
+      <link href="{{ SITEURL }}/{{ TAG_FEED_RSS|format(tag.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} | {{ tag.name }}" />
+    {% endif %}
   {% endblock %}
 </head>
 
@@ -42,5 +40,7 @@
   {% if GOOGLE_ANALYTICS_ID %}
     {% include "include/google-analytics.html" %}
   {% endif %}
+  {% block js %}
+  {% endblock %}
 </body>
 </html>
