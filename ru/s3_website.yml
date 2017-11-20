@@ -10,7 +10,7 @@ cloudfront_distribution_id: <%= ENV['CLOUDFRONT_DISTRIBUTION_ID'] %>
 site: output
 
 max_age:
-   "theme/*": 6000
+   "theme/*": <%= 60 * 60 * 24 %>
    "*": 300
 
 gzip:
@@ -30,6 +30,7 @@ exclude_from_upload:
    - category
    - theme/css/\.sass-cache
    - theme/css/(.+)\.scss
+   - theme/css/(.+)\.map
 
 # s3_reduced_redundancy: true
 
