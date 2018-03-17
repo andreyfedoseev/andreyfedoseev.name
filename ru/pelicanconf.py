@@ -11,6 +11,7 @@ sys.path.append("..")
 from pelicanconf_base import *
 
 AUTHOR = "Андрей Федосеев"
+TELEGRAM = "https://t.me/andreyfedoseev_ru"
 SITENAME = "Блог Андрея Федосеева"
 SITEURL = "http://localhost:8080"
 FEED_DOMAIN = SITEURL

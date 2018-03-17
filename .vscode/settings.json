@@ -16,5 +16,6 @@
     "MD013": false,
     "MD041": false,
     "MD033": false
-  }
+  },
+  "python.linting.enabled": false
 }
