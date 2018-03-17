@@ -10,7 +10,7 @@ from pelicanconf_base import *
 
 AUTHOR = "Andrey Fedoseev"
 SITENAME = "Andrey Fedoseev's Blog"
-SITEURL = "http://andreyfedoseev.name"
+SITEURL = "http://localhost:8080"
 FEED_DOMAIN = SITEURL
 LANG_URLS = {
     "RU": "http://andreyfedoseev.ru"
