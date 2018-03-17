@@ -10,28 +10,31 @@ Feed: false
 <p>Подключить такое кэширование предельно просто. КО рекомендует начать с установки пакета <code>johnny—cache</code>, который можно <a href="http://pypi.python.org/pypi/johnny-cache/">скачать с PyPI</a> или вытянуть из <a href="http://dev.jmoiron.net/hg/johnny-cache">mercurial-репозитория</a>. Затем нужно внести следующие изменения в <code>settings.py</code>:</p>
 <p>1. Добавить <code>jhonny</code> в список установленных приложений</p>
 
-    #!python
-    INSTALLED_APPS = (
-        # ...
-        'johnny',
-    )
+```python
+INSTALLED_APPS = (
+    # ...
+    'johnny',
+)
+```
 
 <p><small>Это делать не обязательно, будет работать и так. Чисто декоративный момент.</small></p>
 <p>2. Подключить middleware</p>
-    
-    #!python
-    MIDDLEWARE_CLASSES = (
-        'johnny.middleware.LocalStoreClearMiddleware',
-        'johnny.middleware.QueryCacheMiddleware',
-        # ...
-    )
+
+```python
+MIDDLEWARE_CLASSES = (
+    'johnny.middleware.LocalStoreClearMiddleware',
+    'johnny.middleware.QueryCacheMiddleware',
+    # ...
+)
+```
 
 <p><small>А вот это нужно сделать обязательно, иначе ничего не получится.</small></p>
 <p>3. И, наконец, настроить кэширующий бэкенд</p>
 
-    #!python
-    CACHE_BACKEND = 'johnny.backends.memcached://localhost:11211'
-    JOHNNY_MIDDLEWARE_KEY_PREFIX='jc_myproj'
+```python
+CACHE_BACKEND = 'johnny.backends.memcached://localhost:11211'
+JOHNNY_MIDDLEWARE_KEY_PREFIX='jc_myproj'
+```
 
 <p>В <code>CACHE_BACKEND</code> указывается хост/порт memcached. В данном случае это <code>localhost:11211</code>.</p>
 <p><code>JOHNNY_MIDDLEWARE_KEY_PREFIX</code> — это префикс для ключей memcached. Он нужен, чтобы избежать конфликтов с другими проектами, которые используют тот же кэш. Соответственно, он должен быть уникальным для каждого проекта.</p>

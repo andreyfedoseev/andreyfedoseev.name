@@ -24,30 +24,31 @@ Feed: false
 
 Ниже приведён мой файл private.xml.
 
-    #!xml
-    <?xml version="1.0"?>
-    <root>    
-      <item>      
-        <name>Fix Numpad</name>
-        <identifier>fixnumpad</identifier>
-    
-        <!-- Стрелки и кнопки Home,End,PgUp,PgDown -->
-        <autogen>--KeyToKey-- KeyCode::KEYPAD_1, KeyCode::END</autogen>
-        <autogen>--KeyToKey-- KeyCode::KEYPAD_2, KeyCode::CURSOR_DOWN</autogen>
-        <autogen>--KeyToKey-- KeyCode::KEYPAD_3, KeyCode::PAGEDOWN</autogen>
-        <autogen>--KeyToKey-- KeyCode::KEYPAD_4, KeyCode::CURSOR_LEFT</autogen>
-        <autogen>--KeyToKey-- KeyCode::KEYPAD_6, KeyCode::CURSOR_RIGHT</autogen>
-        <autogen>--KeyToKey-- KeyCode::KEYPAD_7, KeyCode::HOME</autogen>
-        <autogen>--KeyToKey-- KeyCode::KEYPAD_8, KeyCode::CURSOR_UP</autogen>
-        <autogen>--KeyToKey-- KeyCode::KEYPAD_9, KeyCode::PAGEUP</autogen>
-    
-        <!-- Точка на цифровом блоке работает как Del -->
-        <autogen>--KeyToKey-- KeyCode::KEYPAD_DOT, KeyCode::FORWARD_DELETE</autogen>
+```xml
+  <?xml version="1.0"?>
+  <root>
+    <item>
+      <name>Fix Numpad</name>
+      <identifier>fixnumpad</identifier>
 
-        <!-- Сочетание Shift+0 на цифровом блоке работает как Command+V -->
-        <autogen>--KeyToKey-- KeyCode::KEYPAD_0, ModifierFlag::SHIFT_L,
-                              KeyCode::V, ModifierFlag::COMMAND_L</autogen>
-      </item>
-    </root>
+      <!-- Стрелки и кнопки Home,End,PgUp,PgDown -->
+      <autogen>--KeyToKey-- KeyCode::KEYPAD_1, KeyCode::END</autogen>
+      <autogen>--KeyToKey-- KeyCode::KEYPAD_2, KeyCode::CURSOR_DOWN</autogen>
+      <autogen>--KeyToKey-- KeyCode::KEYPAD_3, KeyCode::PAGEDOWN</autogen>
+      <autogen>--KeyToKey-- KeyCode::KEYPAD_4, KeyCode::CURSOR_LEFT</autogen>
+      <autogen>--KeyToKey-- KeyCode::KEYPAD_6, KeyCode::CURSOR_RIGHT</autogen>
+      <autogen>--KeyToKey-- KeyCode::KEYPAD_7, KeyCode::HOME</autogen>
+      <autogen>--KeyToKey-- KeyCode::KEYPAD_8, KeyCode::CURSOR_UP</autogen>
+      <autogen>--KeyToKey-- KeyCode::KEYPAD_9, KeyCode::PAGEUP</autogen>
+
+      <!-- Точка на цифровом блоке работает как Del -->
+      <autogen>--KeyToKey-- KeyCode::KEYPAD_DOT, KeyCode::FORWARD_DELETE</autogen>
+
+      <!-- Сочетание Shift+0 на цифровом блоке работает как Command+V -->
+      <autogen>--KeyToKey-- KeyCode::KEYPAD_0, ModifierFlag::SHIFT_L,
+                            KeyCode::V, ModifierFlag::COMMAND_L</autogen>
+    </item>
+  </root>
+```
 
 Как видите, различные модификаторы типа Shift, Control или Command тоже поддерживаются.

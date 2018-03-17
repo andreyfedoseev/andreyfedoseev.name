@@ -17,57 +17,58 @@ Feed: false
 </ol>
 <p>Чтобы не заниматься такой чисткой вручную, я написал простенькую функцию, которая автоматически исправляет HTML код перед отображением на странице. Вот она:</p>
 
-    #!python
-    from BeautifulSoup import BeautifulSoup, Tag
-    
-    
-    def fix_embeds(value):
-        soup = BeautifulSoup(value)
-    
-        for object in soup.findAll("object"):
-            movie = None
-            for param in object.findAll("param"):
-                if param["name"] == "movie":
-                    movie = param["value"]
-            embeds = object.findAll("embed")
-            if embeds:
-                embed = embeds[0]
+```python
+from BeautifulSoup import BeautifulSoup, Tag
+
+
+def fix_embeds(value):
+    soup = BeautifulSoup(value)
+
+    for object in soup.findAll("object"):
+        movie = None
+        for param in object.findAll("param"):
+            if param["name"] == "movie":
+                movie = param["value"]
+        embeds = object.findAll("embed")
+        if embeds:
+            embed = embeds[0]
+        else:
+            embed = None
+        data = object.get("data")
+        if not data:
+            if movie:
+                object["data"] = movie
+            elif embed and embed.get("src"):
+                object["data"] = embed["src"]
             else:
-                embed = None
-            data = object.get("data")
-            if not data:
-                if movie:
-                    object["data"] = movie
-                elif embed and embed.get("src"):
-                    object["data"] = embed["src"]
-                else:
-                    continue
-            
-            if not object.get("type") and embed.get("type"):
-                object["type"] = embed["type"]
-            del object["classid"]
-            for embed in object.findAll("embed"):
-                embed.extract()
-        
-        for embed in soup.findAll("embed"):
-            src = embed.get("src")
-            type = embed.get("type")
-            if not src or not type:
                 continue
-            width = embed.get("width")
-            height = embed.get("height")
-            object = Tag(soup, "object")
-            object["data"] = src
-            object["type"] = type
-            if width:
-                object["width"] = width
-            if height:
-                object["height"] = height
-            embed.replaceWith(object)
-    
-                    
-        return unicode(soup)
-        
+
+        if not object.get("type") and embed.get("type"):
+            object["type"] = embed["type"]
+        del object["classid"]
+        for embed in object.findAll("embed"):
+            embed.extract()
+
+    for embed in soup.findAll("embed"):
+        src = embed.get("src")
+        type = embed.get("type")
+        if not src or not type:
+            continue
+        width = embed.get("width")
+        height = embed.get("height")
+        object = Tag(soup, "object")
+        object["data"] = src
+        object["type"] = type
+        if width:
+            object["width"] = width
+        if height:
+            object["height"] = height
+        embed.replaceWith(object)
+
+
+    return unicode(soup)
+```
+
 <p>На её основе можно, например, сделать фильтр для шаблонов Django.</p>
 <p>Обратите внимание, что я принудительно удаляю атрибут <code>classid</code> из тегов <code>object</code>. Его назначение остаётся для меня загадкой, однако если он присутствует, то не отображается музыкальный проигрыватель с Jamendo.</p>
 <p>Пользуйтесь на здоровье. Если обнаружите какие-то косяки — пишите.</p>
