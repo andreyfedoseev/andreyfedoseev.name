@@ -1,11 +1,11 @@
 all: build
 
 build:
-	pelican
+	../.venv/bin/pelican
 
 run: build
-	twistd -no web --path ./output
+	../.venv/bin/twistd -no web --path ./output
 
 publish:
-	pelican -s publishconf.py
+	../.venv/bin/pelican -s publishconf.py
 	s3_website push

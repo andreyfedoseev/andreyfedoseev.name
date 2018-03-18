@@ -1,5 +1,5 @@
 .idea
-virtualenv
+.venv
 theme/static/css/.sass-cache
 en/.env
 en/cache
