@@ -1,0 +1,43 @@
+@mixin inline-block {
+  display: inline-block;
+}
+
+@mixin no-bullet {
+  list-style: none none;
+  margin-left: 0;
+}
+
+@mixin no-bullets {
+  list-style: none;
+  li {
+    @include no-bullet;
+  }
+}
+
+@mixin reset-box-model {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+@mixin horizontal-list-container {
+  @include reset-box-model;
+}
+
+@mixin inline-block-list-container {
+  @include horizontal-list-container;
+}
+
+@mixin inline-block-list-item() {
+  @include no-bullet;
+  @include inline-block;
+  white-space: nowrap;
+}
+
+@mixin inline-block-list() {
+  @include inline-block-list-container;
+  li {
+    @include inline-block-list-item();
+  }
+}
+

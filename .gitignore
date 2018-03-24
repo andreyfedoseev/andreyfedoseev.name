@@ -8,3 +8,5 @@ ru/.env
 ru/cache
 ru/output
 twistd.pid
+node_modules
+theme/static/dist
