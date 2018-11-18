@@ -1,3 +1,3 @@
-My name is Andrey Fedoseev. I am a passionate Python web developer since 2003. Mac user.
-Former Linux user. I am interested in data science, machine learning and retro video games.
-I work at [ISKME](http://iskme.org) and live in San Mateo, California.
+My name is Andrey Fedoseev. I am a passionate Python web developer since 2003.
+Retro video games are my hobby.
+I work at [FineTune](https://www.finetunelearning.com).
