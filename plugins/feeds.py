@@ -24,9 +24,9 @@ class Writer(BaseWriter):
                 item.modified if hasattr(item, 'modified') else item.date,
                 self.settings.get('TIMEZONE', None)))
 
-    def write_feed(self, elements, context, path=None, feed_type='atom'):
-        elements = filter(lambda x: getattr(x, "feed", None) not in ("false", "no", "False"), elements)
-        return super(Writer, self).write_feed(elements, context, path, feed_type)
+    def write_feed(self, elements, *args, **kwargs):
+        elements = [el for el in elements if getattr(el, "feed", None) not in {"false", "no", "False"}]
+        return super(Writer, self).write_feed(elements, *args, **kwargs)
 
 
 def get_writer(pelican):

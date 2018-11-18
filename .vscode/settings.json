@@ -7,11 +7,8 @@
     "**/.DS_Store": true,
     "**/*.pyc": true,
     ".idea": true,
-    ".venv": true,
     "ru/cache": true,
-    "ru/output": true,
-    "en/cache": true,
-    "en/output": true
+    "en/cache": true
   },
   "markdownlint.config": {
     "MD013": false,

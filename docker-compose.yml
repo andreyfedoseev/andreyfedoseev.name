@@ -1,0 +1,79 @@
+version: '3'
+services:
+  webpack:
+    build:
+      context: .
+      dockerfile: Dockerfile-webpack
+    volumes:
+      - ./theme/static:/static:ro
+      - webpack-dist:/dist
+      - webpack-sass-cache:/static/css/.sass-cache
+    command: webpack --watch
+
+  pelican-ru:
+    build:
+      context: .
+      dockerfile: Dockerfile-pelican
+    volumes:
+      - ./ru/content:/app/content:ro
+      - ./ru/pelicanconf.py:/app/pelicanconf.py:ro
+      - ./ru/publishconf.py:/app/publishconf.py:ro
+      - ./theme:/app/theme:ro
+      - ./plugins:/app/plugins:ro
+      - ./pelicanconf_base.py:/app/pelicanconf_base.py:ro
+      - webpack-dist:/app/theme/static/dist:ro
+      - output-ru:/output
+    environment:
+      - PYTHONPATH=/app
+    ports:
+      - "8000:8000"
+    command: pelican -lrdD -s pelicanconf.py -o /output content
+    depends_on:
+      - webpack
+
+  pelican-en:
+    build:
+      context: .
+      dockerfile: Dockerfile-pelican
+    volumes:
+      - ./en/content:/app/content:ro
+      - ./en/pelicanconf.py:/app/pelicanconf.py:ro
+      - ./en/publishconf.py:/app/publishconf.py:ro
+      - ./theme:/app/theme:ro
+      - ./plugins:/app/plugins:ro
+      - ./pelicanconf_base.py:/app/pelicanconf_base.py:ro
+      - webpack-dist:/app/theme/static/dist:ro
+      - output-en:/output
+    environment:
+      - PYTHONPATH=/app
+    ports:
+      - "8000:8000"
+    command: pelican -lrdD -s pelicanconf.py -o /output content
+    depends_on:
+      - webpack
+
+  s3-website-ru:
+    build:
+      context: .
+      dockerfile: Dockerfile-s3-website
+    volumes:
+      - output-ru:/output:ro
+      - ./ru/s3_website.yml:/s3_website.yml:ro
+    env_file:
+      - ./ru/.env
+
+  s3-website-en:
+    build:
+      context: .
+      dockerfile: Dockerfile-s3-website
+    volumes:
+      - output-en:/output:ro
+      - ./en/s3_website.yml:/s3_website.yml:ro
+    env_file:
+      - ./en/.env
+
+volumes:
+  webpack-dist:
+  webpack-sass-cache:
+  output-ru:
+  output-en:

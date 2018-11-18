@@ -18,7 +18,7 @@
   {% block feeds %}
     <link href="{{ SITEURL }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }}" />
     {% if tag %}
-      <link href="{{ SITEURL }}/{{ TAG_FEED_RSS|format(tag.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} | {{ tag.name }}" />
+      <link href="{{ SITEURL }}/{{ TAG_FEED_RSS|format(slug=tag.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} | {{ tag.name }}" />
     {% endif %}
   {% endblock %}
 </head>

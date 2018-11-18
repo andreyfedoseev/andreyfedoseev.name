@@ -1,0 +1,10 @@
+FROM node:10.7.0-alpine
+
+WORKDIR /app
+COPY package.json ./
+COPY package-lock.json ./
+COPY webpack.config.js ./
+RUN npm install
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/app/node_modules/.bin
+
+CMD webpack

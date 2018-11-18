@@ -1,9 +1,9 @@
 # coding: utf-8
-from __future__ import unicode_literals
 from pelican.utils import SafeDatetime
 from pyembed.markdown import PyEmbedMarkdown
 from pytils.dt import ru_strftime
 import datetime
+import os
 
 
 AUTHOR = "Andrey Fedoseev"
@@ -13,20 +13,20 @@ LANG_URLS = {
     "RU": ""
 }
 DEFAULT_LANG = "en"
-PATH = "content"
-OUTPUT_PATH = "output/"
-THEME = "../theme"
+THEME = "theme"
 STATIC_PATHS = [
     "images",
 ]
 
-JINJA_EXTENSIONS = (
-    "jinja2.ext.i18n",
-)
+JINJA_ENVIRONMENT = {
+    "extensions": (
+        "jinja2.ext.i18n",
+    ),
+}
 
 
 PLUGIN_PATHS = (
-    "../plugins",
+    "plugins",
 )
 
 PLUGINS = (
@@ -96,7 +96,7 @@ CATEGORY_FEED_RSS = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 TAG_FEED_ATOM = None
-TAG_FEED_RSS = "blog/feeds/%s.rss.xml"
+TAG_FEED_RSS = "blog/feeds/{slug}.rss.xml"
 TRANSLATION_FEED_ATOM = None
 TRANSLATION_FEED_RSS = None
 
@@ -104,15 +104,19 @@ TRANSLATION_FEED_RSS = None
 # Uncomment following line if you want document-relative URLs when developing
 # RELATIVE_URLS = True
 
-MD_EXTENSIONS = (
-    "codehilite(css_class=codehilite)",
-    "extra",
-    PyEmbedMarkdown(),
-)
+MARKDOWN = {
+    "extensions": [
+        PyEmbedMarkdown(),
+    ],
+    "extension_configs": {
+        "markdown.extensions.codehilite": {"css_class": "codehilite"},
+        "markdown.extensions.extra": {},
+    },
+}
 
 DATE_FORMATS = {
-    "en": b"%B %d, %Y",
-    "ru": b"%d %B %Y",
+    "en": "%B %d, %Y",
+    "ru": "%d %B %Y",
 }
 
 TODAY = datetime.date.today()

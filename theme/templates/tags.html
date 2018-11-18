@@ -11,7 +11,7 @@
     <ul class="tag-list top-tags">
       {% for tag in sorted_tags[:5] %}
         <li>
-          <a href="{{ SITEURL }}/{{ TAG_FEED_RSS|format(tag.slug) }}" title="{% trans %}RSS{% endtrans %}: {{ tag.name }}"><i class="fa fa-rss-square"></i></a><a href="{{ SITEURL }}{{ tag.url }}">{{ tag.name }}</a>
+          <a href="{{ SITEURL }}/{{ TAG_FEED_RSS|format(slug=tag.slug) }}" title="{% trans %}RSS{% endtrans %}: {{ tag.name }}"><i class="fa fa-rss-square"></i></a><a href="{{ SITEURL }}{{ tag.url }}">{{ tag.name }}</a>
         </li>
       {% endfor %}
     </ul>

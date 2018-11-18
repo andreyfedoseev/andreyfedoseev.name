@@ -1,6 +1,4 @@
 const path = require('path');
-// const CleanWebpackPlugin = require('clean-webpack-plugin');
-const LiveReloadPlugin = require('webpack-livereload-plugin');
 
 module.exports = {
   entry: {
@@ -8,7 +6,7 @@ module.exports = {
   },
   output: {
     filename: '[name]',
-    path: path.resolve(__dirname, 'theme/static/dist')
+    path:'/dist'
   },
   module: {
     rules: [
@@ -42,15 +40,12 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new LiveReloadPlugin()
-  ],
   devServer: {
-    contentBase: './theme/dist'
+    contentBase: '/dist'
   },
   resolve: {
     modules: [
-      "theme/static",
+      "/static",
       "node_modules",
     ]
   },
